@@ -29,7 +29,7 @@
     "invitation": false,
     "selfRegistered": false,
     "favorite": false,
-    "username": "test-dedupe-superAdmin",
+    "username": "test-de-superAdmin",
     "userInfo": {
       "id": "WQEkt3SA4Jb"
     },
@@ -145,7 +145,7 @@
       },
       "cogsDimensionConstraints": [],
       "catDimensionConstraints": [],
-      "username": "test-dedupe-interAgency-nigeria",
+      "username": "test-de-interAgency-nigeria",
       "userAccesses": [],
       "selfRegistered": false,
       "passwordLastUpdated": "2020-04-09T15:04:09.362",
@@ -247,7 +247,7 @@
       },
       "cogsDimensionConstraints": [],
       "catDimensionConstraints": [],
-      "username": "test-dedupe-interAgency-rwanda",
+      "username": "test-de-interAgency-rwanda",
       "userAccesses": [],
       "selfRegistered": false,
       "passwordLastUpdated": "2020-04-03T16:58:41.196",

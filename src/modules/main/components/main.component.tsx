@@ -87,8 +87,8 @@ export default class Main extends React.Component<{}, {
     renderPreselect(){
         if(process.env.NODE_ENV === 'production') return null;
         return <div style={{position: 'absolute', bottom: 10, right: 10}}>
-            <span onClick={()=>this.preselect('XtxUYCsDWrR')}>Rwanda</span>
-            <span onClick={()=>this.preselect('PqlFzhuPcF1')}>Nigeria</span>
+            {/*<span onClick={()=>this.preselect('XtxUYCsDWrR')}>Rwanda</span>*/}
+            {/*<span onClick={()=>this.preselect('PqlFzhuPcF1')}>Nigeria</span>*/}
         </div>;
     }
 

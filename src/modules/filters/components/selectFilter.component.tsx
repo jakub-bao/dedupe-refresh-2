@@ -23,6 +23,7 @@ export default function SelectFilter({filterType, filterValue, onFilterSelect, f
         <Select
             labelId={`selectFilter_${filterType}`}
             id={`cypress_filter_${filterType}`}
+            data-testid={`filter_${filterType}`}
             value={filterValue||''}
             onChange={(event:ChangeEvent<any>)=>onFilterSelect(event.target.value)}
             classes={{selectMenu: 'filters_menu'}}

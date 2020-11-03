@@ -1,5 +1,5 @@
 import {screen, waitFor} from "@testing-library/react";
-import {select} from "../domServices/basicDom.service";
+import {select} from "../domServices/domUtils.testService";
 
 export async function selectOu(ouName:string){
     await select('mechanismMenuSelect_Operating_Unit',ouName);

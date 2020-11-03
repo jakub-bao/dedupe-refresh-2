@@ -64,6 +64,7 @@ export default class Main extends React.Component<{}, {
         this.setState({loadingDedupes: true});
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
+            console.log(`Received Dedupe Data:`,dedupes);
             this.setState({results: {dedupes, selectedFilters}, loadingDedupes: false, error: false});
         }).catch(()=>{
             this.setState({loadingDedupes:false, results: {dedupes: null, selectedFilters}, error: true});
@@ -87,8 +88,8 @@ export default class Main extends React.Component<{}, {
     renderPreselect(){
         if(process.env.NODE_ENV === 'production') return null;
         return <div style={{position: 'absolute', bottom: 10, right: 10}}>
-            {/*<span onClick={()=>this.preselect('XtxUYCsDWrR')}>Rwanda</span>*/}
-            {/*<span onClick={()=>this.preselect('PqlFzhuPcF1')}>Nigeria</span>*/}
+            <span onClick={()=>this.preselect('XtxUYCsDWrR')}>Rw</span>
+            <span onClick={()=>this.preselect('PqlFzhuPcF1')}>Ng</span>
         </div>;
     }
 

@@ -16,7 +16,6 @@ const filterOptions = {
 function generateFilterOptionsTest(filterType:string, options:{contains:string[], notContains:string[]}){
     let selectId = `filter_${filterType}`;
     fireEvent.mouseDown(screen.getByTestId(selectId).childNodes[0]);
-    debug();
     texts(options.contains);
     if (options.notContains) noTexts(options.notContains);
     let value = options.contains[0];

@@ -6,7 +6,7 @@ Cypress.Commands.add('loginAs', (userType)=>{
     cy.request({
         method: 'POST', 
         url: `${baseUrl}dhis-web-commons-security/login.action`,
-        body: `j_username=cypress-${userType}&j_password=${testPassword}`,
+        body: `j_username=test-${userType}&j_password=${testPassword}`,
         headers: {
             'authority': baseUrl,
             'origin': baseUrl,

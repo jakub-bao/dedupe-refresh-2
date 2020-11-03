@@ -1,0 +1,436 @@
+[
+{
+  "id": "WQEkt3SA4Jb",
+  "name": "Cypress SuperAdmin",
+  "displayName": "Cypress SuperAdmin",
+  "externalAccess": false,
+  "surname": "SuperAdmin",
+  "employer": "BAO Systems",
+  "email": "jflaska@baosystems.com",
+  "firstName": "Cypress",
+  "phoneNumber": "3014013049",
+  "favorite": false,
+  "access": {
+    "read": true,
+    "update": true,
+    "externalize": false,
+    "delete": true,
+    "write": true,
+    "manage": true
+  },
+  "userCredentials": {
+    "id": "dDaFWcJeyXz",
+    "name": "Cypress SuperAdmin",
+    "displayName": "Cypress SuperAdmin",
+    "externalAuth": false,
+    "externalAccess": false,
+    "disabled": false,
+    "twoFA": false,
+    "invitation": false,
+    "selfRegistered": false,
+    "favorite": false,
+    "username": "test-dedupe-superAdmin",
+    "userInfo": {
+      "id": "WQEkt3SA4Jb"
+    },
+    "access": {
+      "read": true,
+      "update": true,
+      "externalize": false,
+      "delete": true,
+      "write": true,
+      "manage": true
+    },
+    "user": {
+      "id": "KxdQZCgLyCk"
+    },
+    "favorites": [],
+    "cogsDimensionConstraints": [],
+    "catDimensionConstraints": [],
+    "translations": [],
+    "userGroupAccesses": [],
+    "attributeValues": [],
+    "userRoles": [
+      {
+        "id": "jtzbVV4ZmdP"
+      },
+      {
+        "id": "b2uHwX9YLhu"
+      }
+    ],
+    "userAccesses": []
+  },
+  "favorites": [],
+  "teiSearchOrganisationUnits": [],
+  "translations": [],
+  "organisationUnits": [
+    {
+      "id": "ybg3MO3hcf4"
+    }
+  ],
+  "dataViewOrganisationUnits": [
+    {
+      "id": "ybg3MO3hcf4"
+    }
+  ],
+  "userGroupAccesses": [],
+  "attributeValues": [],
+  "userGroups": [
+    {
+      "id": "M9Uer9SioL7"
+    },
+    {
+      "id": "gh9tn4QBbKZ"
+    },
+    {
+      "id": "aaSPLmfLi6p"
+    },
+    {
+      "id": "CwFniyubXbx"
+    },
+    {
+      "id": "OoiLAfMTyMx"
+    },
+    {
+      "id": "TDcG3257Xpn"
+    },
+    {
+      "id": "iuD8wUFz95X"
+    },
+    {
+      "id": "HdRhHh3F5FF"
+    },
+    {
+      "id": "c6hGi8GEZot"
+    }
+  ],
+  "userAccesses": []
+}, {
+    "surname": "Nigeria",
+    "href": "https://dev.datim.org/api/users/ojdT990tyWk",
+    "userGroupAccesses": [],
+    "dataViewOrganisationUnits": [
+      {
+        "id": "PqlFzhuPcF1"
+      }
+    ],
+    "id": "ojdT990tyWk",
+    "userCredentials": {
+      "userRoles": [
+        {
+          "id": "PZAx69RkL9Q"
+        },
+        {
+          "id": "saSooWeXauJ"
+        },
+        {
+          "id": "k7BWFXkG6zt"
+        },
+        {
+          "id": "b2uHwX9YLhu"
+        }
+      ],
+      "disabled": false,
+      "externalAuth": false,
+      "userGroupAccesses": [],
+      "id": "tGLydoff1ZL",
+      "twoFA": false,
+      "access": {
+        "read": true,
+        "manage": true,
+        "update": true,
+        "externalize": true,
+        "write": true,
+        "delete": true
+      },
+      "cogsDimensionConstraints": [],
+      "catDimensionConstraints": [],
+      "username": "test-dedupe-interAgency-nigeria",
+      "userAccesses": [],
+      "selfRegistered": false,
+      "passwordLastUpdated": "2020-04-09T15:04:09.362",
+      "translations": [],
+      "lastUpdated": "2020-04-09T15:02:51.087",
+      "userInfo": {
+        "id": "ojdT990tyWk"
+      },
+      "favorites": [],
+      "attributeValues": [],
+      "displayName": "Dedupe Nigeria",
+      "name": "Dedupe Nigeria",
+      "created": "2020-04-09T15:02:51.087",
+      "externalAccess": false,
+      "favorite": false,
+      "lastLogin": "2020-04-09T15:04:09.763",
+      "invitation": false
+    },
+    "employer": "Test org",
+    "access": {
+      "read": true,
+      "manage": true,
+      "update": true,
+      "externalize": true,
+      "write": true,
+      "delete": true
+    },
+    "phoneNumber": "2903280923890",
+    "email": "jflaska@baosystems.com",
+    "userGroups": [
+      {
+        "id": "SwDArZfzCPD"
+      },
+      {
+        "id": "c6hGi8GEZot"
+      },
+      {
+        "id": "TRBfaInIiOK"
+      }
+    ],
+    "userAccesses": [],
+    "translations": [],
+    "lastUpdated": "2020-04-09T15:04:09.655",
+    "favorites": [],
+    "attributeValues": [],
+    "displayName": "Dedupe Nigeria",
+    "name": "Dedupe Nigeria",
+    "firstName": "Dedupe",
+    "created": "2020-04-09T15:02:55.971",
+    "externalAccess": false,
+    "teiSearchOrganisationUnits": [],
+    "favorite": false,
+    "organisationUnits": [
+      {
+        "id": "PqlFzhuPcF1"
+      }
+    ]
+  },
+  {
+    "surname": "InterAgencyRwanda",
+    "href": "https://dev.datim.org/api/users/yggELpbU9Xw",
+    "userGroupAccesses": [],
+    "dataViewOrganisationUnits": [
+      {
+        "id": "XtxUYCsDWrR"
+      }
+    ],
+    "id": "yggELpbU9Xw",
+    "userCredentials": {
+      "userRoles": [
+        {
+          "id": "PZAx69RkL9Q"
+        },
+        {
+          "id": "saSooWeXauJ"
+        },
+        {
+          "id": "b2uHwX9YLhu"
+        },
+        {
+          "id": "k7BWFXkG6zt"
+        },
+        {
+          "id": "NsYYVxduOTM"
+        }
+      ],
+      "disabled": false,
+      "externalAuth": false,
+      "userGroupAccesses": [],
+      "id": "MFCnnJxQ0m8",
+      "twoFA": false,
+      "access": {
+        "read": true,
+        "manage": true,
+        "update": true,
+        "externalize": true,
+        "write": true,
+        "delete": true
+      },
+      "cogsDimensionConstraints": [],
+      "catDimensionConstraints": [],
+      "username": "test-dedupe-interAgency-rwanda",
+      "userAccesses": [],
+      "selfRegistered": false,
+      "passwordLastUpdated": "2020-04-03T16:58:41.196",
+      "translations": [],
+      "lastUpdated": "2020-03-26T20:19:08.613",
+      "userInfo": {
+        "id": "yggELpbU9Xw"
+      },
+      "favorites": [],
+      "attributeValues": [],
+      "displayName": "Dedupe InterAgencyRwanda",
+      "name": "Dedupe InterAgencyRwanda",
+      "created": "2020-03-26T20:19:08.613",
+      "externalAccess": false,
+      "favorite": false,
+      "lastLogin": "2020-04-08T16:23:05.931",
+      "invitation": false
+    },
+    "employer": "test org",
+    "access": {
+      "read": true,
+      "manage": true,
+      "update": true,
+      "externalize": true,
+      "write": true,
+      "delete": true
+    },
+    "phoneNumber": "34-0438-039=0934-034",
+    "email": "jflaska@baosystems.com",
+    "userGroups": [
+      {
+        "id": "LqrnY1CgnCv"
+      },
+      {
+        "id": "OoiLAfMTyMx"
+      },
+      {
+        "id": "iuD8wUFz95X"
+      },
+      {
+        "id": "TRBfaInIiOK"
+      },
+      {
+        "id": "c6hGi8GEZot"
+      },
+      {
+        "id": "CwFniyubXbx"
+      }
+    ],
+    "userAccesses": [],
+    "translations": [],
+    "lastUpdated": "2020-04-03T16:58:38.959",
+    "favorites": [],
+    "attributeValues": [],
+    "displayName": "Dedupe InterAgencyRwanda",
+    "name": "Dedupe InterAgencyRwanda",
+    "firstName": "Dedupe",
+    "created": "2020-03-26T20:19:13.496",
+    "externalAccess": false,
+    "teiSearchOrganisationUnits": [],
+    "favorite": false,
+    "organisationUnits": [
+      {
+        "id": "XtxUYCsDWrR"
+      }
+    ]
+  },
+  {
+    "surname": "SuperAdmin",
+    "lastCheckedInterpretations": "2019-03-18T14:25:44.997",
+    "href": "https://dev.datim.org/api/users/WQEkD3SA4Jb",
+    "userGroupAccesses": [],
+    "dataViewOrganisationUnits": [
+      {
+        "id": "ybg3MO3hcf4"
+      }
+    ],
+    "id": "WQEkD3SA4Jb",
+    "userCredentials": {
+      "userRoles": [
+        {
+          "id": "jtzbVV4ZmdP"
+        },
+        {
+          "id": "b2uHwX9YLhu"
+        }
+      ],
+      "disabled": false,
+      "externalAuth": false,
+      "userGroupAccesses": [],
+      "id": "dDaFWbJeyXz",
+      "twoFA": false,
+      "access": {
+        "read": true,
+        "manage": true,
+        "update": true,
+        "externalize": true,
+        "write": true,
+        "delete": true
+      },
+      "cogsDimensionConstraints": [],
+      "catDimensionConstraints": [],
+      "username": "cypress-superAdmin",
+      "userAccesses": [],
+      "selfRegistered": false,
+      "passwordLastUpdated": "2020-04-03T16:59:00.626",
+      "translations": [],
+      "lastUpdated": "2019-06-12T20:16:23.828",
+      "lastUpdatedBy": {
+        "id": "WQEkD3SA4Jb"
+      },
+      "userInfo": {
+        "id": "WQEkD3SA4Jb"
+      },
+      "favorites": [],
+      "attributeValues": [],
+      "displayName": "Cypress SuperAdmin",
+      "name": "Cypress SuperAdmin",
+      "created": "2019-03-29T16:06:12.355",
+      "externalAccess": false,
+      "favorite": false,
+      "lastLogin": "2020-04-08T16:23:12.094",
+      "invitation": false,
+      "user": {
+        "id": "KxdQZCgLyCk"
+      }
+    },
+    "employer": "BAO Systems",
+    "access": {
+      "read": true,
+      "manage": true,
+      "update": true,
+      "externalize": true,
+      "write": true,
+      "delete": true
+    },
+    "phoneNumber": "3014013049",
+    "email": "jflaska@baosystems.com",
+    "userGroups": [
+      {
+        "id": "gh9tn4QBbKZ"
+      },
+      {
+        "id": "M9Uer9SioL7"
+      },
+      {
+        "id": "aaSPLmfLi6p"
+      },
+      {
+        "id": "OoiLAfMTyMx"
+      },
+      {
+        "id": "TDcG3257Xpn"
+      },
+      {
+        "id": "iuD8wUFz95X"
+      },
+      {
+        "id": "HdRhHh3F5FF"
+      },
+      {
+        "id": "c6hGi8GEZot"
+      },
+      {
+        "id": "CwFniyubXbx"
+      }
+    ],
+    "userAccesses": [],
+    "translations": [],
+    "lastUpdated": "2020-04-03T16:58:51.705",
+    "favorites": [],
+    "attributeValues": [],
+    "displayName": "Cypress SuperAdmin",
+    "name": "Cypress SuperAdmin",
+    "firstName": "Cypress",
+    "created": "2019-03-29T16:06:12.355",
+    "externalAccess": false,
+    "teiSearchOrganisationUnits": [],
+    "favorite": false,
+    "organisationUnits": [
+      {
+        "id": "ybg3MO3hcf4"
+      }
+    ]
+  }
+]

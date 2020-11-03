@@ -1,0 +1,15 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "watchForFileChanges": false,
+  "defaultCommandTimeout": 10000,
+  "numTestsKeptInMemory": 100,
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "html": false,
+    "quiet": true,
+    "consoleReporter": "none"
+  },
+  "env": {
+    "dhisCachePauseSec": 3
+  }
+}

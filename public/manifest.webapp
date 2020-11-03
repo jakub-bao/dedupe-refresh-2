@@ -1,0 +1,23 @@
+{
+  "launch_path": "index.html",
+  "default_locale": "en",
+  "activities": {
+    "dhis": {
+      "href": "../../.."
+    }
+  },
+  "appType": "APP",
+  "name": "ERB Processor",
+  "version": "1.0.1",
+  "description": "Expenditures Reporting / Budgets > Processor",
+  "icons": {
+    "48": "img/logo_48.png"
+  },
+  "developer": {
+    "name": "Jakub Flaska <jflaska@baosystems.com>"
+  },
+  "dhis2": {
+    "apiVersion": "33"
+  },
+  "manifest_generated_at": "Wed Feb 19 2020 13:52:28 GMT-0500 (Eastern Standard Time)"
+}

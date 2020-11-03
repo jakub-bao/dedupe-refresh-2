@@ -1,0 +1,15 @@
+.idea
+node_modules
+package-lock.json
+coverage
+cachedApiCalls
+mochawesome-report
+cypress/screenshots
+
+ERB-Processor.zip
+build/
+
+
+**/__pycache__
+**/__snapshots__
+

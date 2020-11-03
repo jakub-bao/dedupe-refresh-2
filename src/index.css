@@ -1,0 +1,33 @@
+body {
+    margin: 0px;
+    background-color: white;
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+}
+
+#dhis2HeaderBar{
+    font-family: sans-serif;
+    z-index:2000;
+    position: fixed;
+    top: 0px;
+    width:100%;
+}
+
+.css_errorMessage > div{
+    background-color: #d20000!important;
+}
+
+h5 {
+    font-weight: 300!important;
+}
+
+.contentDrawerOpen{
+    margin-left: 235px;
+    transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+.contentDrawerClosed{
+    margin-left: 10px;
+    transition: margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}

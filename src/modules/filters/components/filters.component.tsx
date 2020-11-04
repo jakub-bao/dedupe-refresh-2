@@ -21,7 +21,7 @@ const styles = {
 };
 
 function CloseDrawerIcon({onClick}:{onClick:()=>void}){
-    return <IconButton onClick={onClick} style={styles.closeDrawerIcon} id='cypress_collapseFilters'>
+    return <IconButton onClick={onClick} style={styles.closeDrawerIcon}>
         <ChevronLeft/>
     </IconButton>
 }
@@ -64,7 +64,7 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
     filtersUi: FiltersUiModel
 }) {
     return <Drawer
-        id='cypress_filters'
+
         anchor='left'
         variant="persistent"
         open={filtersUi.filtersOpen}
@@ -77,7 +77,7 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
         </Typography>
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
-        <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} id='cypress_searchDedupes' data-testid='searchDedupes'>
+        <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes'>
             Search Dedupes
         </Button>
     </Drawer>;

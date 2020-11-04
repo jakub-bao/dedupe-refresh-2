@@ -40,7 +40,7 @@ const columnSettings = [
 
 const customComponents = {
     Container: props=><div {...props}></div>,
-    Row: props=><MTableBodyRow {...props} className='cypress_resultsRow'/>
+    Row: props=><MTableBodyRow {...props} />
 };
 
 function iterateValuesFactory(property:string){

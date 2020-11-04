@@ -21,7 +21,7 @@ export function checkSelectValue(selectId:string, value:string){
 
 export function checkRadioValue(id:string, value:string){
     // @ts-ignore
-    expect(screen.getByTestId(`${id}_${value}`).checked, `Data Stream > ${id} > ${value}`).toBe(true);
+    expect(screen.getByTestId(`${id}_${value}`).checked, `Checkbox > ${id} > ${value}`).toBe(true);
 }
 
 export function checkboxValue(id:string, value:boolean){

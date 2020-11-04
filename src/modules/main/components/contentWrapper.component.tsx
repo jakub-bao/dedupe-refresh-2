@@ -16,7 +16,7 @@ const styles = {
 
 function Indent({filtersOpen, children}:{filtersOpen: boolean, children: any}){
     let finalStyle = Object.assign({}, styles.root, filtersOpen?{}:styles.rootClosedFilters);
-    return <div style={finalStyle} id='cypress_results'>
+    return <div style={finalStyle}>
         {children}
     </div>;
 }

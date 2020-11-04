@@ -24,13 +24,13 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
     filterOptionsProvider: FilterOptionsProvider
     filtersUi: FiltersUiModel
 }) {
-    return <div id='cypress_header'>
+    return <div>
         <Typography variant='h4'>Data Deduplication</Typography>
-        <Button onClick={filtersUi.collapseFilters} variant='outlined' size='small' id='cypress_openFilters'>
+        <Button onClick={filtersUi.collapseFilters} variant='outlined' size='small'>
             <Filter/>
             Filters
         </Button>
-        <span id='cypress_filterBreadCrumb'>
+        <span>
             {renderFilterList(selectedFilters, filterOptionsProvider)}
         </span>
         <Divider/>

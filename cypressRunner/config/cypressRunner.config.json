@@ -1,9 +1,0 @@
-{
-  "devMode": false,
-  "parallelThreads": 8,
-  "browser": "chrome",
-  "headless": true,
-  "appUrl": "http://localhost:3000",
-  "video": false,
-  "defaultCommandTimeout": 10000
-}

@@ -1,7 +1,7 @@
 import {testAs} from "../../test/apiCache/getData/getData.service";
-import {RdTestCase, rdTestCases} from "./3.renderDedupes.testCases";
+import {RdTestCase, rdTestCases, TestResolution} from "./3.renderDedupes.testCases";
 import {renderMain} from "../shared/sharedBasics.testService";
-import {click, debug, loadingDone, select, texts} from "../../test/domServices/domUtils.testService";
+import {checkRadioValue, click, debug, loadingDone, select, texts} from "../../test/domServices/domUtils.testService";
 
 function renderDedupes(testCase:RdTestCase){
     test(`3 > Render Dedupes > ${testCase.name}`, async ()=>{
@@ -14,6 +14,7 @@ function renderDedupes(testCase:RdTestCase){
         click('searchDedupes');
         await loadingDone();
         texts(testCase.expectedTokens);
+        testCase.resolved.forEach((resolution:TestResolution)=>checkRadioValue(resolution.id, resolution.method))
     });
 }
 

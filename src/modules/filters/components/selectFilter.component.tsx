@@ -22,7 +22,7 @@ export default function SelectFilter({filterType, filterValue, onFilterSelect, f
         <InputLabel id={`selectFilter_${filterType}`}>{generateLabel(filterType)}</InputLabel>
         <Select
             labelId={`selectFilter_${filterType}`}
-            id={`cypress_filter_${filterType}`}
+
             data-testid={`filter_${filterType}`}
             value={filterValue||''}
             onChange={(event:ChangeEvent<any>)=>onFilterSelect(event.target.value)}

@@ -66,7 +66,6 @@ function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableVa
 }
 
 function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
-    console.debug(selectedRows);
     const isResolved = selectedRows[0].duplicateStatus==='RESOLVED';
     let resolution:DedupeResolutionModel = {
         resolvedBy: null,
@@ -74,7 +73,6 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
         availableValues: getAvailableValues(selectedRows)
     };
     if (resolution.isResolved) resolution.resolvedBy = getResolvedBy(selectedRows, resolution.availableValues);
-    console.debug(resolution);
     return resolution;
 }
 
@@ -109,7 +107,6 @@ function processResponse(rows:any[]):DedupeModel[]{
         let dedupe:DedupeModel = generateDedupe(selectedRows);
         dedupes.push(dedupe)
     }
-    console.debug(dedupes);
     return dedupes;
 }
 

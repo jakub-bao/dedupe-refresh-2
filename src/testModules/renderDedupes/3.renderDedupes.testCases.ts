@@ -33,7 +33,7 @@ const Nigeria1:RdTestCase = {
         period: 'Apr - Jun 2020',
         includeResolved: true
     },
-    expectedTokens: ['HTS_TST (N, DSD, KeyPop/Result): HTS received results','People in prisons and other enclosed settings, Positive','ad Demsa','HHS/CDC','CATHOLIC CARITAS FOUNDATION O F NIGERIA','16848','30010','10020','20010','20020','Maximum (30020)','Sum (40030)']
+    expectedTokens: ['HTS_TST (N, DSD, KeyPop/Result): HTS received results','People in prisons and other enclosed settings, Positive','ad Demsa','HHS/CDC','CATHOLIC CARITAS FOUNDATION O F NIGERIA','16848','30010','20010','20020','Maximum (30020)','Sum (40030)']
 };
 
-export const rdTestCases:RdTestCase[] = [Rwanda1];
+export const rdTestCases:RdTestCase[] = [Rwanda1,Nigeria1];

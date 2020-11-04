@@ -10,10 +10,9 @@ function renderDedupes(testCase:RdTestCase){
         ['organisationUnit','dataType','period'].forEach((filter:string)=>{
             select(`filter_${filter}`,testCase.filters[filter]);
         });
-        if (testCase.filters.includeResolved) click('filter_Include');
+        if (testCase.filters.includeResolved) click('filter_includeResolved');
         click('searchDedupes');
         await loadingDone();
-        debug();
         texts(testCase.expectedTokens);
     });
 }

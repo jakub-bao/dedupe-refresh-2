@@ -2,6 +2,7 @@ import React from "react";
 import MaterialTable, {MTableBodyRow} from "material-table";
 import {DedupeModel} from "../models/dedupe.model";
 import ResolutionMethodCell from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+import {tableIcons} from "./resultTableIcons.component";
 
 const styles = {
     valueList: {
@@ -53,6 +54,7 @@ function iterateValuesFactory(property:string){
 
 export default function ResultsTable({filteredDedupes}:{filteredDedupes: DedupeModel[]}) {
     return <MaterialTable
+        icons={tableIcons}
         title="Data Deduplication"
         options={tableOptions}
         columns={columnSettings}

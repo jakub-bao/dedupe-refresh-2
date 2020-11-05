@@ -95,11 +95,6 @@ const Nigeria1:FdTestCase = {
             "agencyName": "HHS/CDC",
             "partnerName": "APIN PUBLIC HEALTH INITIATIVE S LTD/GTE",
             "mechanismNumber": 16850
-        }, {
-            "value": -30010,
-            "agencyName": "Dedupe adjustments Agency",
-            "partnerName": "Dedupe adjustment",
-            "mechanismNumber": 0
         }]
     }, {
         "meta": {"orgUnitId": "BY7bSKwPjPJ", "periodId": "blank", "dataType": "blank"},
@@ -129,11 +124,6 @@ const Nigeria1:FdTestCase = {
             "agencyName": "USAID",
             "partnerName": "JSI Research And Training Institute, INC.",
             "mechanismNumber": 14302
-        }, {
-            "value": 0,
-            "agencyName": "Dedupe adjustments Agency",
-            "partnerName": "Dedupe adjustment",
-            "mechanismNumber": 0
         }]
     }]
 };

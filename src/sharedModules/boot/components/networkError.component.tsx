@@ -19,7 +19,7 @@ export default function NetworkError(){
             <ul>
                 <li><Typography>You are still connected to the Internet</Typography></li>
                 <li><Typography>You are still logged in into DATIM</Typography></li>
-                <li><Typography>You have the rights to use ERB Processor</Typography></li>
+                <li><Typography>You have the rights to use Data Deduplication</Typography></li>
             </ul>
             <Typography>If this problem persists, please contact <Link href='https://datim.zendesk.com/'>DATIM Support</Link></Typography>
         </Paper>

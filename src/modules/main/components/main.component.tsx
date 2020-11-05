@@ -11,18 +11,25 @@ import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
 import NetworkError from "../../../sharedModules/boot/components/networkError.component";
 
+type PropertyPath = "filtersOpen"|"error.filters"|"error.results"|"loading.filterOptions"|"loading.dedupes";
+
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
     results: {
         dedupes: DedupeModel[],
         selectedFilters: FiltersModel
     }
-    loadingFilterOptions: boolean,
-    loadingDedupes: boolean,
     ui: {
-        filtersOpen: boolean
+        filtersOpen: boolean,
+        error: {
+            filters?: boolean,
+            results?: boolean
+        },
+        loading: {
+            filterOptions?: boolean,
+            dedupes?: boolean,
+        }
     },
-    error: boolean
 }> {
     filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
     filtersUi:FiltersUiModel;
@@ -42,15 +49,18 @@ export default class Main extends React.Component<{}, {
                 dedupes: null,
                 selectedFilters: null
             },
-            loadingFilterOptions: true,
-            loadingDedupes: false,
             ui: {
-                filtersOpen: true
+                filtersOpen: true,
+                error: {},
+                loading:{
+                    filterOptions: true
+                }
             },
-            error: false
         };
         this.filterOptionsProvider.init().then(()=>{
-            this.setState({loadingFilterOptions:false});
+            this.updateUi("loading.filterOptions", false);
+        }).catch(()=>{
+            this.updateUi("error.filters", true);
         });
         this.filtersUi = {
             filtersOpen: null,
@@ -60,13 +70,28 @@ export default class Main extends React.Component<{}, {
         };
     }
 
+    updateUi = (path:PropertyPath, value:boolean)=>{
+        // let ui = JSON.parse(JSON.stringify(this.state.ui));
+        let ui = this.state.ui;
+        if (path==='filtersOpen') ui.filtersOpen = value;
+        else {
+            let props = path.split('.');
+            ui[props[0]][props[1]] = value;
+        }
+        this.setState({ui})
+    };
+
     onSearchClick = ()=>{
-        this.setState({loadingDedupes: true});
+        this.updateUi("loading.dedupes", true);
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
-            this.setState({results: {dedupes, selectedFilters}, loadingDedupes: false, error: false});
+            this.setState({results: {dedupes, selectedFilters}});
+            this.updateUi("loading.dedupes", false);
+            this.updateUi("error.results", true);
         }).catch(()=>{
-            this.setState({loadingDedupes:false, results: {dedupes: null, selectedFilters}, error: true});
+            this.setState({results: {dedupes: null, selectedFilters}});
+            this.updateUi("loading.filterOptions", false);
+            this.updateUi("error.results", true);
         });
     };
 
@@ -79,8 +104,8 @@ export default class Main extends React.Component<{}, {
     };
 
     renderResults(){
-        if (this.state.loadingDedupes) return <Loading message={'Searching duplicates...'}/>;
-        if (this.state.error) return <NetworkError/>;
+        if (this.state.ui.loading.dedupes) return <Loading message={'Searching duplicates...'}/>;
+        if (this.state.ui.error.results) return <NetworkError/>;
         return <Results filteredDedupes={this.state.results.dedupes} />;
     }
 
@@ -108,7 +133,8 @@ export default class Main extends React.Component<{}, {
     };
 
     render() {
-        if (this.state.loadingFilterOptions) return <Loading message={'Loading...'}/>;
+        if (this.state.ui.error.filters) return <NetworkError/>;
+        if (this.state.ui.loading.filterOptions) return <Loading message={'Loading...'} margin={50}/>;
         return <React.Fragment>
             <Filters
                 selectedFilters={this.state.selectedFilters}

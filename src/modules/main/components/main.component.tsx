@@ -26,8 +26,8 @@ export default class Main extends React.Component<{}, {
             results?: boolean
         },
         loading: {
-            filterOptions?: boolean,
-            dedupes?: boolean,
+            filters?: boolean,
+            results?: boolean,
         }
     },
 }> {
@@ -53,14 +53,14 @@ export default class Main extends React.Component<{}, {
                 filtersOpen: true,
                 error: {},
                 loading:{
-                    filterOptions: true
+                    filters: true
                 }
             },
         };
         this.filterOptionsProvider.init().then(()=>{
-            this.updateUi("loading.filterOptions", false);
+            this.updateUi({filters: false}, {filters: false});
         }).catch(()=>{
-            this.updateUi("error.filters", true);
+            this.updateUi({filters: false}, {filters: true});
         });
         this.filtersUi = {
             filtersOpen: null,
@@ -70,28 +70,22 @@ export default class Main extends React.Component<{}, {
         };
     }
 
-    updateUi = (path:PropertyPath, value:boolean)=>{
-        // let ui = JSON.parse(JSON.stringify(this.state.ui));
+    updateUi = (loading:{filters?:boolean, results?:boolean}, error: {filters?:boolean, results?:boolean})=>{
         let ui = this.state.ui;
-        if (path==='filtersOpen') ui.filtersOpen = value;
-        else {
-            let props = path.split('.');
-            ui[props[0]][props[1]] = value;
-        }
-        this.setState({ui})
-    };
+        if (loading) ui.loading = loading;
+        if (error) ui.error = error;
+        this.setState({ui});
+    }
 
     onSearchClick = ()=>{
-        this.updateUi("loading.dedupes", true);
+        this.updateUi({results: true}, {results: false});
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
             this.setState({results: {dedupes, selectedFilters}});
-            this.updateUi("loading.dedupes", false);
-            this.updateUi("error.results", true);
+            this.updateUi({results: false}, {results: false});
         }).catch(()=>{
             this.setState({results: {dedupes: null, selectedFilters}});
-            this.updateUi("loading.filterOptions", false);
-            this.updateUi("error.results", true);
+            this.updateUi({results: false}, {results: true});
         });
     };
 
@@ -104,7 +98,7 @@ export default class Main extends React.Component<{}, {
     };
 
     renderResults(){
-        if (this.state.ui.loading.dedupes) return <Loading message={'Searching duplicates...'}/>;
+        if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'}/>;
         if (this.state.ui.error.results) return <NetworkError/>;
         return <Results filteredDedupes={this.state.results.dedupes} />;
     }
@@ -134,7 +128,7 @@ export default class Main extends React.Component<{}, {
 
     render() {
         if (this.state.ui.error.filters) return <NetworkError/>;
-        if (this.state.ui.loading.filterOptions) return <Loading message={'Loading...'} margin={50}/>;
+        if (this.state.ui.loading.filters) return <Loading message={'Loading...'} margin={50}/>;
         return <React.Fragment>
             <Filters
                 selectedFilters={this.state.selectedFilters}

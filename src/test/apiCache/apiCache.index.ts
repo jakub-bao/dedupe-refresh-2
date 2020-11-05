@@ -16,7 +16,8 @@ export function sendDataViaTest(method:string, url:string, data:any):Promise<any
 }
 
 export function getDataInProd(url:string):Promise<object>{
-    return fetch(url, {credentials: 'include'}).then(resp => resp.json())
+    return fetch(url, {credentials: 'include'})
+        .then(resp => resp.json());
 }
 
 function sendDataInProd(method:string, url:string, data:any){

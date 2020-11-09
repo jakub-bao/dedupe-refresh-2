@@ -4,6 +4,7 @@ import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import {FiltersModel, FilterType} from "../../filters/models/filters.model";
 import {Filter} from "@material-ui/icons";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
+import {MenuIcon} from "../../filters/components/filtersLogo.component";
 
 const styles = {
     chip: {marginLeft: 5}
@@ -24,15 +25,10 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
     filterOptionsProvider: FilterOptionsProvider
     filtersUi: FiltersUiModel
 }) {
-    return <div>
-        <Typography variant='h4'>Data Deduplication</Typography>
-        <Button onClick={filtersUi.collapseFilters} variant='outlined' size='small'>
-            <Filter/>
-            Filters
-        </Button>
-        <span>
+    return <React.Fragment>
+        <div>
+            {!filtersUi.filtersOpen && <MenuIcon menuOpen={filtersUi.filtersOpen} toggleMenu={filtersUi.collapseFilters}/>}
             {renderFilterList(selectedFilters, filterOptionsProvider)}
-        </span>
-        <Divider/>
-    </div>;
+        </div>
+    </React.Fragment>;
 }

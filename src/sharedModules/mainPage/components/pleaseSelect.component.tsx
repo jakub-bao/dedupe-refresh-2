@@ -9,25 +9,22 @@ const styles={
         marginLeft: 49
     },
     whitespace: {
-        height: 40
+        height: 80
     }
 };
 
 export enum PleaseSelectType{
-    mechanism='mechanism',
     ou='ou'
 }
 
 const messages = {
-    mechanism: 'Please select a Funding Mechanism to submit templates',
-    ou: 'Please select an Operating Unit to review submitted templates'
+    ou: 'Please select an Operating Unit'
 }
 
 export default function PleaseSelect({type}:{type:PleaseSelectType}) {
     return <React.Fragment>
-        {type===PleaseSelectType.ou && <Arrow type={ArrowType.up}/>}
-        {type===PleaseSelectType.mechanism && <div style={styles.whitespace}/>}
+        { <div style={styles.whitespace}/>}
         <Typography style={styles.root}>{messages[type]}</Typography>
-        {type===PleaseSelectType.mechanism && <Arrow type={ArrowType.down}/>}
+        {<Arrow type={ArrowType.down}/>}
     </React.Fragment>;
 }

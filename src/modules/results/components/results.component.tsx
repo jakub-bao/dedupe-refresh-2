@@ -12,7 +12,7 @@ const styles = {
 export default function Results({filteredDedupes}:{
     filteredDedupes: DedupeModel[],
 }) {
-    if (!filteredDedupes) return <Typography style={styles.info}>Start by selecting filters on the left...</Typography>;
+    if (!filteredDedupes) return null;
     if (filteredDedupes.length===0) return <Typography style={styles.info}>No duplicates found matching the selected criteria</Typography>
     return <ResultsTable filteredDedupes={filteredDedupes}/>;
 }

@@ -10,6 +10,7 @@ import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
 import NetworkError from "../../../sharedModules/boot/components/networkError.component";
+import PleaseSelect, {PleaseSelectType} from "../../../sharedModules/mainPage/components/pleaseSelect.component";
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -96,6 +97,7 @@ export default class Main extends React.Component<{}, {
     };
 
     renderResults(){
+        if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'}/>;
         if (this.state.ui.error.results) return <NetworkError/>;
         return <Results filteredDedupes={this.state.results.dedupes} />;

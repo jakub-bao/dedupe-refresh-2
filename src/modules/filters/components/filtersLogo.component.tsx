@@ -5,7 +5,7 @@ import {ChevronLeft, Menu} from "@material-ui/icons";
 const styles = {
     root: {
         fontSize: '1.1rem',
-        margin: '0px 15px 15px 15px',
+        margin: '5px 15px 15px 15px',
         fontWeight: 400
     } as CSSProperties,
     collapseIcon:{
@@ -23,7 +23,7 @@ export function MenuIcon({menuOpen, toggleMenu}:{menuOpen:boolean, toggleMenu: (
 
 export default function MenuLogo({menuOpen, toggleMenu}:{menuOpen:boolean, toggleMenu: ()=>void}) {
     return <Typography color='primary' variant='h6' style={styles.root}>
-        {menuOpen && <div style={styles.collapseIcon}><MenuIcon menuOpen={menuOpen} toggleMenu={toggleMenu}/></div>}
+        <div style={styles.collapseIcon}><MenuIcon menuOpen={menuOpen} toggleMenu={toggleMenu}/></div>
         Data Deduplication
     </Typography>
 }

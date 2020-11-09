@@ -5,10 +5,11 @@ import SelectFilter from "./selectFilter.component";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
 import {ChevronLeft, FilterList} from "@material-ui/icons";
 import {PositionProperty} from "csstype";
-import "./filters.component.css";
 import {FiltersUiModel} from "./filtersUi.model";
 import CheckboxFilter from "./checkboxFilter.component";
 import MenuLogo from "./filtersLogo.component";
+import { colors } from "../../../values/color.values";
+import {makeStyles} from "@material-ui/core/styles";
 
 const styles = {
     filtersIcon: {
@@ -20,6 +21,13 @@ const styles = {
         right: 0
     }
 };
+
+const useStyles = makeStyles({
+    root: {
+        backgroundColor: colors.altBackground,
+        marginTop: 50
+    },
+});
 
 function CloseDrawerIcon({onClick}:{onClick:()=>void}){
     return <IconButton onClick={onClick} style={styles.closeDrawerIcon}>
@@ -64,12 +72,12 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
     onSearchClick: ()=>void,
     filtersUi: FiltersUiModel
 }) {
+    let classStyles = useStyles();
     return <Drawer
-
         anchor='left'
         variant="persistent"
         open={filtersUi.filtersOpen}
-        classes={{paper:'filters_root'}}
+        classes={{paper: classStyles.root}}
     >
         <MenuLogo menuOpen={filtersUi.filtersOpen} toggleMenu={filtersUi.collapseFilters}/>
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}

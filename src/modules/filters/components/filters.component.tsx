@@ -8,6 +8,7 @@ import {PositionProperty} from "csstype";
 import "./filters.component.css";
 import {FiltersUiModel} from "./filtersUi.model";
 import CheckboxFilter from "./checkboxFilter.component";
+import MenuLogo from "./filtersLogo.component";
 
 const styles = {
     filtersIcon: {
@@ -70,11 +71,7 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
         open={filtersUi.filtersOpen}
         classes={{paper:'filters_root'}}
     >
-        <CloseDrawerIcon onClick={filtersUi.closeFilters}/>
-        <Typography variant='h6'>
-            <FilterList style={styles.filtersIcon}/>
-            Filters
-        </Typography>
+        <MenuLogo menuOpen={filtersUi.filtersOpen} toggleMenu={filtersUi.collapseFilters}/>
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
         <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes'>

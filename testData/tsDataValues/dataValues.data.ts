@@ -89,21 +89,36 @@ const Nigeria2:DedupeValueSet = {
     }]
 };
 
-// const Zambia1:DedupeValueSet = {
-//     dataSet: 'jKdHXpBfWop',
-//     orgUnitId: 'ivv9yPgimic',
-//     period: '2020Q3',
-//     dataValues: [{
-//         value: 40010,
-//         cp: 'PHHHN8hDekc',
-//         categoryOptionCombo_co: "pWaGXt8b4rt",
-//         de: 'cRCw63EQEbM',
-//     },{
-//         value: 40020,
-//         cp: 'EqCzVuUpqZW',
-//         categoryOptionCombo_co: "pWaGXt8b4rt",
-//         de: 'TiMvlchPiPH',
-//     }]
-// }
+const Zambia1:DedupeValueSet = {
+    dataSet: 'jKdHXpBfWop',
+    orgUnitId: 'ivv9yPgimic',
+    period: '2020Q3',
+    categoryOption_cp: 'PHHHN8hDekc',
+    categoryOptionCombo_co: "a0F1mOe30rp",
+    dataValues: [{
+        value: 40010,
+        dataElement_de: 'RhkU5KjtAi6',
+    },{
+        value: 40020,
+        dataElement_de: 'Jj8qonfbvBA'
+    }]
+}
 
-export const dedupeValueSets:DedupeValueSet[] = [Nigeria1,Nigeria2,Rwanda1,Rwanda2];
+
+const Zambia2:DedupeValueSet = {
+    dataSet: 'jKdHXpBfWop',
+    orgUnitId: 'ivv9yPgimic',
+    period: '2020Q3',
+    categoryOptionCombo_co: "eD7hpv3uU9Q",
+    dataValues: [{
+        value: 50010,
+        categoryOption_cp: 'ddfsp55f4jN',
+        dataElement_de: 'cRCw63EQEbM',
+    },{
+        value: 50020,
+        categoryOption_cp: 'k6dOaAE6oWj',
+        dataElement_de: 'TiMvlchPiPH'
+    }]
+};
+
+export const dedupeValueSets:DedupeValueSet[] = [Nigeria1,Nigeria2,Rwanda1,Rwanda2,Zambia1,Zambia2];

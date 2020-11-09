@@ -1,6 +1,6 @@
 import React from "react";
 import Filters from "../../filters/components/filters.component";
-import {FiltersModel, FilterType} from "../../filters/models/filters.model";
+import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
 import {DedupeModel} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
@@ -10,8 +10,6 @@ import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
 import NetworkError from "../../../sharedModules/boot/components/networkError.component";
-
-type PropertyPath = "filtersOpen"|"error.filters"|"error.results"|"loading.filterOptions"|"loading.dedupes";
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -37,7 +35,7 @@ export default class Main extends React.Component<{}, {
         super(props);
         this.state = {
             selectedFilters: {
-                dedupeType: 'PURE',
+                dedupeType: DedupeType.pure,
                 includeResolved: false,
                 organisationUnit: null,
                 dataType: null,
@@ -103,20 +101,23 @@ export default class Main extends React.Component<{}, {
         return <Results filteredDedupes={this.state.results.dedupes} />;
     }
 
+
     renderPreselect(){
         if(process.env.NODE_ENV === 'production') return null;
         return <div style={{position: 'fixed', top: 50, right: 10}}>
-            <span onClick={()=>this.preselect('XtxUYCsDWrR')}>Rwda</span>
-            <span onClick={()=>this.preselect('PqlFzhuPcF1')}>Ngia</span>
+            <span onClick={()=>this.preselect('XtxUYCsDWrR','2020Q2', DedupeType.pure)}>Rwda</span>
+            <span onClick={()=>this.preselect('PqlFzhuPcF1','2020Q2',DedupeType.pure)}>Ngia</span>
+            <span onClick={()=>this.preselect('f5RoebaDLMx','2020Q3',DedupeType.crosswalk)}>Zbia</span>
         </div>;
     }
 
-    preselect = (orgUnitId:string)=>{
+    preselect = (orgUnitId:string, period:string, dedupeType:DedupeType)=>{
         let selectedFilters = {...this.state.selectedFilters};
         selectedFilters.organisationUnit = orgUnitId;
-        selectedFilters.dataType = 'RESULTS';
-        selectedFilters.period = '2020Q2';
-        selectedFilters.includeResolved = orgUnitId==='PqlFzhuPcF1'
+        selectedFilters.dataType = DataType.results;
+        selectedFilters.period = period;
+        selectedFilters.dedupeType = dedupeType;
+        selectedFilters.includeResolved = true;
         this.setState({selectedFilters});
         setTimeout(this.onSearchClick, 0);
     };

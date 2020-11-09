@@ -1,4 +1,4 @@
-import {FiltersModel} from "../../modules/filters/models/filters.model";
+import {DataType, DedupeType, FiltersModel} from "../../modules/filters/models/filters.model";
 import {DedupeModel, ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 
 export type FdTestCase = {
@@ -13,11 +13,11 @@ const Rwanda1:FdTestCase = {
     name: `Rwanda > MER Results > 2020 Q2`,
     selectedFilters: {
         organisationUnit: 'XtxUYCsDWrR', //Rwanda
-        dataType: 'RESULTS',
+        dataType: DataType.results,
         period: '2020Q2',
         agency: null,
         technicalArea: null,
-        dedupeType: 'PURE',
+        dedupeType: DedupeType.pure,
         includeResolved: false
     },
     dedupes: [{
@@ -63,11 +63,11 @@ const Nigeria1:FdTestCase = {
     name: `Nigeria > MER Results > 2020 Q2`,
     selectedFilters: {
         organisationUnit: 'PqlFzhuPcF1', //Rwanda
-        dataType: 'RESULTS',
+        dataType: DataType.results,
         period: '2020Q2',
         agency: null,
         technicalArea: null,
-        dedupeType: 'PURE',
+        dedupeType: DedupeType.pure,
         includeResolved: true
     },
     dedupes: [{

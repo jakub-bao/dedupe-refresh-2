@@ -3,6 +3,7 @@ import MaterialTable, {MTableBodyRow} from "material-table";
 import {DedupeModel} from "../models/dedupe.model";
 import ResolutionMethodCell from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 import {tableIcons} from "./resultTableIcons.component";
+import {DuplicateList} from "./duplicateList.component";
 
 const styles = {
     valueList: {
@@ -31,12 +32,13 @@ const borderRight = '1px solid #00000021';
 const columnSettings = [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding}},
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding}},
-    {title: 'Organisation Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
-    {title: 'Agency', render: iterateValuesFactory('agencyName'), ...noSort, cellStyle: {padding}},
-    {title: 'Partner', render: iterateValuesFactory('partnerName'), ...noSort, cellStyle: {padding}},
-    {title: 'Mechanism #', render: iterateValuesFactory('mechanismNumber'), ...noSort, cellStyle: {padding}},
-    {title: 'Value', render: iterateValuesFactory('value'), ...noSort, cellStyle: {padding, borderRight}},
-    {title: 'Resolution Method', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}}
+    {title: 'Org Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
+    {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, cellStyle: {padding, borderRight}},
+    // {title: 'Agency', render: iterateValuesFactory('agencyName'), ...noSort, cellStyle: {padding}},
+    // {title: 'Partner', render: iterateValuesFactory('partnerName'), ...noSort, cellStyle: {padding}},
+    // {title: 'Mechanism', render: iterateValuesFactory('mechanismNumber'), ...noSort, cellStyle: {padding}},
+    // {title: 'Value', render: iterateValuesFactory('value'), ...noSort, cellStyle: {padding, borderRight}},
+    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}}
 ];
 
 const customComponents = {
@@ -47,7 +49,7 @@ const customComponents = {
 function iterateValuesFactory(property:string){
     return function(dedupe:DedupeModel){
         return <ul style={styles.valueList}>
-            {dedupe.duplicates.map((duplicate,i)=><li key={i}>{duplicate[property]}</li>)}
+            {dedupe.duplicates.map((duplicate, i)=><li key={i}>{duplicate[property]}</li>)}
         </ul>
     }
 }

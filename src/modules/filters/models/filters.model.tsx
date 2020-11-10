@@ -9,7 +9,7 @@ export enum DedupeType{
 }
 
 export enum FilterType {
-    organisationUnit = 'organisationUnit',
+    operatingUnit = 'operatingUnit',
     dataType='dataType',
     period='period',
     agency='agency',
@@ -19,7 +19,7 @@ export enum FilterType {
 }
 
 export type FiltersModel = {
-    organisationUnit: string,
+    operatingUnit: string,
     dataType: DataType,
     period: string,
     agency: string,

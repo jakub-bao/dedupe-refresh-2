@@ -14,7 +14,7 @@ function Value({duplicate}:{duplicate:DuplicateModel}){
 export function DuplicateList({duplicates}:{duplicates:DuplicateModel[]}){
     return <Table>
         <TableBody>
-            {duplicates.map((duplicate:DuplicateModel)=><Value duplicate={duplicate}/>)}
+            {duplicates.map((duplicate:DuplicateModel)=><Value duplicate={duplicate} key={duplicate.mechanismNumber}/>)}
         </TableBody>
     </Table>
 }

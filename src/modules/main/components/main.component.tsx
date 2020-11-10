@@ -38,7 +38,7 @@ export default class Main extends React.Component<{}, {
             selectedFilters: {
                 dedupeType: DedupeType.pure,
                 includeResolved: false,
-                organisationUnit: null,
+                operatingUnit: null,
                 dataType: null,
                 period: null,
                 agency: null,
@@ -97,9 +97,9 @@ export default class Main extends React.Component<{}, {
     };
 
     renderResults(){
-        if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'}/>;
         if (this.state.ui.error.results) return <NetworkError/>;
+        if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
         return <Results filteredDedupes={this.state.results.dedupes} />;
     }
 
@@ -115,7 +115,7 @@ export default class Main extends React.Component<{}, {
 
     preselect = (orgUnitId:string, period:string, dedupeType:DedupeType)=>{
         let selectedFilters = {...this.state.selectedFilters};
-        selectedFilters.organisationUnit = orgUnitId;
+        selectedFilters.operatingUnit = orgUnitId;
         selectedFilters.dataType = DataType.results;
         selectedFilters.period = period;
         selectedFilters.dedupeType = dedupeType;

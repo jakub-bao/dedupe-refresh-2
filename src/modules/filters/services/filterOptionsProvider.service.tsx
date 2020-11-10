@@ -9,7 +9,7 @@ function transformIdNameList(list:{id:string, displayName}[]):idName[]{
 }
 
 export default class FilterOptionsProvider {
-    private organisationUnitList: idName[];
+    private operatingUnitList: idName[];
     private dataTypeList: idName[] = [{id: 'TARGETS', name: 'MER Targets'}, {id: 'RESULTS', name: 'MER Results'}];
     private periodList: DataTypePeriodList;
     private agencyList: idName[];
@@ -44,8 +44,8 @@ export default class FilterOptionsProvider {
             let userOus = response[0];
             let allOus = response[1];
             let isGlobal = userOus.map(ou=>ou.name).includes('Global');
-            if (isGlobal) return this.organisationUnitList = allOus;
-            else return this.organisationUnitList = userOus;
+            if (isGlobal) return this.operatingUnitList = allOus;
+            else return this.operatingUnitList = userOus;
         });
     }
 

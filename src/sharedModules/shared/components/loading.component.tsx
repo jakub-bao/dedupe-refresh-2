@@ -13,6 +13,6 @@ export default function Loading({message, margin, size}:{message?:string, margin
     return <div style={getStyle(margin)}>
         <CircularProgress size={size||50}/>
         <br/>
-        <Typography className='cy_loading' data-testid='loading' color="primary" >{message}</Typography>
+        <Typography data-testid='loading' color="primary" >{message}</Typography>
     </div>;
 }

@@ -29,12 +29,6 @@ const useStyles = makeStyles({
     },
 });
 
-function CloseDrawerIcon({onClick}:{onClick:()=>void}){
-    return <IconButton onClick={onClick} style={styles.closeDrawerIcon}>
-        <ChevronLeft/>
-    </IconButton>
-}
-
 function renderFilters(
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
@@ -62,7 +56,7 @@ function renderFilters(
 
 
 function searchEnabled(selectedFilters:FiltersModel):boolean{
-    return !!selectedFilters.organisationUnit && !!selectedFilters.dataType && !!selectedFilters.period;
+    return !!selectedFilters.operatingUnit && !!selectedFilters.dataType && !!selectedFilters.period;
 }
 
 export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{

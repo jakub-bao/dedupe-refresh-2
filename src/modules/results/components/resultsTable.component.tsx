@@ -5,13 +5,6 @@ import ResolutionMethodCell from "../../resolutionMethodCell/components/resoluti
 import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
 
-const styles = {
-    valueList: {
-        paddingInlineStart: 15,
-        margin: 0
-    }
-};
-
 const noSort = {sorting: false};
 const padding = '5px 5px 5px 5px';
 
@@ -34,10 +27,6 @@ const columnSettings = [
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding}},
     {title: 'Org Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
     {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, cellStyle: {padding, borderRight}},
-    // {title: 'Agency', render: iterateValuesFactory('agencyName'), ...noSort, cellStyle: {padding}},
-    // {title: 'Partner', render: iterateValuesFactory('partnerName'), ...noSort, cellStyle: {padding}},
-    // {title: 'Mechanism', render: iterateValuesFactory('mechanismNumber'), ...noSort, cellStyle: {padding}},
-    // {title: 'Value', render: iterateValuesFactory('value'), ...noSort, cellStyle: {padding, borderRight}},
     {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}}
 ];
 
@@ -45,14 +34,6 @@ const customComponents = {
     Container: props=><div {...props}></div>,
     Row: props=><MTableBodyRow {...props} />
 };
-
-function iterateValuesFactory(property:string){
-    return function(dedupe:DedupeModel){
-        return <ul style={styles.valueList}>
-            {dedupe.duplicates.map((duplicate, i)=><li key={i}>{duplicate[property]}</li>)}
-        </ul>
-    }
-}
 
 export default function ResultsTable({filteredDedupes}:{filteredDedupes: DedupeModel[]}) {
     return <MaterialTable

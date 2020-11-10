@@ -3,5 +3,5 @@ import Main from "../../modules/main/components/main.component";
 import React from "react";
 
 export async function renderMain(){
-    return await setUpComponent(<Main/>,['Data Deduplication','Filters','Dedupe Type', 'Organisation Unit *']);
+    return await setUpComponent(<Main/>,['Data Deduplication','Include Resolved','Dedupe Type', 'Operating Unit *']);
 }

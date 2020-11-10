@@ -11,7 +11,7 @@ import {getData} from "../../../sharedModules/shared/services/api.service";
 
 function generateDedupeUrl(selectedFilters:FiltersModel):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
-        + `&var=ou:${selectedFilters.organisationUnit}`
+        + `&var=ou:${selectedFilters.operatingUnit}`
         + `&var=dt:${selectedFilters.dataType}`
         + `&var=pe:${selectedFilters.period}`
         + `&var=ty:${selectedFilters.dedupeType||'PURE'}`

@@ -12,7 +12,7 @@ const Rwanda1:FdTestCase = {
     testAs: 'test-de-interAgency-rwanda',
     name: `Rwanda > MER Results > 2020 Q2`,
     selectedFilters: {
-        organisationUnit: 'XtxUYCsDWrR', //Rwanda
+        operatingUnit: 'XtxUYCsDWrR', //Rwanda
         dataType: DataType.results,
         period: '2020Q2',
         agency: null,
@@ -62,7 +62,7 @@ const Nigeria1:FdTestCase = {
     testAs: 'test-de-interAgency-nigeria',
     name: `Nigeria > MER Results > 2020 Q2`,
     selectedFilters: {
-        organisationUnit: 'PqlFzhuPcF1', //Rwanda
+        operatingUnit: 'PqlFzhuPcF1', //Rwanda
         dataType: DataType.results,
         period: '2020Q2',
         agency: null,

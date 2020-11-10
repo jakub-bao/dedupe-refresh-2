@@ -1,7 +1,7 @@
 import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 
 export type TestFilters = {
-    organisationUnit: string;
+    operatingUnit: string;
     dataType: string;
     period: string;
     includeResolved: boolean
@@ -25,7 +25,7 @@ const Rwanda1:RdTestCase = {
     testAs: 'test-de-interAgency-rwanda',
     name: `Rwanda > MER Results > 2020 Q2`,
     filters: {
-        organisationUnit: 'Rwanda',
+        operatingUnit: 'Rwanda',
         dataType: 'MER Results',
         period: 'Apr - Jun 2020',
         includeResolved: false
@@ -38,7 +38,7 @@ const Nigeria1:RdTestCase = {
     testAs: 'test-de-interAgency-nigeria',
     name: `Nigeria > MER Results > 2020 Q2`,
     filters: {
-        organisationUnit: 'Nigeria',
+        operatingUnit: 'Nigeria',
         dataType: 'MER Results',
         period: 'Apr - Jun 2020',
         includeResolved: true
@@ -55,4 +55,4 @@ const Nigeria1:RdTestCase = {
     }]
 };
 
-export const rdTestCases:RdTestCase[] = [Rwanda1,Nigeria1];
+export const rdTestCases:RdTestCase[] = [Rwanda1/*,Nigeria1*/];

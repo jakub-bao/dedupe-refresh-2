@@ -1,8 +1,8 @@
 [
 {
   "id": "WQEkt3SA4Jb",
-  "name": "Cypress SuperAdmin",
-  "displayName": "Cypress SuperAdmin",
+  "name": "Dedupe SuperAdmin",
+  "displayName": "Dedupe SuperAdmin",
   "externalAccess": false,
   "surname": "SuperAdmin",
   "employer": "BAO Systems",
@@ -20,8 +20,8 @@
   },
   "userCredentials": {
     "id": "dDaFWcJeyXz",
-    "name": "Cypress SuperAdmin",
-    "displayName": "Cypress SuperAdmin",
+    "name": "Dedupe SuperAdmin",
+    "displayName": "Dedupe SuperAdmin",
     "externalAuth": false,
     "externalAccess": false,
     "disabled": false,
@@ -312,124 +312,6 @@
     "organisationUnits": [
       {
         "id": "XtxUYCsDWrR"
-      }
-    ]
-  },
-  {
-    "surname": "SuperAdmin",
-    "lastCheckedInterpretations": "2019-03-18T14:25:44.997",
-    "href": "https://dev.datim.org/api/users/WQEkD3SA4Jb",
-    "userGroupAccesses": [],
-    "dataViewOrganisationUnits": [
-      {
-        "id": "ybg3MO3hcf4"
-      }
-    ],
-    "id": "WQEkD3SA4Jb",
-    "userCredentials": {
-      "userRoles": [
-        {
-          "id": "jtzbVV4ZmdP"
-        },
-        {
-          "id": "b2uHwX9YLhu"
-        }
-      ],
-      "disabled": false,
-      "externalAuth": false,
-      "userGroupAccesses": [],
-      "id": "dDaFWbJeyXz",
-      "twoFA": false,
-      "access": {
-        "read": true,
-        "manage": true,
-        "update": true,
-        "externalize": true,
-        "write": true,
-        "delete": true
-      },
-      "cogsDimensionConstraints": [],
-      "catDimensionConstraints": [],
-      "username": "cypress-superAdmin",
-      "userAccesses": [],
-      "selfRegistered": false,
-      "passwordLastUpdated": "2020-04-03T16:59:00.626",
-      "translations": [],
-      "lastUpdated": "2019-06-12T20:16:23.828",
-      "lastUpdatedBy": {
-        "id": "WQEkD3SA4Jb"
-      },
-      "userInfo": {
-        "id": "WQEkD3SA4Jb"
-      },
-      "favorites": [],
-      "attributeValues": [],
-      "displayName": "Cypress SuperAdmin",
-      "name": "Cypress SuperAdmin",
-      "created": "2019-03-29T16:06:12.355",
-      "externalAccess": false,
-      "favorite": false,
-      "lastLogin": "2020-04-08T16:23:12.094",
-      "invitation": false,
-      "user": {
-        "id": "KxdQZCgLyCk"
-      }
-    },
-    "employer": "BAO Systems",
-    "access": {
-      "read": true,
-      "manage": true,
-      "update": true,
-      "externalize": true,
-      "write": true,
-      "delete": true
-    },
-    "phoneNumber": "3014013049",
-    "email": "jflaska@baosystems.com",
-    "userGroups": [
-      {
-        "id": "gh9tn4QBbKZ"
-      },
-      {
-        "id": "M9Uer9SioL7"
-      },
-      {
-        "id": "aaSPLmfLi6p"
-      },
-      {
-        "id": "OoiLAfMTyMx"
-      },
-      {
-        "id": "TDcG3257Xpn"
-      },
-      {
-        "id": "iuD8wUFz95X"
-      },
-      {
-        "id": "HdRhHh3F5FF"
-      },
-      {
-        "id": "c6hGi8GEZot"
-      },
-      {
-        "id": "CwFniyubXbx"
-      }
-    ],
-    "userAccesses": [],
-    "translations": [],
-    "lastUpdated": "2020-04-03T16:58:51.705",
-    "favorites": [],
-    "attributeValues": [],
-    "displayName": "Cypress SuperAdmin",
-    "name": "Cypress SuperAdmin",
-    "firstName": "Cypress",
-    "created": "2019-03-29T16:06:12.355",
-    "externalAccess": false,
-    "teiSearchOrganisationUnits": [],
-    "favorite": false,
-    "organisationUnits": [
-      {
-        "id": "ybg3MO3hcf4"
       }
     ]
   }

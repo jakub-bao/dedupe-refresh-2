@@ -1,8 +1,7 @@
 import React from "react";
-import {Button, Chip, Divider, Typography} from "@material-ui/core";
+import {Chip} from "@material-ui/core";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import {FiltersModel, FilterType} from "../../filters/models/filters.model";
-import {Filter} from "@material-ui/icons";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
 import {MenuIcon} from "../../filters/components/filtersLogo.component";
 

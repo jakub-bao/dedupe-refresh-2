@@ -1,7 +1,7 @@
 import React from "react";
 import {renderMain} from "../shared/sharedBasics.testService";
 import {testAs} from "../../test/apiCache/getData/getData.service";
-import {checkSelectValue, click, clickByText, debug, noTexts, texts} from "../../test/domServices/domUtils.testService";
+import {checkSelectValue, clickByText, noTexts, texts} from "../../test/domServices/domUtils.testService";
 import {fireEvent, screen} from "@testing-library/react";
 
 const filterOptions = {

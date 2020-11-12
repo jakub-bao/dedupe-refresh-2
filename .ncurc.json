@@ -1,5 +1,6 @@
 {
   "reject": [
-    "babel-jest"
+    "babel-jest",
+    "react-scripts"
   ]
 }

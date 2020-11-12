@@ -1,14 +1,13 @@
 import React from "react";
-import {Button, Drawer, IconButton, Typography} from "@material-ui/core";
+import {Button, Drawer} from "@material-ui/core";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import SelectFilter from "./selectFilter.component";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
-import {ChevronLeft, FilterList} from "@material-ui/icons";
 import {PositionProperty} from "csstype";
 import {FiltersUiModel} from "./filtersUi.model";
 import CheckboxFilter from "./checkboxFilter.component";
 import MenuLogo from "./filtersLogo.component";
-import { colors } from "../../../values/color.values";
+import {colors} from "../../../values/color.values";
 import {makeStyles} from "@material-ui/core/styles";
 
 const styles = {

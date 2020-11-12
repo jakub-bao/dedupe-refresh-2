@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    DedupeModel,
-    DedupeResolutionModel,
-    DedupeResolvedByModel,
-    ResolutionMethodType
-} from "../../results/models/dedupe.model";
+import {DedupeModel, DedupeResolvedByModel, ResolutionMethodType} from "../../results/models/dedupe.model";
 import {FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
 
 function makeId(long:string):string{

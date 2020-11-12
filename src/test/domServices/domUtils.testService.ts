@@ -1,7 +1,8 @@
-import {fireEvent, render, screen, waitFor, waitForElementToBeRemoved} from "@testing-library/react";
+import {fireEvent, render, screen, waitForElementToBeRemoved} from "@testing-library/react";
 import {ReactElement} from "react";
-import {waitForTexts, text, texts, noText, noTexts} from "./texts.testService";
-import {click, clickByText, checkboxValue, checkRadioValue, checkSelectValue, select} from "./click.testService"
+import {noText, noTexts, text, texts, waitForTexts} from "./texts.testService";
+import {checkboxValue, checkRadioValue, checkSelectValue, click, clickByText, select} from "./click.testService"
+
 export {waitForTexts, text, texts, noText, noTexts};
 export {click, clickByText, checkboxValue, checkRadioValue, checkSelectValue, select};
 

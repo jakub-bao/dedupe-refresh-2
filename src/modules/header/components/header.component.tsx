@@ -27,7 +27,7 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
     return <React.Fragment>
         <div>
             {!filtersUi.filtersOpen && <MenuIcon menuOpen={filtersUi.filtersOpen} toggleMenu={filtersUi.collapseFilters}/>}
-            {renderFilterList(selectedFilters, filterOptionsProvider)}
+            {/*{renderFilterList(selectedFilters, filterOptionsProvider)}*/}
         </div>
     </React.Fragment>;
 }

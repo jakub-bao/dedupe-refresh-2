@@ -10,7 +10,7 @@ function makeId(long:string):string{
 
 const styles = {
     root: {
-        marginLeft: 5
+        marginLeft: 10
     }
 }
 

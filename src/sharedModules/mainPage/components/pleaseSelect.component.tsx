@@ -9,7 +9,7 @@ const styles={
         marginLeft: 49
     },
     whitespace: {
-        height: 80
+        height: 64
     }
 };
 

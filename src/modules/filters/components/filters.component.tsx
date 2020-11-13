@@ -3,28 +3,16 @@ import {Button, Drawer} from "@material-ui/core";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import SelectFilter from "./selectFilter.component";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
-import {PositionProperty} from "csstype";
 import {FiltersUiModel} from "./filtersUi.model";
 import CheckboxFilter from "./checkboxFilter.component";
 import MenuLogo from "./filtersLogo.component";
-import {colors} from "../../../values/color.values";
 import {makeStyles} from "@material-ui/core/styles";
-
-const styles = {
-    filtersIcon: {
-        verticalAlign: 'sub'
-    },
-    closeDrawerIcon: {
-        position: 'absolute' as PositionProperty,
-        top: 0,
-        right: 0
-    }
-};
+import {colors} from "../../../values/color.values";
 
 const useStyles = makeStyles({
     root: {
-        backgroundColor: colors.altBackground,
-        marginTop: 50
+        backgroundColor: colors.backgroundSecondary,
+        marginTop: 49
     },
 });
 
@@ -75,7 +63,7 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
         <MenuLogo menuOpen={filtersUi.filtersOpen} toggleMenu={filtersUi.collapseFilters}/>
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
-        <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes'>
+        <Button variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes'>
             Search Dedupes
         </Button>
     </Drawer>;

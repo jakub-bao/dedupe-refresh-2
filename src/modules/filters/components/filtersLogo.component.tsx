@@ -5,7 +5,7 @@ import {ChevronLeft, Menu} from "@material-ui/icons";
 const styles = {
     root: {
         fontSize: '1.1rem',
-        margin: '5px 15px 15px 15px',
+        margin: '7px 15px 12px',
         fontWeight: 400
     } as CSSProperties,
     collapseIcon:{

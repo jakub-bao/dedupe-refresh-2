@@ -1,6 +1,6 @@
 import {TableCell, TableRow, withStyles} from "@material-ui/core";
 import {CSSProperties} from "@material-ui/core/styles/withStyles";
-import {colors} from "../values/color.values";
+import {colors} from "../../../values/color.values";
 
 export const cellStyles:CSSProperties={
     duns: {width:150},

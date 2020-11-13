@@ -97,7 +97,7 @@ export default class Main extends React.Component<{}, {
     };
 
     renderResults(){
-        if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'}/>;
+        if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100} />;
         if (this.state.ui.error.results) return <NetworkError/>;
         if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
         return <Results filteredDedupes={this.state.results.dedupes} />;
@@ -132,7 +132,7 @@ export default class Main extends React.Component<{}, {
 
     render() {
         if (this.state.ui.error.filters) return <NetworkError/>;
-        if (this.state.ui.loading.filters) return <Loading message={'Loading...'} margin={50}/>;
+        if (this.state.ui.loading.filters) return <Loading message={'Loading...'} margin={100}/>;
         return <React.Fragment>
             <Filters
                 selectedFilters={this.state.selectedFilters}

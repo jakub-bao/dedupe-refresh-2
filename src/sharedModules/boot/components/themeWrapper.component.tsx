@@ -4,7 +4,7 @@ import {createGenerateClassName, createMuiTheme, StylesProvider} from "@material
 
 import "../css/themeWrapper.component.css";
 import {PositionProperty} from "csstype";
-import {colors} from "../../shared/values/color.values";
+import {colors} from "../../../values/color.values";
 
 const theme = createMuiTheme({
     palette: {

@@ -37,5 +37,6 @@ export default function ResultsTable({filteredDedupes}:{filteredDedupes: DedupeM
         options={tableOptions}
         columns={columnSettings}
         data={filteredDedupes}
+        components={{Container:props=>(<div {...props}/>)}}
     />;
 }

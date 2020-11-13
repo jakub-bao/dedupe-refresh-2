@@ -4,6 +4,9 @@ import Arrow, {ArrowType} from "./arrow.component";
 
 const styles={
     root: {
+        marginLeft: 10
+    },
+    text: {
         color: '#545454',
         fontWeight: 300,
         marginLeft: 49
@@ -22,9 +25,9 @@ const messages = {
 }
 
 export default function PleaseSelect({type}:{type:PleaseSelectType}) {
-    return <React.Fragment>
+    return <div style={styles.root}>
         { <div style={styles.whitespace}/>}
-        <Typography style={styles.root}>{messages[type]}</Typography>
+        <Typography style={styles.text}>{messages[type]}</Typography>
         {<Arrow type={ArrowType.down}/>}
-    </React.Fragment>;
+    </div>;
 }

@@ -8,6 +8,8 @@ import {DuplicateList} from "./duplicateList.component";
 const noSort = {sorting: false};
 const padding = '5px 5px 5px 5px';
 const borderRight = '1px solid #00000021';
+const fontFamily ='"Roboto", "Helvetica", "Arial", sans-serif';
+const fontSize = '0.875rem'
 
 const tableOptions:Options<DedupeModel> = {
     pageSize: 20,
@@ -22,9 +24,9 @@ const tableOptions:Options<DedupeModel> = {
 
 
 const columnSettings = [
-    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding}},
-    {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding}},
-    {title: 'Org Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
+    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize}},
+    {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize}},
+    {title: 'Org Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight,fontFamily,fontSize}},
     {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding,borderRight}},
     {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}}
 ];

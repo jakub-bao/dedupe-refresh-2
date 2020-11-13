@@ -8,6 +8,12 @@ function makeId(long:string):string{
     return long.substr(0,5).replace(/[^A-z0-9]/,'')
 }
 
+const styles = {
+    root: {
+        marginLeft: 5
+    }
+}
+
 const useStyles = makeStyles({
     label: {
         fontSize: 13
@@ -51,7 +57,7 @@ export default class ResolutionMethodCell extends React.Component<{dedupe:Dedupe
         const resolutionSum = this.props.dedupe.resolution.availableValues.sum;
         const resolutionMax = this.props.dedupe.resolution.availableValues.max;
         let resolutionId = makeId(this.props.dedupe.data.disAggregation);
-        return <RadioGroup value={this.state.resolvedBy?this.state.resolvedBy.resolutionMethod:''} onChange={this.onResolutionMethodChange}>
+        return <RadioGroup style={styles.root} value={this.state.resolvedBy?this.state.resolvedBy.resolutionMethod:''} onChange={this.onResolutionMethodChange}>
             <RadioLabel value="maximum" control={<CompactRadio testId={`resolution_${resolutionId}_maximum`}/>} label={`Maximum (${resolutionMax})`}/>
             <RadioLabel value="sum" control={<CompactRadio testId={`resolution_${resolutionId}_sum`}/>} label={`Sum (${resolutionSum})`}/>
             <RadioLabel value="custom" control={<CompactRadio testId={`resolution_${resolutionId}_custom`}/>} label={`Custom Value`}/>

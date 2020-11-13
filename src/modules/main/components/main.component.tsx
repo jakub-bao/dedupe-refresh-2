@@ -37,12 +37,12 @@ export default class Main extends React.Component<{}, {
         this.state = {
             selectedFilters: {
                 dedupeType: DedupeType.pure,
-                includeResolved: false,
                 operatingUnit: null,
                 dataType: null,
                 period: null,
                 agency: null,
                 technicalArea: null,
+                includeResolved: false,
             },
             results: {
                 dedupes: null,

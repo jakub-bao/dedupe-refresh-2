@@ -4,7 +4,13 @@ import {FilterType} from "../models/filters.model";
 import "./selectFilter.component.css"
 import {camelCaseToHuman} from "../../../sharedModules/shared/services/camelCase.service";
 import {idName} from "../../../sharedModules/shared/models/idNameList.model";
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: '3px 0px',
+    }
+}));
 
 function generateLabel(filterType:string){
     let required = '';
@@ -18,9 +24,11 @@ export default function SelectFilter({filterType, filterValue, onFilterSelect, f
     onFilterSelect:(filterValue:string)=>void,
     filterOptions: idName[]
 }) {
-    return <FormControl>
+    const classes = useStyles();
+    return <FormControl variant='filled' size='small' className={classes.formControl}>
         <InputLabel id={`selectFilter_${filterType}`}>{generateLabel(filterType)}</InputLabel>
         <Select
+            label={generateLabel(filterType)}
             labelId={`selectFilter_${filterType}`}
             data-testid={`filter_${filterType}`}
             value={filterValue||''}

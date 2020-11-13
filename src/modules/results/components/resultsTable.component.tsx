@@ -6,7 +6,7 @@ import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
 
 const noSort = {sorting: false};
-const padding = '5px 5px 5px 5px';
+const padding = '5px';
 const borderRight = '1px solid #00000021';
 const fontFamily ='"Roboto", "Helvetica", "Arial", sans-serif';
 const fontSize = '0.875rem'
@@ -27,7 +27,7 @@ const columnSettings = [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize}},
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize}},
     {title: 'Org Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight,fontFamily,fontSize}},
-    {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding,borderRight}},
+    {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight}},
     {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}}
 ];
 

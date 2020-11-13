@@ -12,7 +12,8 @@ import {colors} from "../../../values/color.values";
 const useStyles = makeStyles({
     root: {
         backgroundColor: colors.backgroundSecondary,
-        marginTop: 49
+        marginTop: 49,
+        width: 200
     },
 });
 
@@ -60,7 +61,7 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
         open={filtersUi.filtersOpen}
         classes={{paper: classStyles.root}}
     >
-        <MenuLogo menuOpen={filtersUi.filtersOpen} toggleMenu={filtersUi.collapseFilters}/>
+        <MenuLogo toggleMenu={filtersUi.collapseFilters}/>
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
         <Button variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes'>

@@ -3,27 +3,33 @@ import {IconButton, Tooltip, Typography} from "@material-ui/core";
 import {ChevronLeft, Menu} from "@material-ui/icons";
 
 const styles = {
-    root: {
+    title: {
         fontSize: '1.1rem',
-        margin: '7px 15px 12px',
-        fontWeight: 400
+        fontWeight: 400,
+        display: 'inline-block',
+        marginTop: 10,
+        marginBottom: 10
     } as CSSProperties,
-    collapseIcon:{
-        float: 'right',
-    }as CSSProperties
+    button: {
+        position: 'relative',
+        top: -2,
+        left: 4
+    } as CSSProperties,
 }
 
-export function MenuIcon({menuOpen, toggleMenu}:{menuOpen:boolean, toggleMenu: ()=>void}){
-    return <Tooltip title={menuOpen?'Hide menu':'Show menu'}>
-        <IconButton onClick={toggleMenu} style={menuOpen?{width: 10, height:10}:null}>
-            {menuOpen?<ChevronLeft/>:<Menu/>}
+export function CollapseIcon({toggleMenu}:{toggleMenu: ()=>void}){
+    return <Tooltip title='Hide menu'>
+        <IconButton onClick={toggleMenu} style={styles.button}>
+            <ChevronLeft/>
         </IconButton>
     </Tooltip>
 }
 
-export default function MenuLogo({menuOpen, toggleMenu}:{menuOpen:boolean, toggleMenu: ()=>void}) {
-    return <Typography color='primary' variant='h6' style={styles.root}>
-        <div style={styles.collapseIcon}><MenuIcon menuOpen={menuOpen} toggleMenu={toggleMenu}/></div>
-        Data Deduplication
-    </Typography>
+export default function MenuLogo({toggleMenu}:{ toggleMenu: ()=>void}) {
+    return <div>
+        <Typography color='primary' variant='h6' style={styles.title}>
+            Data Deduplication
+        </Typography>
+        <CollapseIcon toggleMenu={toggleMenu}/>
+    </div>
 }

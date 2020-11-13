@@ -1,12 +1,21 @@
-import React from "react";
-import {Chip} from "@material-ui/core";
+import React, {CSSProperties} from "react";
+import {Chip, IconButton, Tooltip, Typography} from "@material-ui/core";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import {FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {MenuIcon} from "../../filters/components/filtersLogo.component";
+import {CollapseIcon} from "../../filters/components/filtersLogo.component";
+import {Menu} from "@material-ui/icons";
 
 const styles = {
-    chip: {marginLeft: 5}
+    chip: {marginLeft: 5},
+    menuIcon: {},
+    title: {
+        fontSize: '1.1rem',
+        fontWeight: 400,
+        display: 'inline-block',
+        position: 'relative',
+        top: 2
+    } as CSSProperties,
 };
 
 function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:FilterOptionsProvider) {
@@ -19,15 +28,25 @@ function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:Fi
     });
 }
 
+export function MenuIcon({toggleMenu}:{toggleMenu: ()=>void}){
+    return <Tooltip title='Show menu'>
+        <IconButton onClick={toggleMenu}>
+            <Menu/>
+        </IconButton>
+    </Tooltip>
+}
+
+
+
 export default function Header({selectedFilters, filterOptionsProvider, filtersUi}:{
     selectedFilters: FiltersModel,
     filterOptionsProvider: FilterOptionsProvider
     filtersUi: FiltersUiModel
 }) {
     return <React.Fragment>
-        <div>
-            {!filtersUi.filtersOpen && <MenuIcon menuOpen={filtersUi.filtersOpen} toggleMenu={filtersUi.collapseFilters}/>}
-            {/*{renderFilterList(selectedFilters, filterOptionsProvider)}*/}
-        </div>
+        <MenuIcon toggleMenu={filtersUi.collapseFilters}/>
+        <Typography color='primary' variant='h6' style={styles.title}>
+            Data Deduplication
+        </Typography>
     </React.Fragment>;
 }

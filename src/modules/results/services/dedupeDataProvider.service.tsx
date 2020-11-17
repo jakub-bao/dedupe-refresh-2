@@ -45,7 +45,7 @@ function getResolvedBy(selectedRows:namedRow[], availableValues:DedupeResolution
         resolutionMethod: ResolutionMethodType.sum,
         deduplicationAdjustmentValue: dedupeAdjustmentEntry
     }
-    if (resolutionValue===availableValues.max) return {
+    if (resolutionValue===availableValues.maximum) return {
         resolutionValue: resolutionValue,
         resolutionMethod: ResolutionMethodType.maximum,
         deduplicationAdjustmentValue: dedupeAdjustmentEntry
@@ -61,7 +61,8 @@ function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableVa
     const enteredValues = selectedRows.filter(record=>record.value>=0).map(record=>record.value);
     return {
         sum: enteredValues.reduce((a,b)=>a+b,0),
-        max: Math.max(...enteredValues)
+        maximum: Math.max(...enteredValues),
+        minimum: Math.min(...enteredValues)
     };
 }
 
@@ -77,10 +78,11 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
 }
 
 
-function generateDedupe(selectedRows: namedRow[]):DedupeModel{
+function generateDedupe(selectedRows: namedRow[], groupNumber:number):DedupeModel{
     let first = selectedRows[0];
     return {
         meta: {
+            dedupeGroupId: groupNumber,
             orgUnitId: first.orgUnitId,
             // periodId: 'blank',
             // dataType: 'blank'
@@ -105,7 +107,7 @@ function processResponse(rows:any[]):DedupeModel[]{
     let dedupes = [];
     for (var groupNumber=1; groupNumber<=dedupesCount; groupNumber++){
         let selectedRows = rows.filter(row=>row.group===groupNumber);
-        let dedupe:DedupeModel = generateDedupe(selectedRows);
+        let dedupe:DedupeModel = generateDedupe(selectedRows, groupNumber);
         dedupes.push(dedupe)
     }
     return dedupes;

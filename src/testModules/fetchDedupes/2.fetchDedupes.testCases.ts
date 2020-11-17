@@ -31,7 +31,7 @@ const RwandaResults2020Q4:FdTestCase = {
             "orgUnitName": "Gashora Sector",
             "dataElementName": "HTS_TST (N, DSD, KeyPop/Result): HTS received results"
         },
-        "resolution": {"resolvedBy": null, "isResolved": false, "availableValues": {"sum": 20060, "max": 10040}},
+        "resolution": {"resolvedBy": null, "isResolved": false, "availableValues": {"sum": 20060, "maximum": 10040}},
         "duplicates": [{
             "value": 10040,
             "agencyName": "USAID",
@@ -49,7 +49,7 @@ const RwandaResults2020Q4:FdTestCase = {
             "orgUnitName": "Gashora Sector",
             "dataElementName": "HTS_TST (N, DSD, KeyPop/Result): HTS received results"
         },
-        "resolution": {"resolvedBy": null, "isResolved": false, "availableValues": {"sum": 20040, "max": 10030}},
+        "resolution": {"resolvedBy": null, "isResolved": false, "availableValues": {"sum": 20040, "maximum": 10030}},
         "duplicates": [{
             "value": 10030,
             "agencyName": "USAID",
@@ -83,7 +83,7 @@ const Nigeria1:FdTestCase = {
                 "resolutionValue": 30020,
                 "resolutionMethod": ResolutionMethodType.maximum,
                 "deduplicationAdjustmentValue": -30010
-            }, "isResolved": true, "availableValues": {"sum": 60030, "max": 30020}
+            }, "isResolved": true, "availableValues": {"sum": 60030, "maximum": 30020}
         },
         "duplicates": [{
             "value": 30010,
@@ -112,7 +112,7 @@ const Nigeria1:FdTestCase = {
                 "resolutionValue": 40030,
                 "resolutionMethod": ResolutionMethodType.sum,
                 "deduplicationAdjustmentValue": 0
-            }, "isResolved": true, "availableValues": {"sum": 40030, "max": 20020}
+            }, "isResolved": true, "availableValues": {"sum": 40030, "maximum": 20020}
         },
         "duplicates": [{
             "value": 20010,

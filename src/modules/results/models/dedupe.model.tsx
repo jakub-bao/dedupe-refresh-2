@@ -1,6 +1,7 @@
 
 export type DedupeMetaModel = {
     orgUnitId: string;
+    dedupeGroupId?: number;
     // periodId: string;
     // dataType: string;
 }
@@ -29,8 +30,9 @@ export type DedupeResolvedByModel = {
 }
 
 export type DedupeResolutionAvailableValues = {
-    max: number;
+    maximum: number;
     sum: number;
+    minimum?: number;
 };
 
 export type DedupeResolutionModel = {

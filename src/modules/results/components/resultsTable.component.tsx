@@ -6,6 +6,7 @@ import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
 import { colors } from "../../../values/color.values";
 import {withStyles} from "@material-ui/core";
+import StatusCell from "../../resolutionMethodCell/components/statusCell.component";
 
 const noSort = {sorting: false};
 const padding = '5px';
@@ -50,7 +51,8 @@ const columnSettings = [
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}},
-    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}}
+    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}},
+    // {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}}
 ];
 
 export default function ResultsTable({filteredDedupes}:{filteredDedupes: DedupeModel[]}) {

@@ -76,13 +76,14 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
     return resolution;
 }
 
+
 function generateDedupe(selectedRows: namedRow[]):DedupeModel{
     let first = selectedRows[0];
     return {
         meta: {
             orgUnitId: first.orgUnitId,
-            periodId: 'blank',
-            dataType: 'blank'
+            // periodId: 'blank',
+            // dataType: 'blank'
         },
         data: {
             dataElementId: first.dataElementId,

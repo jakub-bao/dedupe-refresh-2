@@ -17,6 +17,7 @@ dedupeValueSets.forEach((valueSet: DedupeValueSet) => {
             },
             method: 'POST',
         }).then(res=>{
+            // console.log(res);
             console.log(`${res.statusText} > Inserting DV > ${query}`);
         }).catch(e => {
             throw e;

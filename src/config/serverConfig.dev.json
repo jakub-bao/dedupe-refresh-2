@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://test.datim.org/",
+  "baseUrl": "https://dev-jakub.datim.org/",
   "apiVersion": "33",
   "apiRefreshRate": 500,
   "apiOperationWait": 1000,

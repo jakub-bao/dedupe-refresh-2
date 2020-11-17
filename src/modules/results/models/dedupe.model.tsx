@@ -1,8 +1,8 @@
 
 export type DedupeMetaModel = {
     orgUnitId: string;
-    periodId: string;
-    dataType: string;
+    // periodId: string;
+    // dataType: string;
 }
 
 export type DedupeDataModel = {

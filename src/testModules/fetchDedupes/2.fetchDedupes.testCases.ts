@@ -8,20 +8,20 @@ export type FdTestCase = {
     dedupes: DedupeModel[];
 };
 
-const Rwanda1:FdTestCase = {
+const RwandaResults2020Q4:FdTestCase = {
     testAs: 'test-de-interAgency-rwanda',
     name: `Rwanda > MER Results > 2020 Q2`,
     selectedFilters: {
         operatingUnit: 'XtxUYCsDWrR', //Rwanda
         dataType: DataType.results,
-        period: '2020Q2',
+        period: '2020Q4',
         agency: null,
         technicalArea: null,
         dedupeType: DedupeType.pure,
         includeResolved: false
     },
     dedupes: [{
-        "meta": {"orgUnitId": "TAPALAZae2l", "periodId": "blank", "dataType": "blank"},
+        "meta": {"orgUnitId": "TAPALAZae2l"},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "PWID, Negative",
@@ -39,7 +39,7 @@ const Rwanda1:FdTestCase = {
             "mechanismNumber": 17616
         }, {"value": 10020, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": 16858}]
     }, {
-        "meta": {"orgUnitId": "TAPALAZae2l", "periodId": "blank", "dataType": "blank"},
+        "meta": {"orgUnitId": "TAPALAZae2l"},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "PWID, Positive",
@@ -64,14 +64,14 @@ const Nigeria1:FdTestCase = {
     selectedFilters: {
         operatingUnit: 'PqlFzhuPcF1', //Rwanda
         dataType: DataType.results,
-        period: '2020Q2',
+        period: '2020Q4',
         agency: null,
         technicalArea: null,
         dedupeType: DedupeType.pure,
         includeResolved: true
     },
     dedupes: [{
-        "meta": {"orgUnitId": "p7M264Wg1qB", "periodId": "blank", "dataType": "blank"},
+        "meta": {"orgUnitId": "p7M264Wg1qB"},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "People in prisons and other enclosed settings, Positive",
@@ -97,7 +97,7 @@ const Nigeria1:FdTestCase = {
             "mechanismNumber": 16850
         }]
     }, {
-        "meta": {"orgUnitId": "BY7bSKwPjPJ", "periodId": "blank", "dataType": "blank"},
+        "meta": {"orgUnitId": "BY7bSKwPjPJ"},
         "data": {
             "dataElementId": "FI2s716RRZc",
             "disAggregation": "PWID, Recent RTRI, Positive",
@@ -128,4 +128,4 @@ const Nigeria1:FdTestCase = {
     }]
 };
 
-export const testCases:FdTestCase[] = [Rwanda1,Nigeria1];
+export const testCases:FdTestCase[] = [RwandaResults2020Q4,Nigeria1];

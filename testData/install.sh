@@ -14,5 +14,8 @@ section Datastore \> add datastore settings
 section CORS \> Whitelist localhost
 (cd cors && ./cors.py)
 
+section DataSets \> unlock datasets
+(cd dataSets && ./dataSets.py)
+
 section DataValues \> Insert duplicates
 (cd dataValues && ./insertDataValues.sh)

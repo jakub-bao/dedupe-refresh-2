@@ -7,7 +7,7 @@ import {fireEvent, screen} from "@testing-library/react";
 const filterOptions = {
     operatingUnit: {contains: ['Rwanda'], notContains: ['Asia Region', 'Botswana']},
     dataType: {contains:['MER Targets', 'MER Results']},
-    period: {contains:['Oct 2019 - Sep 2020', 'Oct 2020 - Sep 2021'], notContains: ['Oct 2018 - Sep 2019']},
+    period: {contains:['Oct 2020 - Sep 2021'], notContains: ['Oct 2018 - Sep 2019']},
     agency: {contains:['HHS/CDC','State/SGAC','USAID']},
     technicalArea: {contains:['AGYW','KP_MAT','LAB_PT_HIV']},
     // dedupeType: {contains:['Pure Dedupes', 'Crosswalk Dedupes']}

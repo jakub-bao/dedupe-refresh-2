@@ -21,7 +21,7 @@ export type DedupeValueSet = {
 const Rwanda1:DedupeValueSet = {
     orgUnitId: 'TAPALAZae2l',
     dataSet: 'qzVASYuaIey',
-    period: '2020Q2',
+    period: '2020Q4',
     dataElement_de: "qhGxKnmrZBd",
     categoryOptionCombo_co: "xYyVHiXrvSi",
     dataValues: [{
@@ -37,7 +37,7 @@ const Rwanda1:DedupeValueSet = {
 const Rwanda2:DedupeValueSet = {
     orgUnitId: 'TAPALAZae2l',
     dataSet: 'qzVASYuaIey',
-    period: '2020Q2',
+    period: '2020Q4',
     dataElement_de: "qhGxKnmrZBd",
     categoryOptionCombo_co: "nEKvoyX7K7X",
     dataValues: [{
@@ -53,7 +53,7 @@ const Rwanda2:DedupeValueSet = {
 const Nigeria1:DedupeValueSet = {
     orgUnitId: 'BY7bSKwPjPJ',
     dataSet: 'qzVASYuaIey',
-    period: '2020Q2',
+    period: '2020Q4',
     dataElement_de: 'FI2s716RRZc',
     categoryOptionCombo_co: "inrjeyWelOD",
     dataValues: [{
@@ -73,7 +73,7 @@ const Nigeria1:DedupeValueSet = {
 const Nigeria2:DedupeValueSet = {
     orgUnitId: 'p7M264Wg1qB',
     dataSet: 'qzVASYuaIey',
-    period: '2020Q2',
+    period: '2020Q4',
     dataElement_de: "qhGxKnmrZBd",
     categoryOptionCombo_co: "NMYN9FAPqWa",
     dataValues: [{
@@ -92,7 +92,7 @@ const Nigeria2:DedupeValueSet = {
 const Zambia1:DedupeValueSet = {
     dataSet: 'jKdHXpBfWop',
     orgUnitId: 'ivv9yPgimic',
-    period: '2020Q3',
+    period: '2020Q4',
     categoryOption_cp: 'PHHHN8hDekc',
     categoryOptionCombo_co: "a0F1mOe30rp",
     dataValues: [{
@@ -108,7 +108,7 @@ const Zambia1:DedupeValueSet = {
 const Zambia2:DedupeValueSet = {
     dataSet: 'jKdHXpBfWop',
     orgUnitId: 'ivv9yPgimic',
-    period: '2020Q3',
+    period: '2020Q4',
     categoryOptionCombo_co: "eD7hpv3uU9Q",
     dataValues: [{
         value: 50010,

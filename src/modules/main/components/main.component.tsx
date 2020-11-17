@@ -80,6 +80,7 @@ export default class Main extends React.Component<{}, {
         this.updateUi({results: true}, {results: false});
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
+            console.log(dedupes);
             this.setState({results: {dedupes, selectedFilters}});
             this.updateUi({results: false}, {results: false});
         }).catch(()=>{
@@ -107,9 +108,9 @@ export default class Main extends React.Component<{}, {
     renderPreselect(){
         if(process.env.NODE_ENV === 'production') return null;
         return <div style={{position: 'fixed', top: 50, right: 10}}>
-            <span onClick={()=>this.preselect('XtxUYCsDWrR','2020Q2', DedupeType.pure)}>Rwda</span>
-            <span onClick={()=>this.preselect('PqlFzhuPcF1','2020Q2',DedupeType.pure)}>Ngia</span>
-            <span onClick={()=>this.preselect('f5RoebaDLMx','2020Q3',DedupeType.crosswalk)}>Zbia</span>
+            <span onClick={()=>this.preselect('XtxUYCsDWrR','2020Q4', DedupeType.pure)}>Rwda</span>
+            <span onClick={()=>this.preselect('PqlFzhuPcF1','2020Q4',DedupeType.pure)}>Ngia</span>
+            <span onClick={()=>this.preselect('f5RoebaDLMx','2020Q4',DedupeType.crosswalk)}>Zbia</span>
         </div>;
     }
 

@@ -1,14 +1,14 @@
 import React from "react";
-import MaterialTable, {MTableBodyRow, MTablePagination, Options} from "material-table";
+import MaterialTable, {MTableBodyRow, Options} from "material-table";
 import {DedupeModel} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
-import { colors } from "../../../values/color.values";
+import {colors} from "../../../values/color.values";
 import {withStyles} from "@material-ui/core";
-import StatusCell from "../../resolutionMethodCell/components/statusCell.component";
 import {
     ChangeResolutionMethod,
-    ResolutionMethodCell, SetResolutionValue
+    ResolutionMethodCell,
+    SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 
 const noSort = {sorting: false};

@@ -1,9 +1,7 @@
 
 export type DedupeMetaModel = {
     orgUnitId: string;
-    dedupeGroupId?: number;
-    // periodId: string;
-    // dataType: string;
+    internalId: number;
 }
 
 export type DedupeDataModel = {
@@ -23,7 +21,7 @@ export enum ResolutionMethodType {
     custom = 'custom'
 }
 
-export type DedupeResolvedByModel = {
+export type DedupeResolutionMethodValue = {
     resolutionMethod: ResolutionMethodType;
     resolutionValue: number;
     deduplicationAdjustmentValue: number;
@@ -36,8 +34,8 @@ export type DedupeResolutionAvailableValues = {
 };
 
 export type DedupeResolutionModel = {
-    isResolved: boolean;
-    resolvedBy: DedupeResolvedByModel;
+    resolutionMethodValue: DedupeResolutionMethodValue;
+    original_resolutionMethodValue: DedupeResolutionMethodValue;
     availableValues: DedupeResolutionAvailableValues;
 }
 
@@ -48,12 +46,18 @@ export type DuplicateModel = {
     mechanismNumber: number;
 }
 
+export enum InternalStatus{
+    pending='pending',
+    localChanges='localChanges',
+    resolved='resolved',
+};
 
 
-export type DedupeModel = {
+export class DedupeModel {
     meta: DedupeMetaModel;
     data: DedupeDataModel;
     info: DedupeInfoModel;
     resolution: DedupeResolutionModel;
     duplicates: DuplicateModel[];
+    status: ()=>InternalStatus;
 }

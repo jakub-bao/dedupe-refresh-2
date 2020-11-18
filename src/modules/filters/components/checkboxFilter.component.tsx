@@ -1,7 +1,6 @@
 import React from "react";
 import {Checkbox, FormControlLabel} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import {colors} from "../../../values/color.values";
 
 const useStyles = makeStyles({
     root: {

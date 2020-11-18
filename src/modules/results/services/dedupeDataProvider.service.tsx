@@ -2,7 +2,7 @@ import {
     DedupeModel,
     DedupeResolutionAvailableValues,
     DedupeResolutionModel,
-    DedupeResolvedByModel,
+    DedupeResolutionMethodValue,
     DuplicateModel,
     ResolutionMethodType
 } from "../models/dedupe.model";
@@ -37,7 +37,7 @@ function isDedupeFilter(namedRow:namedRow){
     return namedRow.partnerName==='Dedupe adjustment';
 }
 
-function getResolvedBy(selectedRows:namedRow[], availableValues:DedupeResolutionAvailableValues):DedupeResolvedByModel{
+function getResolution(selectedRows:namedRow[], availableValues:DedupeResolutionAvailableValues):DedupeResolutionMethodValue{
     const dedupeAdjustmentEntry = selectedRows.filter(isDedupeFilter)[0].value;
     const resolutionValue = selectedRows.map(record=>record.value).reduce((a,b)=>a+b,0);
     if (dedupeAdjustmentEntry===0) return {
@@ -67,13 +67,16 @@ function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableVa
 }
 
 function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
-    const isResolved = selectedRows[0].duplicateStatus==='RESOLVED';
     let resolution:DedupeResolutionModel = {
-        resolvedBy: null,
-        isResolved: isResolved,
+        resolutionMethodValue: null,
+        original_resolutionMethodValue: null,
         availableValues: getAvailableValues(selectedRows)
     };
-    if (resolution.isResolved) resolution.resolvedBy = getResolvedBy(selectedRows, resolution.availableValues);
+    const isResolved = selectedRows[0].duplicateStatus==='RESOLVED';
+    if (isResolved) {
+        resolution.resolutionMethodValue = getResolution(selectedRows, resolution.availableValues);
+        resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(resolution.resolutionMethodValue));
+    }
     return resolution;
 }
 
@@ -82,10 +85,8 @@ function generateDedupe(selectedRows: namedRow[], groupNumber:number):DedupeMode
     let first = selectedRows[0];
     return {
         meta: {
-            dedupeGroupId: groupNumber,
+            internalId: groupNumber,
             orgUnitId: first.orgUnitId,
-            // periodId: 'blank',
-            // dataType: 'blank'
         },
         data: {
             dataElementId: first.dataElementId,

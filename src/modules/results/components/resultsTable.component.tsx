@@ -33,7 +33,7 @@ const tableOptions:Options<DedupeModel> = {
         backgroundColor: 'rgb(223,223,223)',
         borderRight: darkBorder,
         borderBottom: darkBorder,
-    }
+    },
 } as Options<DedupeModel>;
 
 export const Row = withStyles((theme) => ({
@@ -62,7 +62,7 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
     return {
         padding,
         borderLeft: lightBorder,
-        backgroundColor: statusToColor(getDedupeStatus(dedupe))
+        backgroundColor: statusToColor(getDedupeStatus(dedupe)),
     }as CSSProperties;
 }
 

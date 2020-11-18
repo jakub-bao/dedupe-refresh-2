@@ -10,6 +10,7 @@ import {
     ResolutionMethodCell,
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+import StatusCell from "../../resolutionMethodCell/components/statusCell.component";
 
 const noSort = {sorting: false};
 const padding = '5px';
@@ -55,7 +56,7 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}},
     {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>, ...noSort, cellStyle: {padding}},
-    // {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}}
+    {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}}
 ];
 
 export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod}:{filteredDedupes: DedupeModel[], setResolutionValue:SetResolutionValue, changeResolutionMethod: ChangeResolutionMethod}) {

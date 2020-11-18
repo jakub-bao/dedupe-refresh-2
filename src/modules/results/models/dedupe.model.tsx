@@ -62,13 +62,14 @@ export type DedupeModel = {
 }
 
 function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2:DedupeResolutionMethodValue):boolean{
+    if (!resolution2) return false;
     return resolution1.resolutionMethod===resolution2.resolutionMethod
     && resolution1.deduplicationAdjustmentValue===resolution2.deduplicationAdjustmentValue
     && resolution1.resolutionValue===resolution2.resolutionValue;
 }
 
 export function getDedupeStatus(dedupe:DedupeModel):InternalStatus{
+    if (!dedupe.resolution || !dedupe.resolution.resolutionMethodValue) return InternalStatus.pending;
     if (!compareResolutions(dedupe.resolution.resolutionMethodValue, dedupe.resolution.original_resolutionMethodValue)) return InternalStatus.localChanges;
     if (dedupe.resolution.resolutionMethodValue && dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue!==null) return InternalStatus.resolved;
-    return InternalStatus.pending;
 }

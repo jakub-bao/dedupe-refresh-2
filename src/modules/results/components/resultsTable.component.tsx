@@ -1,6 +1,6 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 import MaterialTable, {MTableBodyRow, Options} from "material-table";
-import {DedupeModel} from "../models/dedupe.model";
+import {DedupeModel, getDedupeStatus, InternalStatus} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
 import {colors} from "../../../values/color.values";
@@ -50,13 +50,29 @@ const components = {
     Row,
 };
 
+function statusToColor(status:InternalStatus):string{
+    switch (status){
+        case InternalStatus.pending: return '#2C6693'
+        case InternalStatus.localChanges: return '#9C0D38'
+        case InternalStatus.resolved: return '#307351'
+    }
+}
+
+function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
+    return {
+        padding,
+        borderLeft: lightBorder,
+        backgroundColor: statusToColor(getDedupeStatus(dedupe))
+    }as CSSProperties;
+}
+
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod)=> [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}},
     {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>, ...noSort, cellStyle: {padding}},
-    {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}}
+    {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe}/>, ...noSort, cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe)}
 ];
 
 export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod}:{filteredDedupes: DedupeModel[], setResolutionValue:SetResolutionValue, changeResolutionMethod: ChangeResolutionMethod}) {

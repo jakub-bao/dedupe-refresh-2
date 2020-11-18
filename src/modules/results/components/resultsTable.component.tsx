@@ -8,7 +8,7 @@ import {withStyles} from "@material-ui/core";
 import StatusCell from "../../resolutionMethodCell/components/statusCell.component";
 import {
     ChangeResolutionMethod,
-    ResolutionMethodCell
+    ResolutionMethodCell, SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 
 const noSort = {sorting: false};
@@ -49,21 +49,21 @@ const components = {
     Row,
 };
 
-const getColumnSettings = (changeResolutionMethod:ChangeResolutionMethod)=> [
+const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod)=> [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}},
-    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod}/>, ...noSort, cellStyle: {padding}},
+    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>, ...noSort, cellStyle: {padding}},
     // {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding}}
 ];
 
-export default function ResultsTable({filteredDedupes, changeResolutionMethod}:{filteredDedupes: DedupeModel[], changeResolutionMethod: ChangeResolutionMethod}) {
+export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod}:{filteredDedupes: DedupeModel[], setResolutionValue:SetResolutionValue, changeResolutionMethod: ChangeResolutionMethod}) {
     return <MaterialTable
         style={{borderTop: border}}
         icons={tableIcons}
         options={tableOptions}
-        columns={getColumnSettings(changeResolutionMethod)}
+        columns={getColumnSettings(setResolutionValue, changeResolutionMethod)}
         data={filteredDedupes}
         components={components}
     />;

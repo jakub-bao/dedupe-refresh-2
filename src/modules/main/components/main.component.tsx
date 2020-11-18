@@ -11,7 +11,11 @@ import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
 import NetworkError from "../../../sharedModules/boot/components/networkError.component";
 import PleaseSelect, {PleaseSelectType} from "../../../sharedModules/mainPage/components/pleaseSelect.component";
-import {ChangeResolutionMethod} from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+import {
+    ChangeResolutionMethod,
+    SetResolutionValue
+} from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -98,20 +102,32 @@ export default class Main extends React.Component<{}, {
         this.setState({selectedFilters});
     };
 
-    changeResolutionMethod:ChangeResolutionMethod = (dedupeId:number, resolvedBy:DedupeResolvedByModel)=>{
+    findDedupe = (dedupeId:number, cb:any)=>{
         let dedupes = JSON.parse(JSON.stringify(this.state.results.dedupes));
         dedupes.forEach((dedupe:DedupeModel)=>{
-           if (dedupe.meta.dedupeGroupId!==dedupeId) return;
-           dedupe.resolution.resolvedBy = resolvedBy;
+            if (dedupe.meta.dedupeGroupId!==dedupeId) return;
+            cb(dedupe);
         });
-        this.setState({results: {selectedFilters: this.state.results.selectedFilters, dedupes}})
+        this.setState({results: {selectedFilters: this.state.results.selectedFilters, dedupes}});
+    }
+
+    changeResolutionMethod:ChangeResolutionMethod = (dedupeId:number, resolvedBy:DedupeResolvedByModel)=>{
+        this.findDedupe(dedupeId, (dedupe:DedupeModel)=>{
+            dedupe.resolution.resolvedBy = resolvedBy;
+        });
+    };
+
+    setResolutionValue:SetResolutionValue = (dedupeId:number, customValue)=>{
+        this.findDedupe(dedupeId, (dedupe:DedupeModel)=>{
+            dedupe.resolution.resolvedBy.resolutionValue = customValue;
+        });
     };
 
     renderResults(){
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100} />;
         if (this.state.ui.error.results) return <NetworkError/>;
         if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
-        return <Results filteredDedupes={this.state.results.dedupes} changeResolutionMethod={this.changeResolutionMethod}/>;
+        return <Results filteredDedupes={this.state.results.dedupes} setResolutionValue={this.setResolutionValue} changeResolutionMethod={this.changeResolutionMethod}/>;
     }
 
 

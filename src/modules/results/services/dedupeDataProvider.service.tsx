@@ -58,7 +58,7 @@ function getResolution(selectedRows:namedRow[], availableValues:DedupeResolution
 }
 
 function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableValues{
-    const enteredValues = selectedRows.filter(record=>record.value>=0).map(record=>record.value);
+    const enteredValues = selectedRows.filter(record=>record.mechanismNumber!==0).map(record=>record.value);
     return {
         sum: enteredValues.reduce((a,b)=>a+b,0),
         maximum: Math.max(...enteredValues),

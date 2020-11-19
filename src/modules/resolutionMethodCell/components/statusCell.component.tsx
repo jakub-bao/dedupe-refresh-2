@@ -22,7 +22,7 @@ const styles = {
 };
 
 function statusToText(status:InternalStatus):string{
-    if (status===InternalStatus.localChanges) return 'UNSAVED';
+    if (status===InternalStatus.localChanges) return 'unsaved';
     return status;
 }
 

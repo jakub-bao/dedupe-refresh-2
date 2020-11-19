@@ -85,7 +85,6 @@ export default class Main extends React.Component<{}, {
         this.updateUi({results: true}, {results: false});
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
-            console.log(dedupes);
             this.setState({results: {dedupes, selectedFilters}});
             this.updateUi({results: false}, {results: false});
         }).catch(()=>{
@@ -137,6 +136,7 @@ export default class Main extends React.Component<{}, {
             <span onClick={()=>this.preselect('XtxUYCsDWrR','2020Q4', DedupeType.pure)}>Rwda</span>
             <span onClick={()=>this.preselect('PqlFzhuPcF1','2020Q4',DedupeType.pure)}>Ngia</span>
             <span onClick={()=>this.preselect('f5RoebaDLMx','2020Q4',DedupeType.crosswalk)}>Zbia</span>
+            <span onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q4',DedupeType.pure)}>Btsw</span>
         </div>;
     }
 

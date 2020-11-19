@@ -79,7 +79,9 @@ function SetCustomValue({value, setValue, visible}:{value:number, setValue:(valu
 export function ResolutionMethodCell({dedupe, changeResolutionMethod, setResolutionValue}:{dedupe:DedupeModel, changeResolutionMethod:ChangeResolutionMethod, setResolutionValue:SetResolutionValue}){
     const resolutionSum = dedupe.resolution.availableValues.sum;
     const resolutionMax = dedupe.resolution.availableValues.maximum;
-    let resolutionId = makeId(dedupe.data.disAggregation);
+    // let resolutionId = makeId(dedupe.data.disAggregation);
+    // @ts-ignore
+    let resolutionId = dedupe.tableData.id;
     return <RadioGroup
         style={styles.root}
         value={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionMethod}

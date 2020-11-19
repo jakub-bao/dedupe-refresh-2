@@ -31,7 +31,7 @@ const RwandaResults2020Q4:FdTestCase = {
             "orgUnitName": "Gashora Sector",
             "dataElementName": "HTS_TST (N, DSD, KeyPop/Result): HTS received results"
         },
-        "resolution": {"resolutionMethodValue": null, "original_resolutionMethodValue": null, "availableValues": {"sum": 20060, "maximum": 10040}},
+        "resolution": {"resolutionMethodValue": null, "original_resolutionMethodValue": null, "availableValues": {"sum": 20060, "maximum": 10040,"minimum":10020}},
         "duplicates": [{
             "value": 10040,
             "agencyName": "USAID",
@@ -49,7 +49,7 @@ const RwandaResults2020Q4:FdTestCase = {
             "orgUnitName": "Gashora Sector",
             "dataElementName": "HTS_TST (N, DSD, KeyPop/Result): HTS received results"
         },
-        "resolution": {"resolutionMethodValue": null, "original_resolutionMethodValue": null, "availableValues": {"sum": 20040, "maximum": 10030}},
+        "resolution": {"resolutionMethodValue": null, "original_resolutionMethodValue": null, "availableValues": {"sum": 20040, "maximum": 10030,"minimum":10010}},
         "duplicates": [{
             "value": 10030,
             "agencyName": "USAID",
@@ -89,7 +89,7 @@ const Nigeria1:FdTestCase = {
                 "resolutionValue": 30020,
                 "resolutionMethod": ResolutionMethodType.maximum,
                 "deduplicationAdjustmentValue": -30010
-            }, "availableValues": {"sum": 60030, "maximum": 30020}
+            }, "availableValues": {"sum": 60030, "maximum": 30020,"minimum":30010}
         },
         "duplicates": [{
             "value": 30010,
@@ -122,7 +122,7 @@ const Nigeria1:FdTestCase = {
                 "resolutionValue": 40030,
                 "resolutionMethod": ResolutionMethodType.sum,
                 "deduplicationAdjustmentValue": 0
-            },  "availableValues": {"sum": 40030, "maximum": 20020}
+            },  "availableValues": {"sum": 40030, "maximum": 20020,"minimum":20010}
         },
         "duplicates": [{
             "value": 20010,

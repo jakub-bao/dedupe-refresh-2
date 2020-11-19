@@ -121,4 +121,22 @@ const Zambia2:DedupeValueSet = {
     }]
 };
 
-export const dedupeValueSets:DedupeValueSet[] = [Nigeria1,Nigeria2,Rwanda1,Rwanda2,Zambia1,Zambia2];
+const Botswana1:DedupeValueSet = {
+    dataSet: 'qzVASYuaIey',
+    orgUnitId: 'gGqaAXuUGpb',
+    period: '2020Q4',
+    categoryOptionCombo_co: "xYyVHiXrvSi",
+    dataElement_de: 'qhGxKnmrZBd',
+    dataValues: [{
+        value: 60010,
+        categoryOption_cp: 'eE1lo7cjSwe',
+    },{
+        value: 60020,
+        categoryOption_cp: 'iRbiBYQuiNZ',
+    },{
+        value: 60030,
+        categoryOption_cp: 'peOpZPZyPaf',
+    }]
+};
+
+export const dedupeValueSets:DedupeValueSet[] = [Nigeria1,Nigeria2,Rwanda1,Rwanda2,Zambia1,Zambia2,Botswana1];

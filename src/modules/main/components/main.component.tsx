@@ -2,7 +2,7 @@ import React from "react";
 import Filters from "../../filters/components/filters.component";
 import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {DedupeModel} from "../../results/models/dedupe.model";
+import {DedupeModel, DedupeResolutionMethodValue} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
@@ -11,6 +11,11 @@ import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
 import NetworkError from "../../../sharedModules/boot/components/networkError.component";
 import PleaseSelect, {PleaseSelectType} from "../../../sharedModules/mainPage/components/pleaseSelect.component";
+import {
+    ChangeResolutionMethod,
+    SetResolutionValue
+} from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -97,11 +102,32 @@ export default class Main extends React.Component<{}, {
         this.setState({selectedFilters});
     };
 
+    findDedupe = (dedupeId:number, cb:any)=>{
+        let dedupes = JSON.parse(JSON.stringify(this.state.results.dedupes));
+        dedupes.forEach((dedupe:DedupeModel)=>{
+            if (dedupe.meta.internalId!==dedupeId) return;
+            cb(dedupe);
+        });
+        this.setState({results: {selectedFilters: this.state.results.selectedFilters, dedupes}});
+    }
+
+    changeResolutionMethod:ChangeResolutionMethod = (dedupeId:number, resolvedBy:DedupeResolutionMethodValue)=>{
+        this.findDedupe(dedupeId, (dedupe:DedupeModel)=>{
+            dedupe.resolution.resolutionMethodValue = resolvedBy;
+        });
+    };
+
+    setResolutionValue:SetResolutionValue = (dedupeId:number, customValue)=>{
+        this.findDedupe(dedupeId, (dedupe:DedupeModel)=>{
+            dedupe.resolution.resolutionMethodValue.resolutionValue = customValue;
+        });
+    };
+
     renderResults(){
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100} />;
         if (this.state.ui.error.results) return <NetworkError/>;
         if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
-        return <Results filteredDedupes={this.state.results.dedupes} />;
+        return <Results filteredDedupes={this.state.results.dedupes} setResolutionValue={this.setResolutionValue} changeResolutionMethod={this.changeResolutionMethod}/>;
     }
 
 

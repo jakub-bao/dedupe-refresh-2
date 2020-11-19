@@ -3,7 +3,6 @@ import {Chip, IconButton, Tooltip, Typography} from "@material-ui/core";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import {FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {CollapseIcon} from "../../filters/components/filtersLogo.component";
 import {Menu} from "@material-ui/icons";
 
 const styles = {

@@ -1,8 +1,7 @@
 
 export type DedupeMetaModel = {
     orgUnitId: string;
-    // periodId: string;
-    // dataType: string;
+    internalId: number;
 }
 
 export type DedupeDataModel = {
@@ -22,20 +21,21 @@ export enum ResolutionMethodType {
     custom = 'custom'
 }
 
-export type DedupeResolvedByModel = {
+export type DedupeResolutionMethodValue = {
     resolutionMethod: ResolutionMethodType;
     resolutionValue: number;
     deduplicationAdjustmentValue: number;
 }
 
 export type DedupeResolutionAvailableValues = {
-    max: number;
+    maximum: number;
     sum: number;
+    minimum?: number;
 };
 
 export type DedupeResolutionModel = {
-    isResolved: boolean;
-    resolvedBy: DedupeResolvedByModel;
+    resolutionMethodValue: DedupeResolutionMethodValue;
+    original_resolutionMethodValue: DedupeResolutionMethodValue;
     availableValues: DedupeResolutionAvailableValues;
 }
 
@@ -46,6 +46,11 @@ export type DuplicateModel = {
     mechanismNumber: number;
 }
 
+export enum InternalStatus{
+    pending='pending',
+    localChanges='localChanges',
+    resolved='resolved',
+};
 
 
 export type DedupeModel = {
@@ -54,4 +59,17 @@ export type DedupeModel = {
     info: DedupeInfoModel;
     resolution: DedupeResolutionModel;
     duplicates: DuplicateModel[];
+}
+
+function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2:DedupeResolutionMethodValue):boolean{
+    if (!resolution2) return false;
+    return resolution1.resolutionMethod===resolution2.resolutionMethod
+    && resolution1.deduplicationAdjustmentValue===resolution2.deduplicationAdjustmentValue
+    && resolution1.resolutionValue===resolution2.resolutionValue;
+}
+
+export function getDedupeStatus(dedupe:DedupeModel):InternalStatus{
+    if (!dedupe.resolution || !dedupe.resolution.resolutionMethodValue) return InternalStatus.pending;
+    if (!compareResolutions(dedupe.resolution.resolutionMethodValue, dedupe.resolution.original_resolutionMethodValue)) return InternalStatus.localChanges;
+    if (dedupe.resolution.resolutionMethodValue && dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue!==null) return InternalStatus.resolved;
 }

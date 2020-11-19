@@ -1,10 +1,9 @@
 import React, {ChangeEvent} from "react";
-import {FormControl, InputBase, InputLabel, MenuItem, Select} from "@material-ui/core";
+import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {FilterType} from "../models/filters.model";
 import {camelCaseToHuman} from "../../../sharedModules/shared/services/camelCase.service";
 import {idName} from "../../../sharedModules/shared/models/idNameList.model";
 import {makeStyles} from "@material-ui/core/styles";
-import {colors} from "../../../values/color.values";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {

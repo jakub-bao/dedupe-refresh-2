@@ -1,8 +1,13 @@
-import React from "react";
-import {DedupeModel, DedupeResolvedByModel, ResolutionMethodType} from "../../results/models/dedupe.model";
-import {FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import {DedupeModel, DedupeResolutionMethodValue, ResolutionMethodType} from "../../results/models/dedupe.model";
+import {FormControlLabel, RadioGroup, TextField, Typography, withStyles} from "@material-ui/core";
 import {CompactRadio} from "../../results/components/compactRadio.component";
+import React from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {getResolutionValue} from "../services/getResolutionValue.service";
+import {getAdjustmentValue} from "../services/getAdjustmentValue.service";
+
+export type ChangeResolutionMethod = (dedupeId: number, resolvedBy:DedupeResolutionMethodValue)=>void;
+export type SetResolutionValue = (dedupeId: number, value:number)=>void;
 
 function makeId(long:string):string{
     return long.substr(0,5).replace(/[^A-z0-9]/,'')
@@ -17,6 +22,9 @@ const styles = {
 const useStyles = makeStyles({
     label: {
         fontSize: 13
+    },
+    customLabel: {
+        fontSize: 13
     }
 });
 
@@ -25,42 +33,59 @@ function RadioLabel(props){
     return <FormControlLabel {...props} classes={{label: classes.label}}/>
 }
 
-export default class ResolutionMethodCell extends React.Component<{dedupe:DedupeModel}, {
-    resolvedBy: DedupeResolvedByModel,
-}>{
-    constructor(props) {
-        super(props);
-        this.state = {
-            resolvedBy: this.props.dedupe.resolution.resolvedBy
-        };
-    }
+function onResolutionChange(dedupe: DedupeModel, resolutionMethod: ResolutionMethodType, changeResolutionMethod:ChangeResolutionMethod) {
+    let resolutionValue = getResolutionValue(dedupe, resolutionMethod);
+    changeResolutionMethod(dedupe.meta.internalId, {
+        resolutionMethod,
+        resolutionValue,
+        deduplicationAdjustmentValue: getAdjustmentValue(dedupe, resolutionMethod)
+    });
+}
 
-    countAdjustmentValue(dedupe:DedupeModel, method: ResolutionMethodType):number{
-        if (method===ResolutionMethodType.maximum) return dedupe.resolution.availableValues.max - dedupe.resolution.availableValues.sum;
-        if (method===ResolutionMethodType.sum) return 0;
-        if (method===ResolutionMethodType.custom) throw new Error('todo custom value');
-    }
 
-    onResolutionMethodChange = (event)=>{
-        let newMethod: ResolutionMethodType = event.target.value;
-        if (newMethod===ResolutionMethodType.maximum || newMethod===ResolutionMethodType.sum) {
-            this.setState({resolvedBy:{
-                    resolutionValue: this.props.dedupe.resolution.availableValues[newMethod as string],
-                    resolutionMethod: newMethod,
-                    deduplicationAdjustmentValue: this.countAdjustmentValue(this.props.dedupe, newMethod)
-                }
-            });
-        }
-    };
+const SmallTextField = withStyles({
+    root: {
+        '& .MuiInputBase-input':{
+            padding: 5,
+            fontSize: 13,
+            width: 50
+        },
+        '& input:valid + fieldset': {
 
-    render() {
-        const resolutionSum = this.props.dedupe.resolution.availableValues.sum;
-        const resolutionMax = this.props.dedupe.resolution.availableValues.max;
-        let resolutionId = makeId(this.props.dedupe.data.disAggregation);
-        return <RadioGroup style={styles.root} value={this.state.resolvedBy?this.state.resolvedBy.resolutionMethod:''} onChange={this.onResolutionMethodChange}>
-            <RadioLabel value="maximum" control={<CompactRadio testId={`resolution_${resolutionId}_maximum`}/>} label={`Maximum (${resolutionMax})`}/>
-            <RadioLabel value="sum" control={<CompactRadio testId={`resolution_${resolutionId}_sum`}/>} label={`Sum (${resolutionSum})`}/>
-            <RadioLabel value="custom" control={<CompactRadio testId={`resolution_${resolutionId}_custom`}/>} label={`Custom Value`}/>
-        </RadioGroup>
-    }
+        },
+        '& input:invalid + fieldset': {
+
+        },
+        '& input:valid:focus + fieldset': {
+
+        },
+    },
+})(TextField);
+
+function SetCustomValue({value, setValue, visible}:{value:number, setValue:(value:number)=>void, visible: boolean}){
+    const classes = useStyles();
+    return <React.Fragment>
+        <Typography className={classes.customLabel}>Custom Value</Typography>
+        {visible && <SmallTextField
+            variant="outlined"
+            type="number"
+            size='small'
+            value={value||''}
+            onChange={(event)=>setValue(parseInt(event.target.value))}
+        />}
+    </React.Fragment>
+}
+
+export function ResolutionMethodCell({dedupe, changeResolutionMethod, setResolutionValue}:{dedupe:DedupeModel, changeResolutionMethod:ChangeResolutionMethod, setResolutionValue:SetResolutionValue}){
+    const resolutionSum = dedupe.resolution.availableValues.sum;
+    const resolutionMax = dedupe.resolution.availableValues.maximum;
+    let resolutionId = makeId(dedupe.data.disAggregation);
+    return <RadioGroup
+        style={styles.root}
+        value={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionMethod}
+        onChange={(event)=>onResolutionChange(dedupe, event.target.value as ResolutionMethodType, changeResolutionMethod)}>
+        <RadioLabel value="maximum" control={<CompactRadio testId={`resolution_${resolutionId}_maximum`}/>} label={`Maximum (${resolutionMax})`}/>
+        <RadioLabel value="sum" control={<CompactRadio testId={`resolution_${resolutionId}_sum`}/>} label={`Sum (${resolutionSum})`}/>
+        <RadioLabel value="custom" control={<CompactRadio testId={`resolution_${resolutionId}_custom`}/>} label={<SetCustomValue value={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionValue} setValue={(value)=>setResolutionValue(dedupe.meta.internalId,value)} visible={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionMethod===ResolutionMethodType.custom}/>}/>
+    </RadioGroup>
 }

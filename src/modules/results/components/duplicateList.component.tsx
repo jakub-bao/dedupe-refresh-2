@@ -1,6 +1,14 @@
 import {DuplicateModel} from "../models/dedupe.model";
-import React from "react";
+import React, {CSSProperties} from "react";
 import {Table, TableBody, TableCell, TableRow, withStyles} from "@material-ui/core";
+
+const styles = {
+    root:{
+    } as CSSProperties,
+    column: {
+        width: 110
+    }
+}
 
 const Row = withStyles((theme) => ({
     root: {
@@ -15,15 +23,20 @@ const Row = withStyles((theme) => ({
 
 function Value({duplicate}:{duplicate:DuplicateModel}){
     return <Row>
-        <TableCell>{duplicate.agencyName}</TableCell>
-        <TableCell>{duplicate.partnerName}</TableCell>
-        <TableCell>{duplicate.mechanismNumber}</TableCell>
-        <TableCell>{duplicate.value}</TableCell>
+        <TableCell className='duplicateColumn' >{duplicate.agencyName}</TableCell>
+        <TableCell className='duplicateColumn' >{duplicate.partnerName}</TableCell>
+        <TableCell className='duplicateColumn' >{duplicate.mechanismNumber}</TableCell>
+        <TableCell className='duplicateColumn' >{duplicate.value}</TableCell>
     </Row>
 }
 
 export function DuplicateList({duplicates}:{duplicates:DuplicateModel[]}){
-    return <Table size="small">
+    return <Table size="small" className='duplicatesListTable'style={styles.root}>
+        <colgroup>
+            <col span={1} style={styles.column}/>
+            <col span={1} style={styles.column}/>
+            <col span={1} style={styles.column}/>
+        </colgroup>
         <TableBody>
             {duplicates.map((duplicate:DuplicateModel)=><Value duplicate={duplicate} key={duplicate.mechanismNumber}/>)}
         </TableBody>

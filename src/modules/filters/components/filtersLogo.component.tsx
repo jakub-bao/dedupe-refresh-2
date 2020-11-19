@@ -1,6 +1,6 @@
 import React, {CSSProperties} from "react";
 import {IconButton, Tooltip, Typography} from "@material-ui/core";
-import {ChevronLeft, Menu} from "@material-ui/icons";
+import {ChevronLeft} from "@material-ui/icons";
 
 const styles = {
     title: {

@@ -1,6 +1,6 @@
 import {testAs} from "../../test/apiCache/getData/getData.service";
 import {RdTestCase, rdTestCases, TestResolution} from "./3.renderDedupes.testCases";
-import {renderMain} from "../shared/sharedBasics.testService";
+import {renderMain, searchDedupes} from "../shared/sharedBasics.testService";
 import {
     checkRadioValue,
     click,
@@ -13,15 +13,7 @@ import {
 
 function renderDedupes(testCase:RdTestCase){
     test(`3 > Render Dedupes > ${testCase.name}`, async ()=>{
-        testAs(testCase.testAs);
-        await renderMain();
-        ['operatingUnit','dataType','period'].forEach((filter:string)=>{
-            select(`filter_${filter}`,testCase.filters[filter]);
-        });
-        if (testCase.filters.includeResolved) click('filter_includeResolved');
-        click('searchDedupes');
-        await loadingDone();
-        texts(testCase.expectedTokens);
+        await searchDedupes(testCase);
         if (!testCase.resolved) {
             noTexts(['resolved','unsaved']);
             text('pending');

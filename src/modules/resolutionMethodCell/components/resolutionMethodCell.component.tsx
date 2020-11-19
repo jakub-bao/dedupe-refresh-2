@@ -72,6 +72,7 @@ function SetCustomValue({value, setValue, visible}:{value:number, setValue:(valu
             size='small'
             value={value||''}
             onChange={(event)=>setValue(parseInt(event.target.value))}
+            inputProps={{'data-testid':'resolution_custom_input'}}
         />}
     </React.Fragment>
 }

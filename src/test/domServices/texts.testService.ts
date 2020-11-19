@@ -19,3 +19,6 @@ export function noTexts(textsToFind:string[]){
 export function noText(text:string){
     expect(screen.queryByText(text)).not.toBeInTheDocument();
 }
+
+export const exist = (id:string)=>screen.queryByTestId(id);
+export const noExist = (id:string)=>expect(screen.queryByTestId(id)).not.toBeInTheDocument();

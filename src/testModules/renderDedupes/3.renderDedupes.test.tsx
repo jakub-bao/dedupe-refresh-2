@@ -1,5 +1,4 @@
-import {testAs} from "../../test/apiCache/getData/getData.service";
-import {RdTestCase, rdTestCases, TestResolution} from "./3.renderDedupes.testCases";
+import {rdTestCases} from "./3.renderDedupes.testCases";
 import {renderMain, searchDedupes} from "../shared/sharedBasics.testService";
 import {
     checkRadioValue,
@@ -10,8 +9,9 @@ import {
     text,
     texts
 } from "../../test/domServices/domUtils.testService";
+import {DedupeTestCase, TestResolution} from "../shared/models/test.models";
 
-function renderDedupes(testCase:RdTestCase){
+function renderDedupes(testCase:DedupeTestCase){
     test(`3 > Render Dedupes > ${testCase.name}`, async ()=>{
         await searchDedupes(testCase);
         if (!testCase.resolved) {

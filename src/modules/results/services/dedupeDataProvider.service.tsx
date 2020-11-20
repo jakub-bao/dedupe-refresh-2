@@ -153,11 +153,15 @@ function nameRows(rows:any[]):namedRow[]{
     });
 }
 
+// function sort(dedupes:DedupeModel[]):DedupeModel[]{
+//     console.log(dedupes.map(d=>d.meta.internalId));
+//     return dedupes;
+// }
+
 export default function fetchDedupes(selectedFilters:FiltersModel):Promise<DedupeModel[]>{
     let requestUrl = generateDedupeUrl(selectedFilters);
-
     return getData(requestUrl)
         .then(response=>nameRows(response.listGrid.rows))
-        .then(processResponse);
+        .then(processResponse)
 }
 

@@ -1,14 +1,14 @@
 import {DedupeModel, DedupeResolutionMethodValue, updateStatus} from "../../results/models/dedupe.model";
 
-
 const findDedupe = (dedupes: DedupeModel[],dedupeId:number, cb:any)=>{
-    let newDedupes = JSON.parse(JSON.stringify(dedupes));
-    newDedupes.forEach((dedupe:DedupeModel)=>{
+    let dedupe = dedupes[dedupeId-1];
+    if (dedupe.meta.internalId!==dedupeId) throw new Error('dedupe search wrong');
+    // dedupes.forEach((dedupe:DedupeModel)=>{
         if (dedupe.meta.internalId!==dedupeId) return;
         cb(dedupe);
         updateStatus(dedupe);
-    });
-    return newDedupes;
+    // });
+    return dedupes;
 }
 
 export const changeResolutionMethod = (dedupes: DedupeModel[], dedupeId:number, resolvedBy:DedupeResolutionMethodValue)=>{

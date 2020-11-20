@@ -47,7 +47,7 @@ function searchEnabled(selectedFilters:FiltersModel):boolean{
     return !!selectedFilters.operatingUnit && !!selectedFilters.dataType && !!selectedFilters.period;
 }
 
-export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{
+function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider,
@@ -69,3 +69,5 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
         </Button>
     </Drawer>;
 }
+
+export default React.memo(Filters);

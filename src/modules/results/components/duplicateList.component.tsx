@@ -30,7 +30,7 @@ function Value({duplicate}:{duplicate:DuplicateModel}){
     </Row>
 }
 
-export function DuplicateList({duplicates}:{duplicates:DuplicateModel[]}){
+function _DuplicateList({duplicates}:{duplicates:DuplicateModel[]}){
     return <Table size="small" className='duplicatesListTable'style={styles.root}>
         <colgroup>
             <col span={1} style={styles.column}/>
@@ -42,3 +42,5 @@ export function DuplicateList({duplicates}:{duplicates:DuplicateModel[]}){
         </TableBody>
     </Table>
 }
+
+export const DuplicateList = React.memo(_DuplicateList);

@@ -118,11 +118,27 @@ export default class Main extends React.Component<{}, {
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100} />;
         if (this.state.ui.error.results) return <NetworkError/>;
         if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
-        return <Results filteredDedupes={this.state.results.dedupes} setResolutionValue={this.setResolutionValue} changeResolutionMethod={this.changeResolutionMethod} saveDedupe={this.saveDedupe}/>;
+        return <Results
+            filteredDedupes={this.state.results.dedupes}
+            setResolutionValue={this.setResolutionValue}
+            changeResolutionMethod={this.changeResolutionMethod}
+            saveDedupe={this.saveDedupe}
+            undoChanges={this.undoChanges}
+        />;
     }
 
-    saveDedupe(dedupe:DedupeModel){
-        console.log(dedupe);
+    getDedupe(id:number):DedupeModel{
+        return this.state.results.dedupes.filter(d=>d.meta.internalId===id)[0];
+    }
+
+    saveDedupe = (id:number)=>{
+        console.log(this.getDedupe(id));
+    }
+
+    undoChanges = (id:number)=>{
+        let newDedupe = this.getDedupe(id);
+        newDedupe.resolution.resolutionMethodValue = newDedupe.resolution.original_resolutionMethodValue;
+        this.updateDedupes(this.state.results.dedupes);
     }
 
     renderPreselect(){
@@ -132,6 +148,7 @@ export default class Main extends React.Component<{}, {
             <span onClick={()=>this.preselect('PqlFzhuPcF1','2020Q4',DedupeType.pure)}>Ngia</span>
             <span onClick={()=>this.preselect('f5RoebaDLMx','2020Q4',DedupeType.crosswalk)}>Zbia</span>
             <span onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q4',DedupeType.pure)}>Btsw</span>
+            <span onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q3',DedupeType.pure)}>Full</span>
         </div>;
     }
 

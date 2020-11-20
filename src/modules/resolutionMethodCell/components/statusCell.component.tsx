@@ -2,7 +2,8 @@ import React, {CSSProperties} from "react";
 import {DedupeModel, getDedupeStatus, InternalStatus} from "../../results/models/dedupe.model";
 import {Button, Typography} from "@material-ui/core";
 
-export type SaveDedupe = (dedupe:DedupeModel)=>void;
+export type SaveDedupe = (id:number)=>void;
+export type UndoChanges = (id:number)=>void;
 
 const styles = {
     root: {
@@ -28,14 +29,14 @@ function statusToText(status:InternalStatus):string{
     return status;
 }
 
-export default function StatusCell({dedupe, saveDedupe}:{dedupe:DedupeModel, saveDedupe:SaveDedupe}) {
+export default function StatusCell({dedupe, saveDedupe, undoChanges}:{dedupe:DedupeModel, saveDedupe:SaveDedupe, undoChanges:UndoChanges}) {
     const status = getDedupeStatus(dedupe);
     // @ts-ignore
     return <div style={styles.root} data-testid={`status_${dedupe.tableData.id}`}>
         <Typography style={styles.status}>{statusToText(status)}</Typography>
         {status===InternalStatus.localChanges &&<div style={styles.buttons}>
-            <Button>Cancel</Button>
-            <Button style={styles.save} onClick={()=>saveDedupe(dedupe)}>Save</Button>
+            <Button onClick={()=>undoChanges(dedupe.meta.internalId)}>Cancel</Button>
+            <Button style={styles.save} onClick={()=>saveDedupe(dedupe.meta.internalId)}>Save</Button>
         </div>}
     </div>;
 }

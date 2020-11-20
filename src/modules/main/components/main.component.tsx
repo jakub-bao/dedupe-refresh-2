@@ -170,6 +170,7 @@ export default class Main extends React.Component<{}, {
     };
 
     render() {
+        console.log('render main');
         if (this.state.ui.error.filters) return <NetworkError/>;
         if (this.state.ui.loading.filters) return <Loading message={'Loading...'} margin={100}/>;
         return <React.Fragment>

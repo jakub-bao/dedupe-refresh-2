@@ -70,4 +70,6 @@ function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSea
     </Drawer>;
 }
 
+// export default Filters;
+
 export default React.memo(Filters);

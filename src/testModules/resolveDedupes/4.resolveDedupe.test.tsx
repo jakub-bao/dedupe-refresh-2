@@ -1,8 +1,9 @@
 import {DedupeTestCase, TestFilters} from "../shared/models/test.models";
-import {searchDedupes} from "../shared/sharedBasics.testService";
+import {searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
 import {exist, noExist, noTexts, text} from "../../test/domServices/texts.testService";
-import { click } from "../../test/domServices/domUtils.testService";
+import {click, debug} from "../../test/domServices/domUtils.testService";
 import {screen} from "@testing-library/react";
+import {type} from "../../test/domServices/click.testService";
 
 const BotswanaTestCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -29,15 +30,8 @@ function asInp(el:Element):HTMLInputElement{
 
 test(`4 > Resolve Dedupes > Botswana`, async ()=>{
     await searchDedupes(BotswanaTestCase);
-    noTexts(['resolved','unsaved']);
-    text('pending');
-    noExist('resolution_custom_input');
-    click('resolution_0_custom');
-    noTexts(['pending','resolved']);
-    text('unsaved');
-    exist('resolution_custom_input');
+    switchToCustom(0);
     expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe("60010")
-    asInp(document.querySelector('[data-testid="resolution_custom_input"]')).value = "60040";
-    expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe("60040")
-    //resolution_custom_input
+    await type('resolution_custom_input', '60040');
+    expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe("60040");
 });

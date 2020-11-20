@@ -75,6 +75,7 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
     {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe}/>, ...noSort, cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe)}
 ];
 
+
 export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod}:{filteredDedupes: DedupeModel[], setResolutionValue:SetResolutionValue, changeResolutionMethod: ChangeResolutionMethod}) {
     return <MaterialTable
         style={{borderTop: border}}

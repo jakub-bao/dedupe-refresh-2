@@ -1,5 +1,5 @@
 import {rdTestCases} from "./3.renderDedupes.testCases";
-import {renderMain, searchDedupes} from "../shared/sharedBasics.testService";
+import {renderMain, searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
 import {
     checkRadioValue,
     click,
@@ -10,21 +10,17 @@ import {
     texts
 } from "../../test/domServices/domUtils.testService";
 import {DedupeTestCase, TestResolution} from "../shared/models/test.models";
+import {noTextIn, textIn} from "../../test/domServices/textsIn.testService";
 
 function renderDedupes(testCase:DedupeTestCase){
     test(`3 > Render Dedupes > ${testCase.name}`, async ()=>{
         await searchDedupes(testCase);
-        if (!testCase.resolved) {
-            noTexts(['resolved','unsaved']);
-            text('pending');
-        }
+        if (!testCase.resolved) textIn('status_0','pending');
         if (testCase.resolved) {
             testCase.resolved.forEach((resolution:TestResolution, i:number)=>checkRadioValue(`resolution_${i}`, resolution.method));
-            noTexts(['pending','unsaved']);
-            text('resolved');
+            textIn('status_0','resolved');
         }
-        click('resolution_0_custom');
-        text('unsaved');
+        switchToCustom(0);
     });
 }
 

@@ -28,7 +28,8 @@ function statusToText(status:InternalStatus):string{
 
 export default function StatusCell({dedupe}:{dedupe:DedupeModel}) {
     const status = getDedupeStatus(dedupe);
-    return <div style={styles.root}>
+    // @ts-ignore
+    return <div style={styles.root} data-testid={`status_${dedupe.tableData.id}`}>
         <Typography style={styles.status}>{statusToText(status)}</Typography>
         {status===InternalStatus.localChanges &&<div style={styles.buttons}>
             <Button>Cancel</Button>

@@ -87,6 +87,7 @@ export function ResolutionMethodCell({dedupe, changeResolutionMethod, setResolut
         style={styles.root}
         value={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionMethod}
         onChange={(event)=>onResolutionChange(dedupe, event.target.value as ResolutionMethodType, changeResolutionMethod)}>
+        {dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionValue}
         <RadioLabel value="maximum" control={<CompactRadio testId={`resolution_${resolutionId}_maximum`}/>} label={`Maximum (${resolutionMax})`}/>
         <RadioLabel value="sum" control={<CompactRadio testId={`resolution_${resolutionId}_sum`}/>} label={`Sum (${resolutionSum})`}/>
         <RadioLabel value="custom" control={<CompactRadio testId={`resolution_${resolutionId}_custom`}/>} label={<SetCustomValue value={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionValue} setValue={(value)=>setResolutionValue(dedupe.meta.internalId,value)} visible={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionMethod===ResolutionMethodType.custom}/>}/>

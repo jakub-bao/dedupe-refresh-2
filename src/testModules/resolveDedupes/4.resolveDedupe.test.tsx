@@ -32,6 +32,6 @@ test(`4 > Resolve Dedupes > Botswana`, async ()=>{
     await searchDedupes(BotswanaTestCase);
     switchToCustom(0);
     expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe("60010")
-    await type('resolution_custom_input', '60040');
-    expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe("60040");
+    await type('resolution_custom_input', '60020');
+    expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe("60020");
 });

@@ -15,6 +15,7 @@ import {
     ChangeResolutionMethod,
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData.service";
 
 
 export default class Main extends React.Component<{}, {
@@ -101,25 +102,16 @@ export default class Main extends React.Component<{}, {
         this.setState({selectedFilters});
     };
 
-    findDedupe = (dedupeId:number, cb:any)=>{
-        let dedupes = JSON.parse(JSON.stringify(this.state.results.dedupes));
-        dedupes.forEach((dedupe:DedupeModel)=>{
-            if (dedupe.meta.internalId!==dedupeId) return;
-            cb(dedupe);
-        });
-        this.setState({results: {selectedFilters: this.state.results.selectedFilters, dedupes}});
+    updateDedupes = (dedupes:DedupeModel[])=>{
+        this.setState({results:{dedupes, selectedFilters: this.state.results.selectedFilters}});
     }
 
     changeResolutionMethod:ChangeResolutionMethod = (dedupeId:number, resolvedBy:DedupeResolutionMethodValue)=>{
-        this.findDedupe(dedupeId, (dedupe:DedupeModel)=>{
-            dedupe.resolution.resolutionMethodValue = resolvedBy;
-        });
+        this.updateDedupes(changeResolutionMethod(this.state.results.dedupes, dedupeId, resolvedBy));
     };
 
     setResolutionValue:SetResolutionValue = (dedupeId:number, customValue)=>{
-        this.findDedupe(dedupeId, (dedupe:DedupeModel)=>{
-            dedupe.resolution.resolutionMethodValue.resolutionValue = customValue;
-        });
+        this.updateDedupes(setResolutionValue(this.state.results.dedupes, dedupeId, customValue));
     };
 
     renderResults(){

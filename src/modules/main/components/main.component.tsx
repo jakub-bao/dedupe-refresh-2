@@ -118,9 +118,12 @@ export default class Main extends React.Component<{}, {
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100} />;
         if (this.state.ui.error.results) return <NetworkError/>;
         if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
-        return <Results filteredDedupes={this.state.results.dedupes} setResolutionValue={this.setResolutionValue} changeResolutionMethod={this.changeResolutionMethod}/>;
+        return <Results filteredDedupes={this.state.results.dedupes} setResolutionValue={this.setResolutionValue} changeResolutionMethod={this.changeResolutionMethod} saveDedupe={this.saveDedupe}/>;
     }
 
+    saveDedupe(dedupe:DedupeModel){
+        console.log(dedupe);
+    }
 
     renderPreselect(){
         if(process.env.NODE_ENV === 'production') return null;

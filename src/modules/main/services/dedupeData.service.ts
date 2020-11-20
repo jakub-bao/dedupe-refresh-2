@@ -1,8 +1,4 @@
 import {DedupeModel, DedupeResolutionMethodValue} from "../../results/models/dedupe.model";
-import {
-    ChangeResolutionMethod,
-    SetResolutionValue
-} from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 
 const findDedupe = (dedupes: DedupeModel[],dedupeId:number, cb:any)=>{
     let newDedupes = JSON.parse(JSON.stringify(dedupes));
@@ -22,5 +18,6 @@ export const changeResolutionMethod = (dedupes: DedupeModel[], dedupeId:number, 
 export const setResolutionValue = (dedupes: DedupeModel[], dedupeId:number, customValue)=>{
     return findDedupe(dedupes, dedupeId, (dedupe:DedupeModel)=>{
         dedupe.resolution.resolutionMethodValue.resolutionValue = customValue;
+        dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue = customValue - dedupe.resolution.availableValues.sum;
     });
 };

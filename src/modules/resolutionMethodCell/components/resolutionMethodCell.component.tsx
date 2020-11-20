@@ -4,7 +4,7 @@ import {CompactRadio} from "../../results/components/compactRadio.component";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {getResolutionValue} from "../services/getResolutionValue.service";
-import {getAdjustmentValue} from "../services/getAdjustmentValue.service";
+import {getAdjustmentValueByMethod} from "../services/getAdjustmentValue.service";
 
 export type ChangeResolutionMethod = (dedupeId: number, resolvedBy:DedupeResolutionMethodValue)=>void;
 export type SetResolutionValue = (dedupeId: number, value:number)=>void;
@@ -38,7 +38,7 @@ function onResolutionChange(dedupe: DedupeModel, resolutionMethod: ResolutionMet
     changeResolutionMethod(dedupe.meta.internalId, {
         resolutionMethod,
         resolutionValue,
-        deduplicationAdjustmentValue: getAdjustmentValue(dedupe, resolutionMethod)
+        deduplicationAdjustmentValue: getAdjustmentValueByMethod(dedupe, resolutionMethod)
     });
 }
 

@@ -4,7 +4,7 @@ import {
     DedupeResolutionModel,
     DedupeResolutionMethodValue,
     DuplicateModel,
-    ResolutionMethodType
+    ResolutionMethodType, updateStatus
 } from "../models/dedupe.model";
 import {FiltersModel} from "../../filters/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";
@@ -83,7 +83,7 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
 
 function generateDedupe(selectedRows: namedRow[], groupNumber:number):DedupeModel{
     let first = selectedRows[0];
-    return {
+    let dedupe:DedupeModel = {
         meta: {
             internalId: groupNumber,
             orgUnitId: first.orgUnitId,
@@ -98,8 +98,11 @@ function generateDedupe(selectedRows: namedRow[], groupNumber:number):DedupeMode
             dataElementName: first.dataElementName
         },
         resolution: getResolutionDetails(selectedRows),
-        duplicates: extractDuplicates(selectedRows)
+        duplicates: extractDuplicates(selectedRows),
+        status: null
     };
+    updateStatus(dedupe);
+    return dedupe;
 }
 
 function processResponse(rows:any[]):DedupeModel[]{

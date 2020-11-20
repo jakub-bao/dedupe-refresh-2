@@ -1,5 +1,5 @@
 import {DataType, DedupeType, FiltersModel} from "../../modules/filters/models/filters.model";
-import {DedupeModel, ResolutionMethodType} from "../../modules/results/models/dedupe.model";
+import {DedupeModel, InternalStatus, ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 
 export type FdTestCase = {
     name:string;
@@ -21,6 +21,7 @@ const RwandaResults2020Q4:FdTestCase = {
         includeResolved: false
     },
     dedupes: [{
+        status: InternalStatus.pending,
         "meta": {"orgUnitId": "TAPALAZae2l", "internalId":1},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
@@ -39,6 +40,7 @@ const RwandaResults2020Q4:FdTestCase = {
             "mechanismNumber": 17616
         }, {"value": 10020, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": 16858}]
     }, {
+        status: InternalStatus.pending,
         "meta": {"orgUnitId": "TAPALAZae2l", "internalId":2},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
@@ -72,6 +74,7 @@ const Nigeria1:FdTestCase = {
         includeResolved: true
     },
     dedupes: [{
+        status: InternalStatus.resolved,
         "meta": {"orgUnitId": "p7M264Wg1qB", "internalId":1},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
@@ -103,6 +106,7 @@ const Nigeria1:FdTestCase = {
             "mechanismNumber": 16850
         }]
     }, {
+        status: InternalStatus.resolved,
         "meta": {"orgUnitId": "BY7bSKwPjPJ", "internalId":2},
         "data": {
             "dataElementId": "FI2s716RRZc",

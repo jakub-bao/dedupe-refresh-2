@@ -2,7 +2,12 @@ import React from "react";
 import Filters from "../../filters/components/filters.component";
 import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {DedupeModel, DedupeResolutionMethodValue} from "../../results/models/dedupe.model";
+import {
+    DedupeModel,
+    DedupeResolutionMethodValue,
+    updateStatus
+
+} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
@@ -138,6 +143,7 @@ export default class Main extends React.Component<{}, {
     undoChanges = (id:number)=>{
         let newDedupe = this.getDedupe(id);
         newDedupe.resolution.resolutionMethodValue = newDedupe.resolution.original_resolutionMethodValue;
+        updateStatus(newDedupe);
         this.updateDedupes(this.state.results.dedupes);
     }
 
@@ -170,7 +176,6 @@ export default class Main extends React.Component<{}, {
     };
 
     render() {
-        console.log('render main');
         if (this.state.ui.error.filters) return <NetworkError/>;
         if (this.state.ui.loading.filters) return <Loading message={'Loading...'} margin={100}/>;
         return <React.Fragment>

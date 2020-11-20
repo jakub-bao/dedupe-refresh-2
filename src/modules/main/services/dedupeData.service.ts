@@ -1,10 +1,12 @@
-import {DedupeModel, DedupeResolutionMethodValue} from "../../results/models/dedupe.model";
+import {DedupeModel, DedupeResolutionMethodValue, updateStatus} from "../../results/models/dedupe.model";
+
 
 const findDedupe = (dedupes: DedupeModel[],dedupeId:number, cb:any)=>{
     let newDedupes = JSON.parse(JSON.stringify(dedupes));
     newDedupes.forEach((dedupe:DedupeModel)=>{
         if (dedupe.meta.internalId!==dedupeId) return;
         cb(dedupe);
+        updateStatus(dedupe);
     });
     return newDedupes;
 }

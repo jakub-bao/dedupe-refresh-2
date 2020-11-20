@@ -1,6 +1,6 @@
 import React, {CSSProperties} from "react";
 import MaterialTable, {MTableBodyRow, Options} from "material-table";
-import {DedupeModel, getDedupeStatus, InternalStatus} from "../models/dedupe.model";
+import {DedupeModel, InternalStatus} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
 import {colors} from "../../../values/color.values";
@@ -63,7 +63,7 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
     return {
         padding,
         borderLeft: lightBorder,
-        backgroundColor: statusToColor(getDedupeStatus(dedupe)),
+        backgroundColor: statusToColor(dedupe.status),
     }as CSSProperties;
 }
 

@@ -1,7 +1,7 @@
 import {screen, waitFor} from "@testing-library/react";
 
 export function waitForTexts(textsToFind:string[]):Promise<any>{
-    return waitFor(() => texts(textsToFind),{timeout: 5000});
+    return waitFor(() => texts(textsToFind),{timeout: 10000});
 }
 
 export function texts(texts:string[]){

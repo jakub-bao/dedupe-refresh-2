@@ -1,10 +1,11 @@
 import {
     DedupeModel,
     DedupeResolutionAvailableValues,
-    DedupeResolutionModel,
     DedupeResolutionMethodValue,
+    DedupeResolutionModel,
     DuplicateModel,
-    ResolutionMethodType, updateStatus
+    ResolutionMethodType,
+    updateStatus
 } from "../models/dedupe.model";
 import {FiltersModel} from "../../filters/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";

@@ -82,7 +82,7 @@ export function ResolutionMethodCell({dedupe, changeResolutionMethod, setResolut
     const resolutionMax = dedupe.resolution.availableValues.maximum;
     // let resolutionId = makeId(dedupe.data.disAggregation);
     // @ts-ignore
-    let resolutionId = dedupe.tableData.id;
+    let resolutionId = dedupe.meta.internalId;
     return <RadioGroup
         style={styles.root}
         value={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionMethod}

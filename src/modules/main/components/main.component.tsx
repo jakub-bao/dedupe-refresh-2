@@ -2,12 +2,7 @@ import React from "react";
 import Filters from "../../filters/components/filters.component";
 import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {
-    DedupeModel,
-    DedupeResolutionMethodValue,
-    updateStatus
-
-} from "../../results/models/dedupe.model";
+import {DedupeModel, DedupeResolutionMethodValue, updateStatus} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";

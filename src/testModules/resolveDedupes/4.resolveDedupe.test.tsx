@@ -1,9 +1,7 @@
-import {DedupeTestCase, TestFilters} from "../shared/models/test.models";
-import {searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
-import {exist, noExist, noTexts, text} from "../../test/domServices/texts.testService";
-import {click, debug} from "../../test/domServices/domUtils.testService";
-import {screen} from "@testing-library/react";
-import {type} from "../../test/domServices/click.testService";
+import {DedupeTestCase} from "../shared/models/test.models";
+import {checkCustomValue, checkStatus, searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
+import {click, type} from "../../test/domServices/click.testService";
+import {InternalStatus} from "../../modules/results/models/dedupe.model";
 
 const BotswanaTestCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -24,14 +22,14 @@ const BotswanaTestCase:DedupeTestCase = {
     resolved: null,
 };
 
-function asInp(el:Element):HTMLInputElement{
-    return el as HTMLInputElement;
-}
 
-test(`4 > Resolve Dedupes > Botswana`, async ()=>{
+test(`4 > Resolve Dedupes > Botswana > Cancel`, async ()=>{
     await searchDedupes(BotswanaTestCase);
-    switchToCustom(0);
-    expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe("60010")
+    switchToCustom(1);
+    checkCustomValue(60010)
     await type('resolution_custom_input', '60020');
-    expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe("60020");
+    checkCustomValue(60020)
+    click(`dedupe_1_cancel`);
+    checkStatus(1,InternalStatus.pending);
+
 });

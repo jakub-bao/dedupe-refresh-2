@@ -30,15 +30,13 @@ function statusToText(status:InternalStatus):string{
     return status;
 }
 
-function StatusCell({dedupe, saveDedupe, undoChanges}:{dedupe:DedupeModel, saveDedupe:SaveDedupe, undoChanges:UndoChanges}) {
+export default function StatusCell({dedupe, saveDedupe, undoChanges}:{dedupe:DedupeModel, saveDedupe:SaveDedupe, undoChanges:UndoChanges}) {
     // @ts-ignore
-    return <div style={styles.root} data-testid={`status_${dedupe.tableData.id}`}>
+    return <div style={styles.root} data-testid={`status_${dedupe.meta.internalId}`}>
         <Typography style={styles.status}>{statusToText(dedupe.status)}</Typography>
         {dedupe.status===InternalStatus.localChanges &&<div style={styles.buttons}>
-            <Button onClick={()=>undoChanges(dedupe.meta.internalId)}>Cancel</Button>
-            <Button style={styles.save} onClick={()=>saveDedupe(dedupe.meta.internalId)}>Save</Button>
+            <Button onClick={()=>undoChanges(dedupe.meta.internalId)} data-testid={`dedupe_${dedupe.meta.internalId}_cancel`}>Cancel</Button>
+            <Button style={styles.save} onClick={()=>saveDedupe(dedupe.meta.internalId)} data-testid={`dedupe_${dedupe.meta.internalId}_save`}>Save</Button>
         </div>}
     </div>;
 }
-
-export default React.memo(StatusCell);

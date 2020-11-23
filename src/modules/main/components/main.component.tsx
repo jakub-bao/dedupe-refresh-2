@@ -2,7 +2,12 @@ import React from "react";
 import Filters from "../../filters/components/filters.component";
 import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {DedupeModel, DedupeResolutionMethodValue, updateStatus} from "../../results/models/dedupe.model";
+import {
+    DedupeModel,
+    DedupeResolutionMethodValue,
+    InternalStatus,
+    updateStatus
+} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
@@ -17,9 +22,13 @@ import {
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData.service";
 import {saveDedupe} from "../services/saveDedupe.service";
+import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 
 
-export default class Main extends React.Component<{}, {
+class Main extends React.Component<{
+    enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
+    closeSnackbar: (key?: SnackbarKey) => void;
+}, {
     selectedFilters:FiltersModel,
     results: {
         dedupes: DedupeModel[],
@@ -133,11 +142,12 @@ export default class Main extends React.Component<{}, {
     }
 
     saveDedupe = (id:number)=>{
-        // console.log(this.getDedupe(id));
-        saveDedupe(this.state.results.dedupes, id).then((dedupe:DedupeModel)=>{
-            let dedupes:DedupeModel[] = this.state.results.dedupes;
-            dedupes[id-1]=dedupe;
-            this.updateDedupes(dedupes);
+        let dedupe:DedupeModel = this.state.results.dedupes[id-1];
+        saveDedupe(dedupe).then((worked:boolean)=>{
+            this.props.enqueueSnackbar(`Saved`);
+            dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
+            dedupe.status = InternalStatus.resolved;
+            this.setState({results:this.state.results});
         });
     }
 
@@ -199,3 +209,4 @@ export default class Main extends React.Component<{}, {
         </React.Fragment>;
     }
 }
+export default withSnackbar(Main);

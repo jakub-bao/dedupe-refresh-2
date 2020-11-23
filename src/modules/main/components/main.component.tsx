@@ -16,6 +16,7 @@ import {
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData.service";
+import {saveDedupe} from "../services/saveDedupe.service";
 
 
 export default class Main extends React.Component<{}, {
@@ -132,7 +133,12 @@ export default class Main extends React.Component<{}, {
     }
 
     saveDedupe = (id:number)=>{
-        console.log(this.getDedupe(id));
+        // console.log(this.getDedupe(id));
+        saveDedupe(this.state.results.dedupes, id).then((dedupe:DedupeModel)=>{
+            let dedupes:DedupeModel[] = this.state.results.dedupes;
+            dedupes[id-1]=dedupe;
+            this.updateDedupes(dedupes);
+        });
     }
 
     undoChanges = (id:number)=>{

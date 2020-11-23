@@ -67,6 +67,7 @@ function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableVa
     };
 }
 
+
 function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
     let resolution:DedupeResolutionModel = {
         resolutionMethodValue: null,
@@ -82,12 +83,13 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
 }
 
 
-function generateDedupe(selectedRows: namedRow[], groupNumber:number):DedupeModel{
+function generateDedupe(selectedRows: namedRow[], groupNumber:number, filters:FiltersModel):DedupeModel{
     let first = selectedRows[0];
     let dedupe:DedupeModel = {
         meta: {
             internalId: groupNumber,
             orgUnitId: first.orgUnitId,
+            periodId: filters.period
         },
         data: {
             dataElementId: first.dataElementId,
@@ -106,13 +108,13 @@ function generateDedupe(selectedRows: namedRow[], groupNumber:number):DedupeMode
     return dedupe;
 }
 
-function processResponse(rows:any[]):DedupeModel[]{
+function processResponse(rows:any[], filters:FiltersModel):DedupeModel[]{
     if (rows.length===0) return [];
     let dedupesCount = rows[0].totalGroups;
     let dedupes = [];
     for (var groupNumber=1; groupNumber<=dedupesCount; groupNumber++){
         let selectedRows = rows.filter(row=>row.group===groupNumber);
-        let dedupe:DedupeModel = generateDedupe(selectedRows, groupNumber);
+        let dedupe:DedupeModel = generateDedupe(selectedRows, groupNumber, filters);
         dedupes.push(dedupe)
     }
     return dedupes;
@@ -154,15 +156,10 @@ function nameRows(rows:any[]):namedRow[]{
     });
 }
 
-// function sort(dedupes:DedupeModel[]):DedupeModel[]{
-//     console.log(dedupes.map(d=>d.meta.internalId));
-//     return dedupes;
-// }
-
 export default function fetchDedupes(selectedFilters:FiltersModel):Promise<DedupeModel[]>{
     let requestUrl = generateDedupeUrl(selectedFilters);
     return getData(requestUrl)
         .then(response=>nameRows(response.listGrid.rows))
-        .then(processResponse)
+        .then((response)=>processResponse(response, selectedFilters))
 }
 

@@ -1,6 +1,6 @@
 import {rdTestCases} from "./3.renderDedupes.testCases";
 import {searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
-import {checkRadioValue} from "../../test/domServices/domUtils.testService";
+import {checkRadioValue, noTexts} from "../../test/domServices/domUtils.testService";
 import {DedupeTestCase, TestResolution} from "../shared/models/test.models";
 import {textIn} from "../../test/domServices/textsIn.testService";
 
@@ -13,8 +13,9 @@ function renderDedupes(testCase:DedupeTestCase){
                 checkRadioValue(`resolution_${i+1}`, resolution.method);
                 textIn(`status_${i+1}`,'resolved');
             });
-
+            noTexts(['Dedupe adjustments Agency','Dedupe adjustment']);
         }
+
         switchToCustom(1);
     });
 }

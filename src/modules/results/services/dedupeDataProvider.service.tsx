@@ -26,8 +26,10 @@ function generateDedupeUrl(selectedFilters:FiltersModel):string{
         + `&cache=${random()}`;
 }
 
+const removeAdjustment = record=>!["00000","00001"].includes(record.mechanismNumber);
+
 function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
-    return rows.filter(namedRow=>!["00000","00001"].includes(namedRow.mechanismNumber)).map(namedRow=>{
+    return rows.filter(removeAdjustment).map(namedRow=>{
         return {
             value: namedRow.value,
             agencyName: namedRow.agencyName,
@@ -62,7 +64,7 @@ function getResolution(selectedRows:namedRow[], availableValues:DedupeResolution
 }
 
 function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableValues{
-    const enteredValues = selectedRows.filter(record=>!["00000","00001"].includes(record.mechanismNumber)).map(record=>record.value);
+    const enteredValues = selectedRows.filter(removeAdjustment).map(record=>record.value);
     return {
         sum: enteredValues.reduce((a,b)=>a+b,0),
         maximum: Math.max(...enteredValues),

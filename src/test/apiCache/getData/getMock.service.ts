@@ -1,6 +1,6 @@
 let registeredMocks = {};
 
-const clean = (url)=>url.replace(/^http.+\/api/,'')
+const clean = (url)=>url.replace(/^http.+\/api/,'').replace(/&cache.+$/,'');
 
 export function registerGetMock(url:string, response: object){
     registeredMocks[clean(url)] = response;

@@ -1,0 +1,149 @@
+{
+  "listGrid": {
+    "metaData": {},
+    "headerWidth": 13,
+    "width": 13,
+    "title": "datim-dedupe-app",
+    "height": 3,
+    "headers": [
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "ou_name",
+        "column": "ou_name",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "dataelement",
+        "column": "dataelement",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "disaggregation",
+        "column": "disaggregation",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "agency",
+        "column": "agency",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "mechanism",
+        "column": "mechanism",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "partner",
+        "column": "partner",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "value",
+        "column": "value",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "duplicate_status",
+        "column": "duplicate_status",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "ou_uid",
+        "column": "ou_uid",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "de_uid",
+        "column": "de_uid",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "coc_uid",
+        "column": "coc_uid",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "group_count",
+        "column": "group_count",
+        "type": "java.lang.String"
+      },
+      {
+        "hidden": false,
+        "meta": false,
+        "name": "total_groups",
+        "column": "total_groups",
+        "type": "java.lang.String"
+      }
+    ],
+    "rows": [
+      [
+        "CMA de Songkolong",
+        "VMMC_CIRC (N, TA, Age/Sex/HIVStatus): Voluntary Circumcised",
+        "20-24, Positive, Male",
+        "HHS/CDC",
+        "14127",
+        "World Health Organization",
+        "70020",
+        "RESOLVED",
+        "Qxqy3OnMtLi",
+        "TiMvlchPiPH",
+        "pWaGXt8b4rt",
+        1,
+        1
+      ],
+      [
+        "CMA de Songkolong",
+        "VMMC_CIRC (N, TA, Age/Sex/HIVStatus): Voluntary Circumcised",
+        "20-24, Positive, Male",
+        "Dedupe adjustments Agency",
+        "00001",
+        "Dedupe adjustment",
+        "-69950",
+        "RESOLVED",
+        "Qxqy3OnMtLi",
+        "TiMvlchPiPH",
+        "pWaGXt8b4rt",
+        1,
+        1
+      ],
+      [
+        "CMA de Songkolong",
+        "VMMC_CIRC (N, TA, Age/Sex/HIVStatus): Voluntary Circumcised",
+        "20-24, Positive, Male",
+        "DSD Value",
+        "DSD Value",
+        "DSD Value",
+        "70010",
+        "RESOLVED",
+        "Qxqy3OnMtLi",
+        "TiMvlchPiPH",
+        "pWaGXt8b4rt",
+        1,
+        1
+      ]
+    ]
+  }
+}

@@ -7,9 +7,10 @@ import {noTextIn, textIn} from "../../test/domServices/textsIn.testService";
 import {exist, noExist} from "../../test/domServices/texts.testService";
 import {screen} from "@testing-library/react";
 import {InternalStatus} from "../../modules/results/models/dedupe.model";
+import {SnackbarProvider} from "notistack";
 
 export async function renderMain(){
-    return await setUpComponent(<Main/>,['Data Deduplication','Include Resolved','Dedupe Type', 'Operating Unit *']);
+    return await setUpComponent(<SnackbarProvider><Main/></SnackbarProvider>,['Data Deduplication','Include Resolved','Dedupe Type', 'Operating Unit *']);
 }
 
 export async function searchDedupes(testCase:DedupeTestCase){

@@ -2,6 +2,7 @@
 export type DedupeMetaModel = {
     orgUnitId: string;
     internalId: number;
+    periodId: string;
 }
 
 export type DedupeDataModel = {
@@ -59,6 +60,7 @@ export type DedupeModel = {
     info: DedupeInfoModel;
     resolution: DedupeResolutionModel;
     duplicates: DuplicateModel[];
+    status: InternalStatus;
 }
 
 function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2:DedupeResolutionMethodValue):boolean{
@@ -68,8 +70,12 @@ function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2
     && resolution1.resolutionValue===resolution2.resolutionValue;
 }
 
-export function getDedupeStatus(dedupe:DedupeModel):InternalStatus{
+function getDedupeStatus(dedupe:DedupeModel):InternalStatus{
     if (!dedupe.resolution || !dedupe.resolution.resolutionMethodValue) return InternalStatus.pending;
     if (!compareResolutions(dedupe.resolution.resolutionMethodValue, dedupe.resolution.original_resolutionMethodValue)) return InternalStatus.localChanges;
     if (dedupe.resolution.resolutionMethodValue && dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue!==null) return InternalStatus.resolved;
+}
+
+export function updateStatus(dedupe:DedupeModel):void{
+    dedupe.status = getDedupeStatus(dedupe);
 }

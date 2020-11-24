@@ -1,4 +1,5 @@
 import {fireEvent, screen} from "@testing-library/react";
+import {pause} from "./domUtils.testService";
 
 export function click(id:string){
     fireEvent.click(screen.getByTestId(id));
@@ -27,4 +28,11 @@ export function checkRadioValue(id:string, value:string){
 export function checkboxValue(id:string, value:boolean){
     // @ts-ignore
     expect(screen.getByTestId(id).checked).toBe(value);
+}
+
+export async function type(id:string, value:string){
+    fireEvent.change(screen.getByTestId(id), { target: { value: value } })
+    // fireEvent.click(screen.getByTestId(id));
+    // fireEvent.keyDown(screen.getByTestId(id),{key: 'Backspace', code: 'Backspace'});
+    await pause(1);
 }

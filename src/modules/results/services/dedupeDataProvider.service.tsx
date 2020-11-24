@@ -1,13 +1,16 @@
 import {
     DedupeModel,
     DedupeResolutionAvailableValues,
-    DedupeResolutionModel,
     DedupeResolutionMethodValue,
+    DedupeResolutionModel,
     DuplicateModel,
-    ResolutionMethodType
+    ResolutionMethodType,
+    updateStatus
 } from "../models/dedupe.model";
 import {FiltersModel} from "../../filters/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";
+
+const random = ()=>Math.random()*10e15
 
 function generateDedupeUrl(selectedFilters:FiltersModel):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
@@ -19,7 +22,8 @@ function generateDedupeUrl(selectedFilters:FiltersModel):string{
         + `&var=ps:100000`
         + `&var=pg:1`
         + `&var=ag:${selectedFilters.agency||'NONE'}`
-        + `&var=dg:${selectedFilters.technicalArea||'NONE'}`;
+        + `&var=dg:${selectedFilters.technicalArea||'NONE'}`
+        + `&cache=${random()}`;
 }
 
 function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
@@ -58,13 +62,14 @@ function getResolution(selectedRows:namedRow[], availableValues:DedupeResolution
 }
 
 function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableValues{
-    const enteredValues = selectedRows.filter(record=>record.value>=0).map(record=>record.value);
+    const enteredValues = selectedRows.filter(record=>record.mechanismNumber!==0).map(record=>record.value);
     return {
         sum: enteredValues.reduce((a,b)=>a+b,0),
         maximum: Math.max(...enteredValues),
         minimum: Math.min(...enteredValues)
     };
 }
+
 
 function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
     let resolution:DedupeResolutionModel = {
@@ -81,12 +86,13 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
 }
 
 
-function generateDedupe(selectedRows: namedRow[], groupNumber:number):DedupeModel{
+function generateDedupe(selectedRows: namedRow[], groupNumber:number, filters:FiltersModel):DedupeModel{
     let first = selectedRows[0];
-    return {
+    let dedupe:DedupeModel = {
         meta: {
             internalId: groupNumber,
             orgUnitId: first.orgUnitId,
+            periodId: filters.period
         },
         data: {
             dataElementId: first.dataElementId,
@@ -98,17 +104,20 @@ function generateDedupe(selectedRows: namedRow[], groupNumber:number):DedupeMode
             dataElementName: first.dataElementName
         },
         resolution: getResolutionDetails(selectedRows),
-        duplicates: extractDuplicates(selectedRows)
+        duplicates: extractDuplicates(selectedRows),
+        status: null
     };
+    updateStatus(dedupe);
+    return dedupe;
 }
 
-function processResponse(rows:any[]):DedupeModel[]{
+function processResponse(rows:any[], filters:FiltersModel):DedupeModel[]{
     if (rows.length===0) return [];
     let dedupesCount = rows[0].totalGroups;
     let dedupes = [];
     for (var groupNumber=1; groupNumber<=dedupesCount; groupNumber++){
         let selectedRows = rows.filter(row=>row.group===groupNumber);
-        let dedupe:DedupeModel = generateDedupe(selectedRows, groupNumber);
+        let dedupe:DedupeModel = generateDedupe(selectedRows, groupNumber, filters);
         dedupes.push(dedupe)
     }
     return dedupes;
@@ -152,9 +161,8 @@ function nameRows(rows:any[]):namedRow[]{
 
 export default function fetchDedupes(selectedFilters:FiltersModel):Promise<DedupeModel[]>{
     let requestUrl = generateDedupeUrl(selectedFilters);
-
     return getData(requestUrl)
         .then(response=>nameRows(response.listGrid.rows))
-        .then(processResponse);
+        .then((response)=>processResponse(response, selectedFilters))
 }
 

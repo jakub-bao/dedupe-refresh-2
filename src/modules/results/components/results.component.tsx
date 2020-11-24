@@ -6,6 +6,7 @@ import {
     ChangeResolutionMethod,
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+import {SaveDedupe, UndoChanges} from "../../resolutionMethodCell/components/statusCell.component";
 
 const styles = {
     info: {
@@ -13,12 +14,20 @@ const styles = {
     }
 };
 
-export default function Results({filteredDedupes,setResolutionValue, changeResolutionMethod}:{
+export default function Results({filteredDedupes,setResolutionValue, changeResolutionMethod, saveDedupe, undoChanges}:{
     filteredDedupes: DedupeModel[],
     setResolutionValue:SetResolutionValue,
-    changeResolutionMethod: ChangeResolutionMethod
+    changeResolutionMethod: ChangeResolutionMethod,
+    saveDedupe: SaveDedupe,
+    undoChanges:UndoChanges
 }) {
     if (!filteredDedupes) return null;
     if (filteredDedupes.length===0) return <Typography style={styles.info}>No duplicates found matching the selected criteria</Typography>
-    return <ResultsTable filteredDedupes={filteredDedupes} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>;
+    return <ResultsTable
+        filteredDedupes={filteredDedupes}
+        changeResolutionMethod={changeResolutionMethod}
+        setResolutionValue={setResolutionValue}
+        saveDedupe={saveDedupe}
+        undoChanges={undoChanges}
+    />;
 }

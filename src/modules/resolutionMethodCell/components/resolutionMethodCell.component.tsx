@@ -4,7 +4,7 @@ import {CompactRadio} from "../../results/components/compactRadio.component";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {getResolutionValue} from "../services/getResolutionValue.service";
-import {getAdjustmentValue} from "../services/getAdjustmentValue.service";
+import {getAdjustmentValueByMethod} from "../services/getAdjustmentValue.service";
 
 export type ChangeResolutionMethod = (dedupeId: number, resolvedBy:DedupeResolutionMethodValue)=>void;
 export type SetResolutionValue = (dedupeId: number, value:number)=>void;
@@ -38,7 +38,7 @@ function onResolutionChange(dedupe: DedupeModel, resolutionMethod: ResolutionMet
     changeResolutionMethod(dedupe.meta.internalId, {
         resolutionMethod,
         resolutionValue,
-        deduplicationAdjustmentValue: getAdjustmentValue(dedupe, resolutionMethod)
+        deduplicationAdjustmentValue: getAdjustmentValueByMethod(dedupe, resolutionMethod)
     });
 }
 
@@ -72,6 +72,7 @@ function SetCustomValue({value, setValue, visible}:{value:number, setValue:(valu
             size='small'
             value={value||''}
             onChange={(event)=>setValue(parseInt(event.target.value))}
+            inputProps={{'data-testid':'resolution_custom_input'}}
         />}
     </React.Fragment>
 }
@@ -79,7 +80,8 @@ function SetCustomValue({value, setValue, visible}:{value:number, setValue:(valu
 export function ResolutionMethodCell({dedupe, changeResolutionMethod, setResolutionValue}:{dedupe:DedupeModel, changeResolutionMethod:ChangeResolutionMethod, setResolutionValue:SetResolutionValue}){
     const resolutionSum = dedupe.resolution.availableValues.sum;
     const resolutionMax = dedupe.resolution.availableValues.maximum;
-    let resolutionId = makeId(dedupe.data.disAggregation);
+    // @ts-ignore
+    let resolutionId = dedupe.meta.internalId;
     return <RadioGroup
         style={styles.root}
         value={dedupe.resolution.resolutionMethodValue&&dedupe.resolution.resolutionMethodValue.resolutionMethod}

@@ -1,20 +1,21 @@
-import {testAs} from "../../test/apiCache/getData/getData.service";
-import {RdTestCase, rdTestCases, TestResolution} from "./3.renderDedupes.testCases";
-import {renderMain} from "../shared/sharedBasics.testService";
-import {checkRadioValue, click, loadingDone, select, texts} from "../../test/domServices/domUtils.testService";
+import {rdTestCases} from "./3.renderDedupes.testCases";
+import {searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
+import {checkRadioValue} from "../../test/domServices/domUtils.testService";
+import {DedupeTestCase, TestResolution} from "../shared/models/test.models";
+import {textIn} from "../../test/domServices/textsIn.testService";
 
-function renderDedupes(testCase:RdTestCase){
+function renderDedupes(testCase:DedupeTestCase){
     test(`3 > Render Dedupes > ${testCase.name}`, async ()=>{
-        testAs(testCase.testAs);
-        await renderMain();
-        ['operatingUnit','dataType','period'].forEach((filter:string)=>{
-            select(`filter_${filter}`,testCase.filters[filter]);
-        });
-        if (testCase.filters.includeResolved) click('filter_includeResolved');
-        click('searchDedupes');
-        await loadingDone();
-        texts(testCase.expectedTokens);
-        testCase.resolved.forEach((resolution:TestResolution)=>checkRadioValue(resolution.id, resolution.method))
+        await searchDedupes(testCase);
+        if (!testCase.resolved) textIn('status_1','pending');
+        if (testCase.resolved) {
+            testCase.resolved.forEach((resolution:TestResolution, i:number)=>{
+                checkRadioValue(`resolution_${i+1}`, resolution.method);
+                textIn(`status_${i+1}`,'resolved');
+            });
+
+        }
+        switchToCustom(1);
     });
 }
 

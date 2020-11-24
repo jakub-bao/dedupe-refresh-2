@@ -1,5 +1,5 @@
 import {DataType, DedupeType, FiltersModel} from "../../modules/filters/models/filters.model";
-import {DedupeModel, ResolutionMethodType} from "../../modules/results/models/dedupe.model";
+import {DedupeModel, InternalStatus, ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 
 export type FdTestCase = {
     name:string;
@@ -21,7 +21,8 @@ const RwandaResults2020Q4:FdTestCase = {
         includeResolved: false
     },
     dedupes: [{
-        "meta": {"orgUnitId": "TAPALAZae2l", "internalId":1},
+        status: InternalStatus.pending,
+        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":1},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "PWID, Negative",
@@ -39,7 +40,8 @@ const RwandaResults2020Q4:FdTestCase = {
             "mechanismNumber": 17616
         }, {"value": 10020, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": 16858}]
     }, {
-        "meta": {"orgUnitId": "TAPALAZae2l", "internalId":2},
+        status: InternalStatus.pending,
+        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":2},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "PWID, Positive",
@@ -72,7 +74,8 @@ const Nigeria1:FdTestCase = {
         includeResolved: true
     },
     dedupes: [{
-        "meta": {"orgUnitId": "p7M264Wg1qB", "internalId":1},
+        status: InternalStatus.resolved,
+        "meta": {"periodId":"2020Q4", "orgUnitId": "p7M264Wg1qB", "internalId":1},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "People in prisons and other enclosed settings, Positive",
@@ -103,7 +106,8 @@ const Nigeria1:FdTestCase = {
             "mechanismNumber": 16850
         }]
     }, {
-        "meta": {"orgUnitId": "BY7bSKwPjPJ", "internalId":2},
+        status: InternalStatus.resolved,
+        "meta": {"periodId":"2020Q4", "orgUnitId": "BY7bSKwPjPJ", "internalId":2},
         "data": {
             "dataElementId": "FI2s716RRZc",
             "disAggregation": "PWID, Recent RTRI, Positive",

@@ -2,7 +2,12 @@ import React from "react";
 import Filters from "../../filters/components/filters.component";
 import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {DedupeModel, DedupeResolutionMethodValue} from "../../results/models/dedupe.model";
+import {
+    DedupeModel,
+    DedupeResolutionMethodValue,
+    InternalStatus,
+    updateStatus
+} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
@@ -15,9 +20,15 @@ import {
     ChangeResolutionMethod,
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData.service";
+import {saveDedupe} from "../services/saveDedupe.service";
+import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 
 
-export default class Main extends React.Component<{}, {
+class Main extends React.Component<{
+    enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
+    closeSnackbar: (key?: SnackbarKey) => void;
+}, {
     selectedFilters:FiltersModel,
     results: {
         dedupes: DedupeModel[],
@@ -85,7 +96,6 @@ export default class Main extends React.Component<{}, {
         this.updateUi({results: true}, {results: false});
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
-            console.log(dedupes);
             this.setState({results: {dedupes, selectedFilters}});
             this.updateUi({results: false}, {results: false});
         }).catch(()=>{
@@ -102,34 +112,51 @@ export default class Main extends React.Component<{}, {
         this.setState({selectedFilters});
     };
 
-    findDedupe = (dedupeId:number, cb:any)=>{
-        let dedupes = JSON.parse(JSON.stringify(this.state.results.dedupes));
-        dedupes.forEach((dedupe:DedupeModel)=>{
-            if (dedupe.meta.internalId!==dedupeId) return;
-            cb(dedupe);
-        });
-        this.setState({results: {selectedFilters: this.state.results.selectedFilters, dedupes}});
+    updateDedupes = (dedupes:DedupeModel[])=>{
+        this.setState({results:{dedupes, selectedFilters: this.state.results.selectedFilters}});
     }
 
     changeResolutionMethod:ChangeResolutionMethod = (dedupeId:number, resolvedBy:DedupeResolutionMethodValue)=>{
-        this.findDedupe(dedupeId, (dedupe:DedupeModel)=>{
-            dedupe.resolution.resolutionMethodValue = resolvedBy;
-        });
+        this.updateDedupes(changeResolutionMethod(this.state.results.dedupes, dedupeId, resolvedBy));
     };
 
     setResolutionValue:SetResolutionValue = (dedupeId:number, customValue)=>{
-        this.findDedupe(dedupeId, (dedupe:DedupeModel)=>{
-            dedupe.resolution.resolutionMethodValue.resolutionValue = customValue;
-        });
+        this.updateDedupes(setResolutionValue(this.state.results.dedupes, dedupeId, customValue));
     };
 
     renderResults(){
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100} />;
         if (this.state.ui.error.results) return <NetworkError/>;
         if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
-        return <Results filteredDedupes={this.state.results.dedupes} setResolutionValue={this.setResolutionValue} changeResolutionMethod={this.changeResolutionMethod}/>;
+        return <Results
+            filteredDedupes={this.state.results.dedupes}
+            setResolutionValue={this.setResolutionValue}
+            changeResolutionMethod={this.changeResolutionMethod}
+            saveDedupe={this.saveDedupe}
+            undoChanges={this.undoChanges}
+        />;
     }
 
+    getDedupe(id:number):DedupeModel{
+        return this.state.results.dedupes.filter(d=>d.meta.internalId===id)[0];
+    }
+
+    saveDedupe = (id:number)=>{
+        let dedupe:DedupeModel = this.state.results.dedupes[id-1];
+        saveDedupe(dedupe).then((worked:boolean)=>{
+            this.props.enqueueSnackbar(`Saved`);
+            dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
+            dedupe.status = InternalStatus.resolved;
+            this.setState({results:this.state.results});
+        });
+    }
+
+    undoChanges = (id:number)=>{
+        let newDedupe = this.getDedupe(id);
+        newDedupe.resolution.resolutionMethodValue = newDedupe.resolution.original_resolutionMethodValue;
+        updateStatus(newDedupe);
+        this.updateDedupes(this.state.results.dedupes);
+    }
 
     renderPreselect(){
         if(process.env.NODE_ENV === 'production') return null;
@@ -137,6 +164,8 @@ export default class Main extends React.Component<{}, {
             <span onClick={()=>this.preselect('XtxUYCsDWrR','2020Q4', DedupeType.pure)}>Rwda</span>
             <span onClick={()=>this.preselect('PqlFzhuPcF1','2020Q4',DedupeType.pure)}>Ngia</span>
             <span onClick={()=>this.preselect('f5RoebaDLMx','2020Q4',DedupeType.crosswalk)}>Zbia</span>
+            <span onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q4',DedupeType.pure)}>Btsw</span>
+            <span onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q3',DedupeType.pure)}>Full</span>
         </div>;
     }
 
@@ -180,3 +209,4 @@ export default class Main extends React.Component<{}, {
         </React.Fragment>;
     }
 }
+export default withSnackbar(Main);

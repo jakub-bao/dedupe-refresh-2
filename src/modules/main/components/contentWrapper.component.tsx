@@ -21,8 +21,10 @@ function Indent({filtersOpen, children}:{filtersOpen: boolean, children: any}){
     </div>;
 }
 
-export default function ContentWrapper({filtersUi, children}:{filtersUi: FiltersUiModel, children:any}) {
+function _ContentWrapper({filtersUi, children}:{filtersUi: FiltersUiModel, children:any}) {
     return <Indent filtersOpen={filtersUi.filtersOpen}>
         {children}
     </Indent>;
 }
+
+export default React.memo(_ContentWrapper);

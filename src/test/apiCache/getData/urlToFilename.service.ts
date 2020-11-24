@@ -17,6 +17,7 @@ let tokensToRemove = [
     /startDate/g,
     /endDate/g,
     /01_01/g,
+    /&cache.+$/g,
 ];
 export function urlToFilename(username:string, url:string):string{
     tokensToRemove.forEach(re=>{

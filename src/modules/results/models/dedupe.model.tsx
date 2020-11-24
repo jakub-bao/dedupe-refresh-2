@@ -46,7 +46,8 @@ export type DuplicateModel = {
     value: number;
     agencyName: string;
     partnerName: string;
-    mechanismNumber: number;
+    mechanismNumber: string;
+
 }
 
 export enum InternalStatus{

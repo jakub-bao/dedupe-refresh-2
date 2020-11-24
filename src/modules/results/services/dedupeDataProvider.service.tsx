@@ -27,7 +27,7 @@ function generateDedupeUrl(selectedFilters:FiltersModel):string{
 }
 
 function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
-    return rows.filter(namedRow=>namedRow.mechanismNumber!==0).map(namedRow=>{
+    return rows.filter(namedRow=>!["00000","00001"].includes(namedRow.mechanismNumber)).map(namedRow=>{
         return {
             value: namedRow.value,
             agencyName: namedRow.agencyName,
@@ -62,7 +62,7 @@ function getResolution(selectedRows:namedRow[], availableValues:DedupeResolution
 }
 
 function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableValues{
-    const enteredValues = selectedRows.filter(record=>record.mechanismNumber!==0).map(record=>record.value);
+    const enteredValues = selectedRows.filter(record=>!["00000","00001"].includes(record.mechanismNumber)).map(record=>record.value);
     return {
         sum: enteredValues.reduce((a,b)=>a+b,0),
         maximum: Math.max(...enteredValues),
@@ -133,7 +133,7 @@ type namedRow = {
     dataElementName:string;
     disAggregation:string;
     agencyName: string;
-    mechanismNumber:number;
+    mechanismNumber:string;
     partnerName:string;
     value:number;
     duplicateStatus:string;
@@ -151,7 +151,7 @@ function nameRows(rows:any[]):namedRow[]{
             dataElementName: row[1],
             disAggregation: row[2],
             agencyName: row[3],
-            mechanismNumber: parseInt(row[4]),
+            mechanismNumber: row[4],
             partnerName: row[5],
             value: parseInt(row[6]),
             duplicateStatus: row[7],

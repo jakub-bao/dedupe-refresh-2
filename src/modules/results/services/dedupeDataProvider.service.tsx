@@ -7,7 +7,7 @@ import {
     ResolutionMethodType,
     updateStatus
 } from "../models/dedupe.model";
-import {FiltersModel} from "../../filters/models/filters.model";
+import {DedupeType, FiltersModel} from "../../filters/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";
 
 const random = ()=>Math.random()*10e15
@@ -85,6 +85,10 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
     return resolution;
 }
 
+function getDe(filters:FiltersModel,rows:namedRow[]):string{
+    if (filters.dedupeType===DedupeType.pure) return rows[0].dataElementId;
+    return rows.filter(row=>row.partnerName!=='DSD Value')[0].dataElementId;
+}
 
 function generateDedupe(selectedRows: namedRow[], groupNumber:number, filters:FiltersModel):DedupeModel{
     let first = selectedRows[0];
@@ -92,10 +96,11 @@ function generateDedupe(selectedRows: namedRow[], groupNumber:number, filters:Fi
         meta: {
             internalId: groupNumber,
             orgUnitId: first.orgUnitId,
-            periodId: filters.period
+            periodId: filters.period,
+            dedupeType: filters.dedupeType
         },
         data: {
-            dataElementId: first.dataElementId,
+            dataElementId: getDe(filters, selectedRows),
             disAggregation: first.disAggregation,
             categoryOptionComboId: first.categoryOptionComboId
         },

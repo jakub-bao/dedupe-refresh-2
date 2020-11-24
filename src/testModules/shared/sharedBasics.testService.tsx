@@ -16,6 +16,7 @@ export async function renderMain(){
 export async function searchDedupes(testCase:DedupeTestCase){
     testAs(testCase.testAs);
     await renderMain();
+    if (testCase.filters.crosswalk) select(`filter_dedupeType`,'Crosswalk Dedupes');
     ['operatingUnit','dataType','period'].forEach((filter:string)=>{
         select(`filter_${filter}`,testCase.filters[filter]);
     });

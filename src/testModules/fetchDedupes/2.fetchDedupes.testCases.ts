@@ -22,7 +22,7 @@ const RwandaResults2020Q4:FdTestCase = {
     },
     dedupes: [{
         status: InternalStatus.pending,
-        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":1},
+        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":1,"dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "PWID, Negative",
@@ -41,7 +41,7 @@ const RwandaResults2020Q4:FdTestCase = {
         }, {"value": 10020, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": 16858}]
     }, {
         status: InternalStatus.pending,
-        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":2},
+        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":2,"dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "PWID, Positive",
@@ -75,7 +75,7 @@ const Nigeria1:FdTestCase = {
     },
     dedupes: [{
         status: InternalStatus.resolved,
-        "meta": {"periodId":"2020Q4", "orgUnitId": "p7M264Wg1qB", "internalId":1},
+        "meta": {"periodId":"2020Q4", "orgUnitId": "p7M264Wg1qB", "internalId":1, "dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "People in prisons and other enclosed settings, Positive",
@@ -107,7 +107,7 @@ const Nigeria1:FdTestCase = {
         }]
     }, {
         status: InternalStatus.resolved,
-        "meta": {"periodId":"2020Q4", "orgUnitId": "BY7bSKwPjPJ", "internalId":2},
+        "meta": {"periodId":"2020Q4", "orgUnitId": "BY7bSKwPjPJ", "internalId":2, "dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "FI2s716RRZc",
             "disAggregation": "PWID, Recent RTRI, Positive",

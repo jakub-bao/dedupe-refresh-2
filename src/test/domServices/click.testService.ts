@@ -1,5 +1,5 @@
 import {fireEvent, screen} from "@testing-library/react";
-import {pause} from "./domUtils.testService";
+import {debug, pause} from "./domUtils.testService";
 
 export function click(id:string){
     fireEvent.click(screen.getByTestId(id));
@@ -11,6 +11,7 @@ export function clickByText(text:string){
 
 export async function select(selectId:string, value:string){
     fireEvent.mouseDown(screen.getByTestId(selectId).childNodes[0]);
+    // debug();
     screen.getByText(value);
     fireEvent.click(screen.getByText(value));
     checkSelectValue(selectId, value);

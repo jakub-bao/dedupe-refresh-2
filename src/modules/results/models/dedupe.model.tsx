@@ -1,8 +1,10 @@
+import {DedupeType} from "../../filters/models/filters.model";
 
 export type DedupeMetaModel = {
     orgUnitId: string;
     internalId: number;
     periodId: string;
+    dedupeType: DedupeType
 }
 
 export type DedupeDataModel = {

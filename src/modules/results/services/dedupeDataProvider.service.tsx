@@ -10,6 +10,8 @@ import {
 import {FiltersModel} from "../../filters/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";
 
+const random = ()=>Math.random()*10e15
+
 function generateDedupeUrl(selectedFilters:FiltersModel):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
         + `&var=ou:${selectedFilters.operatingUnit}`
@@ -20,7 +22,8 @@ function generateDedupeUrl(selectedFilters:FiltersModel):string{
         + `&var=ps:100000`
         + `&var=pg:1`
         + `&var=ag:${selectedFilters.agency||'NONE'}`
-        + `&var=dg:${selectedFilters.technicalArea||'NONE'}`;
+        + `&var=dg:${selectedFilters.technicalArea||'NONE'}`
+        + `&cache=${random()}`;
 }
 
 function extractDuplicates(rows:namedRow[]):DuplicateModel[]{

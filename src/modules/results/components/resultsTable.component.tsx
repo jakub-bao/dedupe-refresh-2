@@ -34,6 +34,7 @@ const tableOptions:Options<DedupeModel> = {
         borderRight: darkBorder,
         borderBottom: darkBorder,
     },
+    draggable: false
 } as Options<DedupeModel>;
 
 export const Row = withStyles((theme) => ({

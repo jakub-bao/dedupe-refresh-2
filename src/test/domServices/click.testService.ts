@@ -1,5 +1,5 @@
 import {fireEvent, screen} from "@testing-library/react";
-import {debug, pause} from "./domUtils.testService";
+import {pause} from "./domUtils.testService";
 
 export function click(id:string){
     fireEvent.click(screen.getByTestId(id));

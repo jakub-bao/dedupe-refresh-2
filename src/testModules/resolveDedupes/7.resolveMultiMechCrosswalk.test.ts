@@ -1,7 +1,6 @@
 import {DedupeTestCase} from "../shared/models/test.models";
-import {checkCustomValue, checkStatus, searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
-import {checkRadioValue, click, type} from "../../test/domServices/click.testService";
-import {InternalStatus} from "../../modules/results/models/dedupe.model";
+import {searchDedupes} from "../shared/sharedBasics.testService";
+import {checkRadioValue, click} from "../../test/domServices/click.testService";
 import {waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
 

@@ -1,11 +1,9 @@
 import sqlResponse from "./8.displayResolvedMultiMechCrosswalk.testData.json";
 import {registerGetMock} from "../../test/apiCache/getData/getMock.service";
-import {checkCustomValue, searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
-import {checkRadioValue, click, type} from "../../test/domServices/click.testService";
-import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
-import {noTexts, waitForTexts} from "../../test/domServices/texts.testService";
+import {searchDedupes} from "../shared/sharedBasics.testService";
+import {checkRadioValue} from "../../test/domServices/click.testService";
+import {noTexts} from "../../test/domServices/texts.testService";
 import {DedupeTestCase} from "../shared/models/test.models";
-import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 
 const EthiopiaTest:DedupeTestCase = {
     testAs: 'test-de-superAdmin',

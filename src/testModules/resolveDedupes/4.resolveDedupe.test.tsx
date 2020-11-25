@@ -2,9 +2,8 @@ import {DedupeTestCase} from "../shared/models/test.models";
 import {checkCustomValue, checkStatus, searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
 import {click, type} from "../../test/domServices/click.testService";
 import {InternalStatus} from "../../modules/results/models/dedupe.model";
-import {noTexts, waitForTexts} from "../../test/domServices/domUtils.testService";
+import {waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
-import {deleteData} from "../../sharedModules/shared/services/api.service";
 
 //delete data: env-load-dhis jakub && dhis_api -a "dataValues.json?de=qhGxKnmrZBd&co=xYyVHiXrvSi&ou=gGqaAXuUGpb&pe=2020Q4&cc=wUpfppgjEza&cp=xEzelmtHWPn" -X DELETE
 

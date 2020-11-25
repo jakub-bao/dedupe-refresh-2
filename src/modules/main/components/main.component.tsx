@@ -23,6 +23,7 @@ import {
 import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData.service";
 import {saveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
+import {Typography} from "@material-ui/core";
 
 
 class Main extends React.Component<{
@@ -160,13 +161,15 @@ class Main extends React.Component<{
 
     renderPreselect(){
         if(process.env.NODE_ENV === 'production') return null;
+        if(this.state.results.dedupes) return null;
         return <div style={{position: 'fixed', top: 50, right: 10}}>
-            <span onClick={()=>this.preselect('XtxUYCsDWrR','2020Q4', DedupeType.pure)}>Rwda</span>
-            <span onClick={()=>this.preselect('PqlFzhuPcF1','2020Q4',DedupeType.pure)}>Ngia</span>
-            <span onClick={()=>this.preselect('f5RoebaDLMx','2020Q4',DedupeType.crosswalk)}>Zbia</span>
-            <span onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q4',DedupeType.pure)}>Btsw</span>
-            <span onClick={()=>this.preselect('bQQJe0cC1eD','2020Q4',DedupeType.crosswalk)}>Cmrn</span>
-            <span onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q3',DedupeType.pure)}>Full</span>
+            <Typography onClick={()=>this.preselect('XtxUYCsDWrR','2020Q4', DedupeType.pure)}>Rwanda</Typography>
+            <Typography onClick={()=>this.preselect('PqlFzhuPcF1','2020Q4',DedupeType.pure)}>Nigeria</Typography>
+            <Typography onClick={()=>this.preselect('f5RoebaDLMx','2020Q4',DedupeType.crosswalk)}>Zambia</Typography>
+            <Typography onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q4',DedupeType.pure)}>Botswana</Typography>
+            <Typography onClick={()=>this.preselect('bQQJe0cC1eD','2020Q4',DedupeType.crosswalk)}>Cameroon</Typography>
+            <Typography onClick={()=>this.preselect('IH1kchw86uA','2020Q4',DedupeType.crosswalk)}>Ethiopia</Typography>
+            <Typography onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q3',DedupeType.pure)}>Full list</Typography>
         </div>;
     }
 

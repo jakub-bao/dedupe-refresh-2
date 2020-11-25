@@ -155,4 +155,20 @@ const Cameroon:DedupeValueSet = {
     }]
 };
 
-export const dedupeValueSets:DedupeValueSet[] = [Nigeria1,Nigeria2,Rwanda1,Rwanda2,Zambia1,Zambia2,Botswana, Cameroon];
+const Ethiopia:DedupeValueSet = {
+    dataSet: 'qzVASYuaIey',
+    orgUnitId: 'Dl0yK0OhftZ',
+    period: '2020Q4',
+    categoryOptionCombo_co: "xYyVHiXrvSi",
+    dataValues: [{
+        value: 80010,
+        dataElement_de: 'qhGxKnmrZBd',
+        categoryOption_cp: 'Mc2Hbha1xD6',
+    },{
+        value: 80020,
+        dataElement_de: 'kt5rPumWUBE',
+        categoryOption_cp: 'IlCRnjpyBAl',
+    }]
+};
+
+export const dedupeValueSets:DedupeValueSet[] = [Nigeria1,Nigeria2,Rwanda1,Rwanda2,Zambia1,Zambia2,Botswana, Cameroon, Ethiopia];

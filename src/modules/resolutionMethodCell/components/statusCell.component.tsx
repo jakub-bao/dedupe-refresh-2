@@ -1,6 +1,7 @@
 import React, {CSSProperties} from "react";
 import {DedupeModel, InternalStatus} from "../../results/models/dedupe.model";
-import {Button, Typography} from "@material-ui/core";
+import {Button, IconButton, Tooltip, Typography} from "@material-ui/core";
+import {Check, Close} from "@material-ui/icons";
 
 export type SaveDedupe = (id:number)=>void;
 export type UndoChanges = (id:number)=>void;
@@ -35,8 +36,14 @@ export default function StatusCell({dedupe, saveDedupe, undoChanges}:{dedupe:Ded
     return <div style={styles.root} data-testid={`status_${dedupe.meta.internalId}`}>
         <Typography style={styles.status}>{statusToText(dedupe.status)}</Typography>
         {dedupe.status===InternalStatus.localChanges &&<div style={styles.buttons}>
-            <Button onClick={()=>undoChanges(dedupe.meta.internalId)} data-testid={`dedupe_${dedupe.meta.internalId}_cancel`}>Cancel</Button>
-            <Button style={styles.save} onClick={()=>saveDedupe(dedupe.meta.internalId)} data-testid={`dedupe_${dedupe.meta.internalId}_save`}>Save</Button>
+            <Tooltip title='Cancel'>
+                <IconButton onClick={()=>undoChanges(dedupe.meta.internalId)} data-testid={`dedupe_${dedupe.meta.internalId}_cancel`} size='small'><Close/></IconButton>
+            </Tooltip>
+            <Tooltip title='Save'>
+                <IconButton style={styles.save} onClick={()=>saveDedupe(dedupe.meta.internalId)} data-testid={`dedupe_${dedupe.meta.internalId}_save`} size='small'><Check/></IconButton>
+            </Tooltip>
+            {/*<Button onClick={()=>undoChanges(dedupe.meta.internalId)} data-testid={`dedupe_${dedupe.meta.internalId}_cancel`} size='small'>Cancel</Button>*/}
+            {/*<Button style={styles.save} onClick={()=>saveDedupe(dedupe.meta.internalId)} data-testid={`dedupe_${dedupe.meta.internalId}_save`} size='small'>Save</Button>*/}
         </div>}
     </div>;
 }

@@ -38,10 +38,16 @@ function statusToText(status:InternalStatus):string{
     return camelCaseToHuman(status);
 }
 
+function getStatusStyle(status:InternalStatus):object{
+    let color;
+    if (status!==InternalStatus.unresolved) color = 'white';
+    return Object.assign({},styles.status,{color:color});
+}
+
 export default function StatusCell({dedupe, saveDedupe}:{dedupe:DedupeModel, saveDedupe:SaveDedupe}) {
     // @ts-ignore
     return <div style={styles.root} data-testid={`status_${dedupe.meta.internalId}`}>
-        <Typography style={styles.status}>{statusToText(dedupe.status)}</Typography>
+        <Typography style={getStatusStyle(dedupe.status)}>{statusToText(dedupe.status)}</Typography>
         {dedupe.status===InternalStatus.readyToResolve && <Button
             variant='contained'
             style={styles.save}

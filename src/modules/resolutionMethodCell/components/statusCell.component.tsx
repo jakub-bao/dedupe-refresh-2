@@ -8,8 +8,6 @@ export type SaveDedupe = (id:number)=>void;
 const styles = {
     root: {
         textAlign: 'center',
-        color: 'white',
-        position: 'relative'
     } as CSSProperties,
     status:{
         fontSize: 13,
@@ -18,10 +16,10 @@ const styles = {
         left: 0
     },
     save: {
-        color: 'white',
         right: 0,
         padding: '3px',
-        minWidth: 55
+        minWidth: 72,
+        marginTop: 5
     } as CSSProperties
 };
 

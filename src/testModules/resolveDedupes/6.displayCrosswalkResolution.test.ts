@@ -20,7 +20,7 @@ export const CameroonTestCase:DedupeTestCase = {
         '20-24, Positive, Male',
         'CMA de Songkolong',
         'HHS/CDC',
-        'resolved','70020','70010','Sum (140030)','Maximum (70020)'
+        'Resolved on server','70020','70010','Sum (140030)','Maximum (70020)'
     ],
     resolved: [{
         value:70080,

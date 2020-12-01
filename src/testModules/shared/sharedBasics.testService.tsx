@@ -28,9 +28,9 @@ export async function searchDedupes(testCase:DedupeTestCase){
 
 export function switchToCustom(index:number){
     noExist('resolution_custom_input');
-    noTextIn(`status_${index}`, 'unsaved');
+    noTextIn(`status_${index}`, 'Ready to resolve');
     click(`resolution_${index}_custom`);
-    textIn(`status_${index}`, 'unsaved');
+    textIn(`status_${index}`, 'Ready to resolve');
     exist('resolution_custom_input');
 }
 

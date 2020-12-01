@@ -1,7 +1,6 @@
 import {DedupeTestCase} from "../shared/models/test.models";
-import {checkCustomValue, checkStatus, searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
+import {checkCustomValue, searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
 import {click, type} from "../../test/domServices/click.testService";
-import {InternalStatus} from "../../modules/results/models/dedupe.model";
 import {waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
 
@@ -25,15 +24,6 @@ const BotswanaTestCase:DedupeTestCase = {
     ],
     resolved: null,
 };
-test(`4 > Resolve Dedupes > Botswana > Cancel`, async ()=>{
-    await searchDedupes(BotswanaTestCase);
-    switchToCustom(1);
-    checkCustomValue(60010)
-    await type('resolution_custom_input', '60020');
-    checkCustomValue(60020)
-    click(`dedupe_1_cancel`);
-    checkStatus(1,InternalStatus.pending);
-});
 
 test(`4 > Resolve Dedupes > Botswana > Submit`, async ()=>{
     // await deleteData('/dataValues?de=qhGxKnmrZBd&co=xYyVHiXrvSi&ou=gGqaAXuUGpb&pe=2020Q4&value=0&cc=wUpfppgjEza&cp=xEzelmtHWPn');
@@ -46,6 +36,6 @@ test(`4 > Resolve Dedupes > Botswana > Submit`, async ()=>{
         expect(data).toBe('de=qhGxKnmrZBd&co=xYyVHiXrvSi&ou=gGqaAXuUGpb&pe=2020Q4&value=-120040&cc=wUpfppgjEza&cp=xEzelmtHWPn');
     });
     click(`dedupe_1_save`);
-    await waitForTexts(['Saved','resolved']);
+    await waitForTexts(['Resolved','Resolved on server']);
     checkCustomValue(60020);
 });

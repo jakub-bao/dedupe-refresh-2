@@ -20,7 +20,7 @@ const CameroonTestCase:DedupeTestCase = {
         '20-24, Positive, Male',
         'CMA de Songkolong',
         'HHS/CDC',
-        'pending','70020','70010','Sum (140030)','Maximum (70020)'
+        'Unresolved','70020','70010','Sum (140030)','Maximum (70020)'
     ],
     resolved: null,
 };
@@ -35,6 +35,6 @@ test(`5 > Resolve Crosswalk Dedupes > Cameroon`, async ()=>{
         expect(data).toBe('de=TiMvlchPiPH&co=pWaGXt8b4rt&ou=Qxqy3OnMtLi&pe=2020Q4&value=-69950&cc=wUpfppgjEza&cp=OM58NubPbx1');
     });
     click(`dedupe_1_save`);
-    await waitForTexts(['Saved','resolved']);
+    await waitForTexts(['Resolved','Resolved on server']);
     checkCustomValue(70080);
 });

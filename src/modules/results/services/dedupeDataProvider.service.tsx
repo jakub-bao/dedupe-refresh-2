@@ -123,7 +123,8 @@ function processResponse(rows:any[], filters:FiltersModel):DedupeModel[]{
     let dedupesCount = rows[0].totalGroups;
     let dedupes = [];
     for (var groupNumber=1; groupNumber<=dedupesCount; groupNumber++){
-        let selectedRows = rows.filter(row=>row.group===groupNumber);
+        const gn = groupNumber;
+        let selectedRows = rows.filter(row=>row.group===gn);
         let dedupe:DedupeModel = generateDedupe(selectedRows, groupNumber, filters);
         dedupes.push(dedupe)
     }

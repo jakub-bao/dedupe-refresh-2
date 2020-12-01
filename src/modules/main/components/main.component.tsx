@@ -2,12 +2,7 @@ import React from "react";
 import Filters from "../../filters/components/filters.component";
 import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {
-    DedupeModel,
-    DedupeResolutionMethodValue,
-    InternalStatus,
-    updateStatus
-} from "../../results/models/dedupe.model";
+import {DedupeModel, DedupeResolutionMethodValue, InternalStatus} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
@@ -134,7 +129,6 @@ class Main extends React.Component<{
             setResolutionValue={this.setResolutionValue}
             changeResolutionMethod={this.changeResolutionMethod}
             saveDedupe={this.saveDedupe}
-            undoChanges={this.undoChanges}
         />;
     }
 
@@ -145,18 +139,11 @@ class Main extends React.Component<{
     saveDedupe = (id:number)=>{
         let dedupe:DedupeModel = this.state.results.dedupes[id-1];
         saveDedupe(dedupe).then((worked:boolean)=>{
-            this.props.enqueueSnackbar(`Saved`);
+            this.props.enqueueSnackbar(`Resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
-            dedupe.status = InternalStatus.resolved;
+            dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results:this.state.results});
         });
-    }
-
-    undoChanges = (id:number)=>{
-        let newDedupe = this.getDedupe(id);
-        newDedupe.resolution.resolutionMethodValue = newDedupe.resolution.original_resolutionMethodValue;
-        updateStatus(newDedupe);
-        this.updateDedupes(this.state.results.dedupes);
     }
 
     renderPreselect(){

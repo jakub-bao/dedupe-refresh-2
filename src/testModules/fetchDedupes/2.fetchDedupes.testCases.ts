@@ -21,7 +21,7 @@ const RwandaResults2020Q4:FdTestCase = {
         includeResolved: false
     },
     dedupes: [{
-        status: InternalStatus.pending,
+        status: InternalStatus.unresolved,
         "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":1,"dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
@@ -40,7 +40,7 @@ const RwandaResults2020Q4:FdTestCase = {
             "mechanismNumber": "17616"
         }, {"value": 10020, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": "16858"}]
     }, {
-        status: InternalStatus.pending,
+        status: InternalStatus.unresolved,
         "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":2,"dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
@@ -74,7 +74,7 @@ const Nigeria1:FdTestCase = {
         includeResolved: true
     },
     dedupes: [{
-        status: InternalStatus.resolved,
+        status: InternalStatus.resolvedOnServer,
         "meta": {"periodId":"2020Q4", "orgUnitId": "p7M264Wg1qB", "internalId":1, "dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
@@ -106,7 +106,7 @@ const Nigeria1:FdTestCase = {
             "mechanismNumber": "16850"
         }]
     }, {
-        status: InternalStatus.resolved,
+        status: InternalStatus.resolvedOnServer,
         "meta": {"periodId":"2020Q4", "orgUnitId": "BY7bSKwPjPJ", "internalId":2, "dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "FI2s716RRZc",

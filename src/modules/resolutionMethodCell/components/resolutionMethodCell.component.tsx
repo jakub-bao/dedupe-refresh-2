@@ -9,10 +9,6 @@ import {getAdjustmentValueByMethod} from "../services/getAdjustmentValue.service
 export type ChangeResolutionMethod = (dedupeId: number, resolvedBy:DedupeResolutionMethodValue)=>void;
 export type SetResolutionValue = (dedupeId: number, value:number)=>void;
 
-function makeId(long:string):string{
-    return long.substr(0,5).replace(/[^A-z0-9]/,'')
-}
-
 const styles = {
     root: {
         marginLeft: 10

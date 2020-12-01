@@ -19,12 +19,9 @@ const styles = {
     },
     save: {
         color: 'white',
-        right: 0
-    },
-    buttons: {
-        // position: 'absolute',
-        // top: 30,
-        width: '100%'
+        right: 0,
+        padding: '3px',
+        minWidth: 55
     } as CSSProperties
 };
 
@@ -47,16 +44,14 @@ export default function StatusCell({dedupe, saveDedupe}:{dedupe:DedupeModel, sav
     // @ts-ignore
     return <div style={styles.root} data-testid={`status_${dedupe.meta.internalId}`}>
         <Typography style={styles.status}>{statusToText(dedupe.status)}</Typography>
-        {dedupe.status===InternalStatus.readyToResolve &&<div style={styles.buttons}>
-            <Button
-                variant='contained'
-                style={styles.save}
-                onClick={()=>saveDedupe(dedupe.meta.internalId)}
-                data-testid={`dedupe_${dedupe.meta.internalId}_save`}
-                disableElevation
-                size='small'>
-                Save
-            </Button>
-        </div>}
+        {dedupe.status===InternalStatus.readyToResolve && <Button
+            variant='contained'
+            style={styles.save}
+            onClick={()=>saveDedupe(dedupe.meta.internalId)}
+            data-testid={`dedupe_${dedupe.meta.internalId}_resolve`}
+            disableElevation
+            size='small'>
+            Resolve
+        </Button>}
     </div>;
 }

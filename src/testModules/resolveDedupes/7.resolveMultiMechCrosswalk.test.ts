@@ -31,7 +31,7 @@ test(`7 > Resolve Multi-mech Crosswalk Dedupe > Ethiopia`, async ()=>{
     registerSendMock('POST','/dataValues', {ok:true},(data:any)=>{
         expect(data).toBe('de=kt5rPumWUBE&co=xYyVHiXrvSi&ou=Dl0yK0OhftZ&pe=2020Q4&value=-80010&cc=wUpfppgjEza&cp=OM58NubPbx1');
     });
-    click(`dedupe_1_save`);
+    click(`dedupe_1_resolve`);
     await waitForTexts(['Resolved','Resolved on server']);
     checkRadioValue(`resolution_1`, 'maximum');
 });

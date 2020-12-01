@@ -35,7 +35,7 @@ test(`4 > Resolve Dedupes > Botswana > Submit`, async ()=>{
     registerSendMock('POST','/dataValues', {ok:true},(data:any)=>{
         expect(data).toBe('de=qhGxKnmrZBd&co=xYyVHiXrvSi&ou=gGqaAXuUGpb&pe=2020Q4&value=-120040&cc=wUpfppgjEza&cp=xEzelmtHWPn');
     });
-    click(`dedupe_1_save`);
+    click(`dedupe_1_resolve`);
     await waitForTexts(['Resolved','Resolved on server']);
     checkCustomValue(60020);
 });

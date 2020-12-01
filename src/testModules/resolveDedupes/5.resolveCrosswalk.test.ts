@@ -34,7 +34,7 @@ test(`5 > Resolve Crosswalk Dedupes > Cameroon`, async ()=>{
     registerSendMock('POST','/dataValues', {ok:true},(data:any)=>{
         expect(data).toBe('de=TiMvlchPiPH&co=pWaGXt8b4rt&ou=Qxqy3OnMtLi&pe=2020Q4&value=-69950&cc=wUpfppgjEza&cp=OM58NubPbx1');
     });
-    click(`dedupe_1_save`);
+    click(`dedupe_1_resolve`);
     await waitForTexts(['Resolved','Resolved on server']);
     checkCustomValue(70080);
 });

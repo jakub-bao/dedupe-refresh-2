@@ -53,7 +53,7 @@ const components = {
 
 function statusToColor(status:InternalStatus):string{
     switch (status){
-        case InternalStatus.unresolved: return 'none';
+        case InternalStatus.unresolved: return '#00000000';
         case InternalStatus.readyToResolve: return '#9C0D38';
         case InternalStatus.resolvedOnServer: return '#307351';
     }

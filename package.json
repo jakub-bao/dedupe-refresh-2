@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && npm run build:zip",
-    "build:zip": "(rm -f Data-Deduplication.zip && cd build && zip ../Data-Deduplication.zip -r .)",
+    "build:zip": "(rm -f Data-Deduplication-2.zip && cd build && zip ../Data-Deduplication-2.zip -r .)",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --maxWorkers=4",
     "test:debug": "react-scripts --inspect-brk test --env=jest-environment-jsdom-sixteen --runInBand --no-cache",
     "test:cy": "ts-node --skip-project cypressRunner/cypressRunner.index.ts",

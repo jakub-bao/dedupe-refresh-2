@@ -121,7 +121,7 @@ const Zambia2:DedupeValueSet = {
     }]
 };
 
-const Botswana1:DedupeValueSet = {
+const Botswana:DedupeValueSet = {
     dataSet: 'qzVASYuaIey',
     orgUnitId: 'gGqaAXuUGpb',
     period: '2020Q4',
@@ -139,4 +139,36 @@ const Botswana1:DedupeValueSet = {
     }]
 };
 
-export const dedupeValueSets:DedupeValueSet[] = [Nigeria1,Nigeria2,Rwanda1,Rwanda2,Zambia1,Zambia2,Botswana1];
+
+const Cameroon:DedupeValueSet = {
+    dataSet: 'jKdHXpBfWop',
+    orgUnitId: 'Qxqy3OnMtLi',
+    period: '2020Q4',
+    categoryOptionCombo_co: "pWaGXt8b4rt",
+    categoryOption_cp: 'gSrW64Ru7Ia',
+    dataValues: [{
+        value: 70010,
+        dataElement_de: 'cRCw63EQEbM',
+    },{
+        value: 70020,
+        dataElement_de: 'TiMvlchPiPH',
+    }]
+};
+
+const Ethiopia:DedupeValueSet = {
+    dataSet: 'qzVASYuaIey',
+    orgUnitId: 'Dl0yK0OhftZ',
+    period: '2020Q4',
+    categoryOptionCombo_co: "xYyVHiXrvSi",
+    dataValues: [{
+        value: 80010,
+        dataElement_de: 'qhGxKnmrZBd',
+        categoryOption_cp: 'Mc2Hbha1xD6',
+    },{
+        value: 80020,
+        dataElement_de: 'kt5rPumWUBE',
+        categoryOption_cp: 'IlCRnjpyBAl',
+    }]
+};
+
+export const dedupeValueSets:DedupeValueSet[] = [Nigeria1,Nigeria2,Rwanda1,Rwanda2,Zambia1,Zambia2,Botswana, Cameroon, Ethiopia];

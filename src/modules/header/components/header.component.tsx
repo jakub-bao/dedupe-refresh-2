@@ -1,7 +1,7 @@
 import React, {CSSProperties} from "react";
-import {Chip, IconButton, Tooltip, Typography} from "@material-ui/core";
+import {IconButton, Tooltip, Typography} from "@material-ui/core";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
-import {FiltersModel, FilterType} from "../../filters/models/filters.model";
+import {FiltersModel} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
 import {Menu} from "@material-ui/icons";
 
@@ -17,15 +17,15 @@ const styles = {
     } as CSSProperties,
 };
 
-function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:FilterOptionsProvider) {
-    if (!selectedFilters) return null;
-    return Object.keys(selectedFilters)
-        .filter(filterType=>selectedFilters[filterType])
-        .map((filterType:FilterType)=>{
-            const valueName = filterOptionsProvider.getValueNameById(filterType, selectedFilters[filterType]);
-            return <Chip label={valueName} size="small" style={styles.chip} key={valueName}/>
-    });
-}
+// function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:FilterOptionsProvider) {
+//     if (!selectedFilters) return null;
+//     return Object.keys(selectedFilters)
+//         .filter(filterType=>selectedFilters[filterType])
+//         .map((filterType:FilterType)=>{
+//             const valueName = filterOptionsProvider.getValueNameById(filterType, selectedFilters[filterType]);
+//             return <Chip label={valueName} size="small" style={styles.chip} key={valueName}/>
+//     });
+// }
 
 export function MenuIcon({toggleMenu}:{toggleMenu: ()=>void}){
     return <Tooltip title='Show menu'>

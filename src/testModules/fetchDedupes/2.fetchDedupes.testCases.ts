@@ -21,8 +21,8 @@ const RwandaResults2020Q4:FdTestCase = {
         includeResolved: false
     },
     dedupes: [{
-        status: InternalStatus.pending,
-        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":1},
+        status: InternalStatus.unresolved,
+        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":1,"dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "PWID, Negative",
@@ -37,11 +37,11 @@ const RwandaResults2020Q4:FdTestCase = {
             "value": 10040,
             "agencyName": "USAID",
             "partnerName": "Cooperative Housing Foundation Corp.",
-            "mechanismNumber": 17616
-        }, {"value": 10020, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": 16858}]
+            "mechanismNumber": "17616"
+        }, {"value": 10020, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": "16858"}]
     }, {
-        status: InternalStatus.pending,
-        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":2},
+        status: InternalStatus.unresolved,
+        "meta": {"periodId":"2020Q4", "orgUnitId": "TAPALAZae2l", "internalId":2,"dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "PWID, Positive",
@@ -56,8 +56,8 @@ const RwandaResults2020Q4:FdTestCase = {
             "value": 10030,
             "agencyName": "USAID",
             "partnerName": "Cooperative Housing Foundation Corp.",
-            "mechanismNumber": 17616
-        }, {"value": 10010, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": 16858}]
+            "mechanismNumber": "17616"
+        }, {"value": 10010, "agencyName": "USAID", "partnerName": "Caritas Rwanda Asbl", "mechanismNumber": "16858"}]
     }]
 };
 
@@ -74,8 +74,8 @@ const Nigeria1:FdTestCase = {
         includeResolved: true
     },
     dedupes: [{
-        status: InternalStatus.resolved,
-        "meta": {"periodId":"2020Q4", "orgUnitId": "p7M264Wg1qB", "internalId":1},
+        status: InternalStatus.resolvedOnServer,
+        "meta": {"periodId":"2020Q4", "orgUnitId": "p7M264Wg1qB", "internalId":1, "dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "qhGxKnmrZBd",
             "disAggregation": "People in prisons and other enclosed settings, Positive",
@@ -98,16 +98,16 @@ const Nigeria1:FdTestCase = {
             "value": 30010,
             "agencyName": "HHS/CDC",
             "partnerName": "CATHOLIC CARITAS FOUNDATION O F NIGERIA",
-            "mechanismNumber": 16848
+            "mechanismNumber": "16848"
         }, {
             "value": 30020,
             "agencyName": "HHS/CDC",
             "partnerName": "APIN PUBLIC HEALTH INITIATIVE S LTD/GTE",
-            "mechanismNumber": 16850
+            "mechanismNumber": "16850"
         }]
     }, {
-        status: InternalStatus.resolved,
-        "meta": {"periodId":"2020Q4", "orgUnitId": "BY7bSKwPjPJ", "internalId":2},
+        status: InternalStatus.resolvedOnServer,
+        "meta": {"periodId":"2020Q4", "orgUnitId": "BY7bSKwPjPJ", "internalId":2, "dedupeType": DedupeType.pure},
         "data": {
             "dataElementId": "FI2s716RRZc",
             "disAggregation": "PWID, Recent RTRI, Positive",
@@ -132,12 +132,12 @@ const Nigeria1:FdTestCase = {
             "value": 20010,
             "agencyName": "USAID",
             "partnerName": "Abt Associates Inc.",
-            "mechanismNumber": 14169
+            "mechanismNumber": "14169"
         }, {
             "value": 20020,
             "agencyName": "USAID",
             "partnerName": "JSI Research And Training Institute, INC.",
-            "mechanismNumber": 14302
+            "mechanismNumber": "14302"
         }]
     }]
 };

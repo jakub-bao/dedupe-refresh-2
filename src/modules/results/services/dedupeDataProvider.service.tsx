@@ -7,7 +7,7 @@ import {
     ResolutionMethodType,
     updateStatus
 } from "../models/dedupe.model";
-import {FiltersModel} from "../../filters/models/filters.model";
+import {DedupeType, FiltersModel} from "../../filters/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";
 
 const random = ()=>Math.random()*10e15
@@ -26,8 +26,10 @@ function generateDedupeUrl(selectedFilters:FiltersModel):string{
         + `&cache=${random()}`;
 }
 
+const removeAdjustment = record=>!["00000","00001"].includes(record.mechanismNumber);
+
 function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
-    return rows.filter(namedRow=>namedRow.mechanismNumber!==0).map(namedRow=>{
+    return rows.filter(removeAdjustment).map(namedRow=>{
         return {
             value: namedRow.value,
             agencyName: namedRow.agencyName,
@@ -62,7 +64,7 @@ function getResolution(selectedRows:namedRow[], availableValues:DedupeResolution
 }
 
 function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableValues{
-    const enteredValues = selectedRows.filter(record=>record.mechanismNumber!==0).map(record=>record.value);
+    const enteredValues = selectedRows.filter(removeAdjustment).map(record=>record.value);
     return {
         sum: enteredValues.reduce((a,b)=>a+b,0),
         maximum: Math.max(...enteredValues),
@@ -85,6 +87,10 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
     return resolution;
 }
 
+function getDe(filters:FiltersModel,rows:namedRow[]):string{
+    if (filters.dedupeType===DedupeType.pure) return rows[0].dataElementId;
+    return rows.filter(row=>row.partnerName!=='DSD Value')[0].dataElementId;
+}
 
 function generateDedupe(selectedRows: namedRow[], groupNumber:number, filters:FiltersModel):DedupeModel{
     let first = selectedRows[0];
@@ -92,10 +98,11 @@ function generateDedupe(selectedRows: namedRow[], groupNumber:number, filters:Fi
         meta: {
             internalId: groupNumber,
             orgUnitId: first.orgUnitId,
-            periodId: filters.period
+            periodId: filters.period,
+            dedupeType: filters.dedupeType
         },
         data: {
-            dataElementId: first.dataElementId,
+            dataElementId: getDe(filters, selectedRows),
             disAggregation: first.disAggregation,
             categoryOptionComboId: first.categoryOptionComboId
         },
@@ -116,7 +123,8 @@ function processResponse(rows:any[], filters:FiltersModel):DedupeModel[]{
     let dedupesCount = rows[0].totalGroups;
     let dedupes = [];
     for (var groupNumber=1; groupNumber<=dedupesCount; groupNumber++){
-        let selectedRows = rows.filter(row=>row.group===groupNumber);
+        const gn = groupNumber;
+        let selectedRows = rows.filter(row=>row.group===gn);
         let dedupe:DedupeModel = generateDedupe(selectedRows, groupNumber, filters);
         dedupes.push(dedupe)
     }
@@ -128,7 +136,7 @@ type namedRow = {
     dataElementName:string;
     disAggregation:string;
     agencyName: string;
-    mechanismNumber:number;
+    mechanismNumber:string;
     partnerName:string;
     value:number;
     duplicateStatus:string;
@@ -146,7 +154,7 @@ function nameRows(rows:any[]):namedRow[]{
             dataElementName: row[1],
             disAggregation: row[2],
             agencyName: row[3],
-            mechanismNumber: parseInt(row[4]),
+            mechanismNumber: row[4],
             partnerName: row[5],
             value: parseInt(row[6]),
             duplicateStatus: row[7],

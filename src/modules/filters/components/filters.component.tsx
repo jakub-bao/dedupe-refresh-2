@@ -64,7 +64,7 @@ function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSea
         <MenuLogo toggleMenu={filtersUi.collapseFilters}/>
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
-        <Button variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes'>
+        <Button variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes' disableElevation>
             Search Dedupes
         </Button>
     </Drawer>;

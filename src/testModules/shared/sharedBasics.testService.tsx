@@ -16,6 +16,7 @@ export async function renderMain(){
 export async function searchDedupes(testCase:DedupeTestCase){
     testAs(testCase.testAs);
     await renderMain();
+    if (testCase.filters.crosswalk) select(`filter_dedupeType`,'Crosswalk Dedupes');
     ['operatingUnit','dataType','period'].forEach((filter:string)=>{
         select(`filter_${filter}`,testCase.filters[filter]);
     });
@@ -27,9 +28,9 @@ export async function searchDedupes(testCase:DedupeTestCase){
 
 export function switchToCustom(index:number){
     noExist('resolution_custom_input');
-    noTextIn(`status_${index}`, 'unsaved');
+    noTextIn(`status_${index}`, 'Ready to resolve');
     click(`resolution_${index}_custom`);
-    textIn(`status_${index}`, 'unsaved');
+    textIn(`status_${index}`, 'Ready to resolve');
     exist('resolution_custom_input');
 }
 

@@ -5,6 +5,7 @@ export type TestFilters = {
     dataType: string;
     period: string;
     includeResolved: boolean;
+    crosswalk?:boolean;
 };
 
 export type TestResolution = {

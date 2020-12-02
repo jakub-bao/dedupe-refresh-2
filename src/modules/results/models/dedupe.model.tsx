@@ -1,8 +1,10 @@
+import {DedupeType} from "../../filters/models/filters.model";
 
 export type DedupeMetaModel = {
     orgUnitId: string;
     internalId: number;
     periodId: string;
+    dedupeType: DedupeType
 }
 
 export type DedupeDataModel = {
@@ -44,13 +46,14 @@ export type DuplicateModel = {
     value: number;
     agencyName: string;
     partnerName: string;
-    mechanismNumber: number;
+    mechanismNumber: string;
+
 }
 
 export enum InternalStatus{
-    pending='pending',
-    localChanges='localChanges',
-    resolved='resolved',
+    unresolved='unresolved',
+    readyToResolve='readyToResolve',
+    resolvedOnServer='resolvedOnServer',
 };
 
 
@@ -71,9 +74,9 @@ function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2
 }
 
 function getDedupeStatus(dedupe:DedupeModel):InternalStatus{
-    if (!dedupe.resolution || !dedupe.resolution.resolutionMethodValue) return InternalStatus.pending;
-    if (!compareResolutions(dedupe.resolution.resolutionMethodValue, dedupe.resolution.original_resolutionMethodValue)) return InternalStatus.localChanges;
-    if (dedupe.resolution.resolutionMethodValue && dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue!==null) return InternalStatus.resolved;
+    if (!dedupe.resolution || !dedupe.resolution.resolutionMethodValue) return InternalStatus.unresolved;
+    if (!compareResolutions(dedupe.resolution.resolutionMethodValue, dedupe.resolution.original_resolutionMethodValue)) return InternalStatus.readyToResolve;
+    if (dedupe.resolution.resolutionMethodValue && dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue!==null) return InternalStatus.resolvedOnServer;
 }
 
 export function updateStatus(dedupe:DedupeModel):void{

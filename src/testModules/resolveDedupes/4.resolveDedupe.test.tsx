@@ -1,7 +1,7 @@
 import {DedupeTestCase} from "../shared/models/test.models";
 import {checkCustomValue, searchDedupes, switchToCustom} from "../shared/sharedBasics.testService";
 import {click, type} from "../../test/domServices/click.testService";
-import {waitForTexts} from "../../test/domServices/domUtils.testService";
+import {text, waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
 
 //delete data: env-load-dhis jakub && dhis_api -a "dataValues.json?de=qhGxKnmrZBd&co=xYyVHiXrvSi&ou=gGqaAXuUGpb&pe=2020Q4&cc=wUpfppgjEza&cp=xEzelmtHWPn" -X DELETE
@@ -36,6 +36,7 @@ test(`4 > Resolve Dedupes > Botswana > Submit`, async ()=>{
         expect(data).toBe('de=qhGxKnmrZBd&co=xYyVHiXrvSi&ou=gGqaAXuUGpb&pe=2020Q4&value=-120040&cc=wUpfppgjEza&cp=xEzelmtHWPn');
     });
     click(`dedupe_1_resolve`);
+    text('Processing...');
     await waitForTexts(['Resolved','Resolved on server']);
     checkCustomValue(60020);
 });

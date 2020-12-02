@@ -56,6 +56,7 @@ function statusToColor(status:InternalStatus):string{
         case InternalStatus.unresolved: return '#00000000';
         case InternalStatus.readyToResolve: return '#9C0D38';
         case InternalStatus.resolvedOnServer: return '#307351';
+        case InternalStatus.processing: return '#E8C547';
     }
 }
 

@@ -144,6 +144,8 @@ class Main extends React.Component<{
 
     resolveDedupe = (id:number)=>{
         let dedupe:DedupeModel = this.state.results.dedupes[id-1];
+        dedupe.status = InternalStatus.processing;
+        this.setState({results:this.state.results});
         resolveDedupe(dedupe).then((worked:boolean)=>{
             this.showMessage(`Resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
@@ -160,6 +162,8 @@ class Main extends React.Component<{
         this.updateUi(null,null,null,false);
         if (confirmed) {
             const index = this.state.toBeUnresolved;
+            this.state.results.dedupes[index-1].status = InternalStatus.processing;
+            this.setState({results:this.state.results});
             unresolveDedupe(this.state.results.dedupes[index-1]).then(()=>{
                 this.showMessage(`Unresolved`);
                 let results = this.state.results;

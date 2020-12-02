@@ -54,6 +54,7 @@ export enum InternalStatus{
     unresolved='unresolved',
     readyToResolve='readyToResolve',
     resolvedOnServer='resolvedOnServer',
+    processing='processing'
 };
 
 

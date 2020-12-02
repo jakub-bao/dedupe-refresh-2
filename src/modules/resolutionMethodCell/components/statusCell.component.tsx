@@ -38,6 +38,7 @@ function camelCaseToHuman(text:string):string {
 }
 
 function statusToText(status:InternalStatus):string{
+    if (status===InternalStatus.processing) return 'Processing...';
     return camelCaseToHuman(status);
 }
 

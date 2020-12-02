@@ -14,7 +14,7 @@ const Rwanda1:DedupeTestCase = {
     resolved: null,
 };
 
-const Nigeria1:DedupeTestCase = {
+export const Nigeria1:DedupeTestCase = {
     testAs: 'test-de-interAgency-nigeria',
     name: `Nigeria > MER Results > 2020 Q4`,
     filters: {

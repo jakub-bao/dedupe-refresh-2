@@ -16,7 +16,7 @@ import {
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData.service";
-import {saveDedupe} from "../services/saveDedupe.service";
+import {resolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
 
@@ -128,7 +128,8 @@ class Main extends React.Component<{
             filteredDedupes={this.state.results.dedupes}
             setResolutionValue={this.setResolutionValue}
             changeResolutionMethod={this.changeResolutionMethod}
-            saveDedupe={this.saveDedupe}
+            resolveDedupe={this.resolveDedupe}
+            unresolveDedupe={this.unresolveDedupe}
         />;
     }
 
@@ -136,14 +137,18 @@ class Main extends React.Component<{
         return this.state.results.dedupes.filter(d=>d.meta.internalId===id)[0];
     }
 
-    saveDedupe = (id:number)=>{
+    resolveDedupe = (id:number)=>{
         let dedupe:DedupeModel = this.state.results.dedupes[id-1];
-        saveDedupe(dedupe).then((worked:boolean)=>{
+        resolveDedupe(dedupe).then((worked:boolean)=>{
             this.props.enqueueSnackbar(`Resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results:this.state.results});
         });
+    }
+
+    unresolveDedupe = (id:number)=>{
+        console.log(id);
     }
 
     renderPreselect(){

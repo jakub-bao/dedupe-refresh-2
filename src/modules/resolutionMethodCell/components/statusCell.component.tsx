@@ -2,8 +2,8 @@ import React, {CSSProperties} from "react";
 import {DedupeModel, InternalStatus} from "../../results/models/dedupe.model";
 import {Button, Typography} from "@material-ui/core";
 
-export type SaveDedupe = (id:number)=>void;
-
+export type ResolveDedupe = (id:number)=>void;
+export type UnresolveDedupe = (id:number)=>void;
 
 const styles = {
     root: {
@@ -19,8 +19,11 @@ const styles = {
         right: 0,
         padding: '3px',
         minWidth: 72,
-        marginTop: 5
-    } as CSSProperties
+        marginTop: 15,
+    } as CSSProperties,
+    spacer:{
+        height: 20
+    }
 };
 
 function capitalize(word) {
@@ -44,18 +47,28 @@ function getStatusStyle(status:InternalStatus):object{
     return Object.assign({},styles.status,{color:color});
 }
 
-export default function StatusCell({dedupe, saveDedupe}:{dedupe:DedupeModel, saveDedupe:SaveDedupe}) {
+export default function StatusCell({dedupe, resolveDedupe, unresolveDedupe}:{dedupe:DedupeModel, resolveDedupe:ResolveDedupe, unresolveDedupe:UnresolveDedupe}) {
     // @ts-ignore
     return <div style={styles.root} data-testid={`status_${dedupe.meta.internalId}`}>
+        {dedupe.status!==InternalStatus.unresolved && <div style={styles.spacer}/>}
         <Typography style={getStatusStyle(dedupe.status)}>{statusToText(dedupe.status)}</Typography>
         {dedupe.status===InternalStatus.readyToResolve && <Button
             variant='contained'
             style={styles.save}
-            onClick={()=>saveDedupe(dedupe.meta.internalId)}
+            onClick={()=>resolveDedupe(dedupe.meta.internalId)}
             data-testid={`dedupe_${dedupe.meta.internalId}_resolve`}
             disableElevation
             size='small'>
             Resolve
+        </Button>}
+        {dedupe.status===InternalStatus.resolvedOnServer && <Button
+            variant='contained'
+            style={styles.save}
+            onClick={()=>unresolveDedupe(dedupe.meta.internalId)}
+            data-testid={`dedupe_${dedupe.meta.internalId}_unresolve`}
+            disableElevation
+            size='small'>
+            Unresolve
         </Button>}
     </div>;
 }

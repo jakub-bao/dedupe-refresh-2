@@ -19,6 +19,7 @@ import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData
 import {resolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
+import {UnresolveConfirm} from "./unresolveConfirm.component";
 
 
 class Main extends React.Component<{
@@ -32,6 +33,7 @@ class Main extends React.Component<{
     }
     ui: {
         filtersOpen: boolean,
+        unresolveConfirmOpen: boolean,
         error: {
             filters?: boolean,
             results?: boolean
@@ -65,7 +67,8 @@ class Main extends React.Component<{
                 error: {},
                 loading:{
                     filters: true
-                }
+                },
+                unresolveConfirmOpen: false
             },
         };
         this.filterOptionsProvider.init().then(()=>{
@@ -81,10 +84,12 @@ class Main extends React.Component<{
         };
     }
 
-    updateUi = (loading:{filters?:boolean, results?:boolean}, error: {filters?:boolean, results?:boolean})=>{
+    updateUi = (loading:{filters?:boolean, results?:boolean}, error: {filters?:boolean, results?:boolean},filtersOpen?:boolean, unresolveConfirmOpen?:boolean)=>{
         let ui = this.state.ui;
         if (loading) ui.loading = loading;
         if (error) ui.error = error;
+        if (typeof filtersOpen==='boolean') ui.filtersOpen = filtersOpen;
+        if (typeof unresolveConfirmOpen==='boolean') ui.unresolveConfirmOpen = unresolveConfirmOpen;
         this.setState({ui});
     }
 
@@ -133,10 +138,6 @@ class Main extends React.Component<{
         />;
     }
 
-    getDedupe(id:number):DedupeModel{
-        return this.state.results.dedupes.filter(d=>d.meta.internalId===id)[0];
-    }
-
     resolveDedupe = (id:number)=>{
         let dedupe:DedupeModel = this.state.results.dedupes[id-1];
         resolveDedupe(dedupe).then((worked:boolean)=>{
@@ -147,8 +148,24 @@ class Main extends React.Component<{
         });
     }
 
+    uiSetFiltersOpen = (open:boolean)=>{
+        // let ui = {...this.state.ui};
+        // ui.filtersOpen = open;
+        // this.setState({ui})
+        this.updateUi(null,null,open,null);
+    };
+
+    onUnresolveDialogClose = (confirmed:boolean)=>{
+        console.log('confirmed?',confirmed);
+        this.updateUi(null,null,null,false);
+    }
+
     unresolveDedupe = (id:number)=>{
         console.log(id);
+        // let ui = this.state.ui;
+        // ui.unresolveConfirmOpen = true;
+        // this.setState({ui});
+        this.updateUi(null,null,null,true);
     }
 
     renderPreselect(){
@@ -176,11 +193,6 @@ class Main extends React.Component<{
         setTimeout(this.onSearchClick, 0);
     };
 
-    uiSetFiltersOpen = (open:boolean)=>{
-        let ui = {...this.state.ui};
-        ui.filtersOpen = open;
-        this.setState({ui})
-    };
 
     render() {
         if (this.state.ui.error.filters) return <NetworkError/>;
@@ -202,6 +214,10 @@ class Main extends React.Component<{
                 {this.renderResults()}
                 {this.renderPreselect()}
             </ContentWrapper>
+            {this.state.results.dedupes&&<UnresolveConfirm
+                isOpen={this.state.ui.unresolveConfirmOpen}
+                onClose={this.onUnresolveDialogClose}
+            />}
         </React.Fragment>;
     }
 }

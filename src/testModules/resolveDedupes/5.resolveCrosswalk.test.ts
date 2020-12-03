@@ -28,7 +28,7 @@ const CameroonTestCase:DedupeTestCase = {
 test(`5 > Resolve Crosswalk Dedupes > Cameroon`, async ()=>{
     await searchDedupes(CameroonTestCase);
     switchToCustom(1);
-    checkCustomValue(70010)
+    checkCustomValue(70020)
     await type('resolution_custom_input', '70080');
     checkCustomValue(70080);
     registerSendMock('POST','/dataValues', {ok:true},(data:any)=>{

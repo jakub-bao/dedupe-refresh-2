@@ -56,7 +56,7 @@ export default function StatusCell({dedupe, resolveDedupe, unresolveDedupe}:{ded
     return <div style={styles.root} data-testid={`status_${dedupe.meta.internalId}`}>
         {dedupe.status!==InternalStatus.unresolved && <div style={styles.spacer}/>}
         <Typography style={getStatusStyle(dedupe.status)}>{statusToText(dedupe.status)}</Typography>
-        {dedupe.status===InternalStatus.processing&&<CircularProgress style={styles.processing}/>}
+        {dedupe.status===InternalStatus.processing&&<CircularProgress style={styles.processing} size={25}/>}
         {dedupe.status===InternalStatus.readyToResolve && <Button
             variant='contained'
             style={styles.save}

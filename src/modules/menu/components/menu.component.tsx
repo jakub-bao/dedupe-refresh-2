@@ -8,6 +8,7 @@ import CheckboxFilter from "./checkboxFilter.component";
 import MenuLogo from "./filtersLogo.component";
 import {makeStyles} from "@material-ui/core/styles";
 import {colors} from "../../../values/color.values";
+import {Filters} from "../filters.component";
 
 const useStyles = makeStyles({
     root: {
@@ -17,35 +18,6 @@ const useStyles = makeStyles({
     },
 });
 
-function renderFilters(
-    selectedFilters: FiltersModel,
-    onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
-    filterOptionsProvider: FilterOptionsProvider
-) {
-        return Object.keys(selectedFilters).map((filterType:FilterType)=>{
-            let filterOptions;
-            if (filterType!=='period') filterOptions = filterOptionsProvider.getFilterOptions(filterType);
-            else filterOptions = filterOptionsProvider.getPeriodOptions(selectedFilters.dataType);
-            if (filterType===FilterType.includeResolved) return <CheckboxFilter
-                key={0}
-                checked={selectedFilters.includeResolved}
-                label='Include Resolved'
-                onChange={()=>onFiltersSelect(FilterType.includeResolved, !selectedFilters.includeResolved)}
-            />
-            return <SelectFilter
-                key={filterType}
-                filterType={filterType}
-                filterValue={selectedFilters[filterType]}
-                onFilterSelect={(filterValue:string)=>onFiltersSelect(filterType, filterValue)}
-                filterOptions={filterOptions}
-            />
-        });
-}
-
-
-function searchEnabled(selectedFilters:FiltersModel):boolean{
-    return !!selectedFilters.operatingUnit && !!selectedFilters.dataType && !!selectedFilters.period;
-}
 
 function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{
     selectedFilters: FiltersModel,
@@ -64,11 +36,7 @@ function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearch
 
 
         {/*<MenuLogo toggleMenu={filtersUi.collapseFilters}/>*/}
-        {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
-        <br/>
-        <Button variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes' disableElevation>
-            Search Dedupes
-        </Button>
+        <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>
     </Drawer>;
 }
 

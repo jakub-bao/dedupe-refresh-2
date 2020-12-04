@@ -1,5 +1,5 @@
 import React from "react";
-import {FiltersUiModel} from "../../filters/components/filtersUi.model";
+import {FiltersUiModel} from "../../menu/components/filtersUi.model";
 
 
 const styles = {

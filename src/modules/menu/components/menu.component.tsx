@@ -47,7 +47,7 @@ function searchEnabled(selectedFilters:FiltersModel):boolean{
     return !!selectedFilters.operatingUnit && !!selectedFilters.dataType && !!selectedFilters.period;
 }
 
-function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{
+function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider,
@@ -61,7 +61,9 @@ function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSea
         open={filtersUi.filtersOpen}
         classes={{paper: classStyles.root}}
     >
-        <MenuLogo toggleMenu={filtersUi.collapseFilters}/>
+
+
+        {/*<MenuLogo toggleMenu={filtersUi.collapseFilters}/>*/}
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
         <Button variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes' disableElevation>
@@ -72,4 +74,4 @@ function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSea
 
 // export default Filters;
 
-export default React.memo(Filters);
+export default React.memo(Menu);

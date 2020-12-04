@@ -7,7 +7,7 @@ import {
     ResolutionMethodType,
     updateStatus
 } from "../models/dedupe.model";
-import {DedupeType, FiltersModel} from "../../filters/models/filters.model";
+import {DedupeType, FiltersModel} from "../../menu/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";
 
 const random = ()=>Math.random()*10e15

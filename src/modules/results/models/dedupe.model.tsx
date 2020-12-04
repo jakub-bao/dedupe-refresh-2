@@ -1,4 +1,4 @@
-import {DedupeType} from "../../filters/models/filters.model";
+import {DedupeType} from "../../menu/models/filters.model";
 
 export type DedupeMetaModel = {
     orgUnitId: string;

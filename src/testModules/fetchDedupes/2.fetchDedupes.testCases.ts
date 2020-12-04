@@ -1,4 +1,4 @@
-import {DataType, DedupeType, FiltersModel} from "../../modules/filters/models/filters.model";
+import {DataType, DedupeType, FiltersModel} from "../../modules/menu/models/filters.model";
 import {DedupeModel, InternalStatus, ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 
 export type FdTestCase = {

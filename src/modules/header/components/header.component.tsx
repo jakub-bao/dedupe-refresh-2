@@ -1,8 +1,8 @@
 import React, {CSSProperties} from "react";
 import {IconButton, Tooltip, Typography} from "@material-ui/core";
-import {FiltersUiModel} from "../../filters/components/filtersUi.model";
-import {FiltersModel} from "../../filters/models/filters.model";
-import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
+import {FiltersUiModel} from "../../menu/components/filtersUi.model";
+import {FiltersModel} from "../../menu/models/filters.model";
+import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.service";
 import {Menu} from "@material-ui/icons";
 
 const styles = {

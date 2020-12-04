@@ -1,11 +1,11 @@
 import React from "react";
-import Filters from "../../filters/components/filters.component";
-import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
-import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
+import Menu from "../../menu/components/menu.component";
+import {DataType, DedupeType, FiltersModel, FilterType} from "../../menu/models/filters.model";
+import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.service";
 import {DedupeModel, DedupeResolutionMethodValue, InternalStatus} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
-import {FiltersUiModel} from "../../filters/components/filtersUi.model";
+import {FiltersUiModel} from "../../menu/components/filtersUi.model";
 import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
@@ -211,7 +211,7 @@ class Main extends React.Component<{
         if (this.state.ui.error.filters) return <NetworkError/>;
         if (this.state.ui.loading.filters) return <Loading message={'Loading...'} margin={100}/>;
         return <React.Fragment>
-            <Filters
+            <Menu
                 selectedFilters={this.state.selectedFilters}
                 onFiltersSelect={this.onFiltersSelect}
                 filterOptionsProvider={this.filterOptionsProvider}

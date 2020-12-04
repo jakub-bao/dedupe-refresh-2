@@ -1,5 +1,5 @@
 import React from "react";
-import {FiltersUiModel} from "../../menu/components/filtersUi.model";
+import {UiModel} from "../../menu/services/uiModel";
 
 
 const styles = {
@@ -21,8 +21,8 @@ function Indent({filtersOpen, children}:{filtersOpen: boolean, children: any}){
     </div>;
 }
 
-function _ContentWrapper({filtersUi, children}:{filtersUi: FiltersUiModel, children:any}) {
-    return <Indent filtersOpen={filtersUi.filtersOpen}>
+function _ContentWrapper({ui, children}:{ui: UiModel, children:any}) {
+    return <Indent filtersOpen={ui.menu.open}>
         {children}
     </Indent>;
 }

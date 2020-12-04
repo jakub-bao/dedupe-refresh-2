@@ -23,8 +23,8 @@ const fontSize = '0.875rem'
 
 const tableOptions:Options<DedupeModel> = {
     pageSize: 20,
-    pageSizeOptions: [20, 50, 100],
-    // selection: true,
+    pageSizeOptions: [20, 50, 1000],
+    selection: true,
     emptyRowsWhenPaging: false,
     thirdSortClick: false,
     padding: 'dense',

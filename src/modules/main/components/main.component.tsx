@@ -5,7 +5,6 @@ import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.ser
 import {DedupeModel, DedupeResolutionMethodValue, InternalStatus} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
-import {FiltersUiModel} from "../../menu/components/filtersUi.model";
 import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
@@ -20,6 +19,7 @@ import {resolveDedupe, unresolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
 import {UnresolveConfirm} from "./unresolveConfirm.component";
+import {UiAction, UiModel, updateUi} from "../../menu/services/uiModel";
 
 
 class Main extends React.Component<{
@@ -32,21 +32,9 @@ class Main extends React.Component<{
         selectedFilters: FiltersModel
     },
     toBeUnresolved:number,
-    ui: {
-        filtersOpen: boolean,
-        unresolveConfirmOpen: boolean,
-        error: {
-            filters?: boolean,
-            results?: boolean
-        },
-        loading: {
-            filters?: boolean,
-            results?: boolean,
-        },
-    },
+    ui: UiModel
 }> {
     filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
-    filtersUi:FiltersUiModel;
     constructor(props) {
         super(props);
         this.state = {
@@ -64,7 +52,10 @@ class Main extends React.Component<{
                 selectedFilters: null
             },
             ui: {
-                filtersOpen: true,
+                menu: {
+                    open: true,
+                    batchOpen: false
+                },
                 error: {},
                 loading:{
                     filters: true
@@ -74,38 +65,31 @@ class Main extends React.Component<{
             toBeUnresolved:null
         };
         this.filterOptionsProvider.init().then(()=>{
-            this.updateUi({filters: false}, {filters: false});
+            this.updateUi(UiAction.loadingFilters, false);
         }).catch(()=>{
-            this.updateUi({filters: false}, {filters: true});
+            this.updateUi(UiAction.loadingFilters, false);
+            this.updateUi(UiAction.errorFilters, true);
         });
-        this.filtersUi = {
-            filtersOpen: null,
-            closeFilters: ()=>this.uiSetFiltersOpen(false),
-            collapseFilters: ()=>this.uiSetFiltersOpen(!this.state.ui.filtersOpen),
-            openFilters: ()=>this.uiSetFiltersOpen(true)
-        };
     }
 
     showMessage = this.props.enqueueSnackbar;
 
-    updateUi = (loading:{filters?:boolean, results?:boolean}, error: {filters?:boolean, results?:boolean},filtersOpen?:boolean, unresolveConfirmOpen?:boolean)=>{
-        let ui = this.state.ui;
-        if (loading) ui.loading = loading;
-        if (error) ui.error = error;
-        if (typeof filtersOpen==='boolean') ui.filtersOpen = filtersOpen;
-        if (typeof unresolveConfirmOpen==='boolean') ui.unresolveConfirmOpen = unresolveConfirmOpen;
+    updateUi = (action:UiAction, value:boolean)=>{
+        let ui = updateUi(this.state.ui, action, value);
         this.setState({ui});
     }
 
     onSearchClick = ()=>{
-        this.updateUi({results: true}, {results: false});
+        this.updateUi(UiAction.loadingResults, true);
+        this.updateUi(UiAction.errorResults, false);
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
             this.setState({results: {dedupes, selectedFilters}});
-            this.updateUi({results: false}, {results: false});
+            this.updateUi(UiAction.loadingResults, false);
         }).catch(()=>{
             this.setState({results: {dedupes: null, selectedFilters}});
-            this.updateUi({results: false}, {results: true});
+            this.updateUi(UiAction.loadingResults, false);
+            this.updateUi(UiAction.errorResults, true);
         });
     };
 
@@ -155,11 +139,11 @@ class Main extends React.Component<{
     }
 
     uiSetFiltersOpen = (open:boolean)=>{
-        this.updateUi(null,null,open,null);
+        this.updateUi(UiAction.menuOpen, open);
     };
 
     onUnresolveDialogClose = (confirmed:boolean)=>{
-        this.updateUi(null,null,null,false);
+        this.updateUi(UiAction.unresolveConfirm, false);
         if (confirmed) {
             const index = this.state.toBeUnresolved;
             this.state.results.dedupes[index-1].status = InternalStatus.processing;
@@ -177,7 +161,8 @@ class Main extends React.Component<{
     }
 
     unresolveDedupe = (id:number)=>{
-        this.updateUi(null,null,null,true);
+        // this.updateUi(null,null,null,true);
+        this.updateUi(UiAction.unresolveConfirm, true);
         this.setState({toBeUnresolved: id});
     }
 
@@ -216,13 +201,12 @@ class Main extends React.Component<{
                 onFiltersSelect={this.onFiltersSelect}
                 filterOptionsProvider={this.filterOptionsProvider}
                 onSearchClick={this.onSearchClick}
-                filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
+                ui={this.state.ui}
             />
-            <ContentWrapper filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}>
-                {!this.state.ui.filtersOpen && <Header
+            <ContentWrapper ui={this.state.ui}>
+                {!this.state.ui.menu.open && <Header
                     selectedFilters={this.state.results.selectedFilters}
                     filterOptionsProvider={this.filterOptionsProvider}
-                    filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
                 />}
                 {this.renderResults()}
                 {this.renderPreselect()}

@@ -6,7 +6,7 @@ import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.servic
 
 //delete data: env-load-dhis jakub && dhis_api -a "dataValues.json?de=qhGxKnmrZBd&co=xYyVHiXrvSi&ou=gGqaAXuUGpb&pe=2020Q4&cc=wUpfppgjEza&cp=xEzelmtHWPn" -X DELETE
 
-const BotswanaTestCase:DedupeTestCase = {
+export const BotswanaTestCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
     name: `Botswana > MER Results > 2020 Q4`,
     filters: {

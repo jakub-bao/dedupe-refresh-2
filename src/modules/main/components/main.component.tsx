@@ -19,7 +19,7 @@ import {resolveDedupe, unresolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
 import {UnresolveConfirm} from "./unresolveConfirm.component";
-import {ActionValue, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
+import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
@@ -53,7 +53,8 @@ class Main extends React.Component<{
             ui: {
                 menu: {
                     open: true,
-                    batchOpen: false
+                    // batchOpen: false
+                    menuTab: MenuVariant.search
                 },
                 error: {},
                 loading:{
@@ -66,7 +67,6 @@ class Main extends React.Component<{
         this.filterOptionsProvider.init().then(()=>{
             this.updateUi([{action: UiActionType.loadingFilters, value: false}]);
         }).catch(()=>{
-            // this.updateUi(UiAction.loadingFilters, false);
             this.updateUi([{action: UiActionType.errorFilters, value: true}]);
         });
     }
@@ -135,9 +135,13 @@ class Main extends React.Component<{
         });
     }
 
-    uiSetFiltersOpen = (open:boolean)=>{
-        this.updateUi([{action: UiActionType.menuOpen, value: open}])
-    };
+    // uiSetFiltersOpen = (open:boolean)=>{
+    //     this.updateUi([{action: UiActionType.menuOpen, value: open}])
+    // };
+
+    switchMenuTab = (tab:MenuVariant)=>{
+        this.updateUi([{action: UiActionType.menuTab,value: tab}]);
+    }
 
     onUnresolveDialogClose = (confirmed:boolean)=>{
         this.updateUi([{action: UiActionType.unresolveConfirm, value: false}])
@@ -197,8 +201,10 @@ class Main extends React.Component<{
                 onFiltersSelect={this.onFiltersSelect}
                 filterOptionsProvider={this.filterOptionsProvider}
                 onSearchClick={this.onSearchClick}
-                ui={this.state.ui}
+                menuUi={this.state.ui.menu}
+                switchMenuTab={this.switchMenuTab}
             />
+
             <ContentWrapper ui={this.state.ui}>
                 {!this.state.ui.menu.open && <Header
                     selectedFilters={this.state.results.selectedFilters}

@@ -8,7 +8,7 @@ import MenuLogo from "./filtersLogo.component";
 import {makeStyles} from "@material-ui/core/styles";
 import {colors} from "../../../values/color.values";
 import {Filters} from "../filters.component";
-import {UiModel} from "../services/uiModel";
+import {MenuUi} from "../services/uiModel";
 
 export enum MenuVariant {
     search=0,
@@ -29,21 +29,22 @@ const MenuTab = styled(Tab)({
     height: 40
 });
 
-function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, ui}:{
+export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider,
     onSearchClick: ()=>void,
-    ui: UiModel
+    menuUi: MenuUi,
+    switchMenuTab: (tabIndex:MenuVariant)=>void
 }) {
     let classStyles = useStyles();
     return <Drawer
         anchor='left'
         variant="persistent"
-        open={ui.menu.open}
+        open={menuUi.open}
         classes={{paper: classStyles.root}}
     >
-        <Tabs value={null} onChange={null}>
+        <Tabs value={menuUi.menuTab} onChange={(event, tabIndex:number)=>switchMenuTab(tabIndex)}>
             <MenuTab label="Search"/>
             <MenuTab label="Batch"/>
         </Tabs>
@@ -54,4 +55,4 @@ function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearch
     </Drawer>;
 }
 
-export default React.memo(Menu);
+// export default React.memo(Menu);

@@ -19,8 +19,7 @@ import {resolveDedupe, unresolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
 import {UnresolveConfirm} from "./unresolveConfirm.component";
-import {UiAction, UiModel, updateUi} from "../../menu/services/uiModel";
-
+import {ActionValue, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
@@ -65,31 +64,29 @@ class Main extends React.Component<{
             toBeUnresolved:null
         };
         this.filterOptionsProvider.init().then(()=>{
-            this.updateUi(UiAction.loadingFilters, false);
+            this.updateUi([{action: UiActionType.loadingFilters, value: false}]);
         }).catch(()=>{
-            this.updateUi(UiAction.loadingFilters, false);
-            this.updateUi(UiAction.errorFilters, true);
+            // this.updateUi(UiAction.loadingFilters, false);
+            this.updateUi([{action: UiActionType.errorFilters, value: true}]);
         });
     }
 
     showMessage = this.props.enqueueSnackbar;
 
-    updateUi = (action:UiAction, value:boolean)=>{
-        let ui = updateUi(this.state.ui, action, value);
+    updateUi = (actions:ActionValue[])=>{
+        let ui = updateUi(this.state.ui, actions);
         this.setState({ui});
     }
 
     onSearchClick = ()=>{
-        this.updateUi(UiAction.loadingResults, true);
-        this.updateUi(UiAction.errorResults, false);
+        this.updateUi([{action: UiActionType.loadingResults, value: true},{action:UiActionType.errorResults, value: false}])
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
             this.setState({results: {dedupes, selectedFilters}});
-            this.updateUi(UiAction.loadingResults, false);
+            this.updateUi([{action: UiActionType.loadingResults, value: false}])
         }).catch(()=>{
             this.setState({results: {dedupes: null, selectedFilters}});
-            this.updateUi(UiAction.loadingResults, false);
-            this.updateUi(UiAction.errorResults, true);
+            this.updateUi([{action: UiActionType.loadingResults, value: false},{action:UiActionType.errorResults, value: true}])
         });
     };
 
@@ -139,11 +136,11 @@ class Main extends React.Component<{
     }
 
     uiSetFiltersOpen = (open:boolean)=>{
-        this.updateUi(UiAction.menuOpen, open);
+        this.updateUi([{action: UiActionType.menuOpen, value: open}])
     };
 
     onUnresolveDialogClose = (confirmed:boolean)=>{
-        this.updateUi(UiAction.unresolveConfirm, false);
+        this.updateUi([{action: UiActionType.unresolveConfirm, value: false}])
         if (confirmed) {
             const index = this.state.toBeUnresolved;
             this.state.results.dedupes[index-1].status = InternalStatus.processing;
@@ -161,8 +158,7 @@ class Main extends React.Component<{
     }
 
     unresolveDedupe = (id:number)=>{
-        // this.updateUi(null,null,null,true);
-        this.updateUi(UiAction.unresolveConfirm, true);
+        this.updateUi([{action: UiActionType.unresolveConfirm, value:true}]);
         this.setState({toBeUnresolved: id});
     }
 

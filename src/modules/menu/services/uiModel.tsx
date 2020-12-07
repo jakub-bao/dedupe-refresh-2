@@ -1,6 +1,6 @@
 import {MenuVariant} from "../components/menu.component";
 
-export enum UiAction{
+export enum UiActionType{
     loadingResults,
     loadingFilters,
     errorResults,
@@ -9,6 +9,10 @@ export enum UiAction{
     menuOpen,
     batchOpen,
 }
+
+export type ActionValue = {
+    action:UiActionType, value:boolean
+};
 
 export type UiModel = {
     menu: {
@@ -26,22 +30,26 @@ export type UiModel = {
     },
 };
 
-export function updateUi(ui:UiModel, action: UiAction, value:boolean){
-    switch (action){
-        case UiAction.loadingResults:
-            ui.loading.results = value; break;
-        case UiAction.loadingFilters:
-            ui.loading.filters = value; break;
-        case UiAction.errorResults:
-            ui.error.results = value; break;
-        case UiAction.errorFilters:
-            ui.error.filters = value; break;
-        case UiAction.unresolveConfirm:
-            ui.unresolveConfirmOpen = value; break;
-        case UiAction.menuOpen:
-            ui.menu.open = value; break;
-        case UiAction.batchOpen:
-            ui.menu.batchOpen = value; break;
-    }
+export function updateUi(ui:UiModel, actions: ActionValue[]){
+    actions.forEach(actionValue=>{
+        let action = actionValue.action;
+        let value = actionValue.value;
+        switch (action){
+            case UiActionType.loadingResults:
+                ui.loading.results = value; break;
+            case UiActionType.loadingFilters:
+                ui.loading.filters = value; break;
+            case UiActionType.errorResults:
+                ui.error.results = value; break;
+            case UiActionType.errorFilters:
+                ui.error.filters = value; break;
+            case UiActionType.unresolveConfirm:
+                ui.unresolveConfirmOpen = value; break;
+            case UiActionType.menuOpen:
+                ui.menu.open = value; break;
+            case UiActionType.batchOpen:
+                ui.menu.batchOpen = value; break;
+        }
+    });
     return ui;
 }

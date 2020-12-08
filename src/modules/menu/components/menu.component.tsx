@@ -24,10 +24,48 @@ const useStyles = makeStyles({
     },
 });
 
-const MenuTab = styled(Tab)({
-    minWidth: 100,
-    height: 40
-});
+// const MenuTab = styled(Tab)({
+//     minWidth: 100,
+//     height: 40,
+//     '&$selected':{
+//         color: 'red'
+//     }
+// });
+
+const MenuTabs = withStyles((theme)=>({
+    root: {
+        marginBottom: 5,
+        overflow: 'visible!important'
+    },
+    scroller: {
+        overflow: 'visible!important'
+    },
+    indicator: {
+        // display:'none'
+        '&:after':{
+            display: 'block',
+            width: 0,
+            height: 0,
+            borderLeft: '6px solid transparent',
+            borderRight: '6px solid transparent',
+            borderTop: '6px solid #f50057',
+            // backgroundColor: 'green',
+            content: 'close-quote',
+            margin:'auto'
+        }
+    }
+}))(Tabs);
+
+const MenuTab = withStyles((theme)=>({
+    root:{
+        minWidth: 100,
+        height: 40,
+    },
+    selected:{
+        color: 'white',
+        backgroundColor: 'rgba(44, 102, 147, 88%)'
+    }
+}))(Tab)//(Tab);
 
 export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab}:{
     selectedFilters: FiltersModel,
@@ -44,14 +82,14 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
         open={menuUi.open}
         classes={{paper: classStyles.root}}
     >
-        <Tabs value={menuUi.menuTab} onChange={(event, tabIndex:number)=>switchMenuTab(tabIndex)}>
+        <MenuTabs value={menuUi.menuTab} onChange={(event, tabIndex:number)=>switchMenuTab(tabIndex)} variant='fullWidth'>
             <MenuTab label="Search"/>
             <MenuTab label="Batch"/>
-        </Tabs>
+        </MenuTabs>
 
 
         {/*<MenuLogo toggleMenu={filtersUi.collapseFilters}/>*/}
-        <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>
+        {menuUi.menuTab===0 && <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>}
     </Drawer>;
 }
 

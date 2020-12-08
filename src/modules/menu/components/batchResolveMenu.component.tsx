@@ -3,7 +3,8 @@ import {Button as MuiButton, Tooltip, Typography} from "@material-ui/core";
 import {ResolutionMethodType} from "../../results/models/dedupe.model";
 
 export type BatchStats = {
-    selected: number;
+    selectedCount: number;
+    allDedupesCount: number;
 }
 
 const styles = {
@@ -69,9 +70,9 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
 }){
     return <React.Fragment>
         <Section title='Selection'>
-            <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'} onClick={()=>batchSelect(SelectionType.allMatching)}/>
+            <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'} onClick={()=>batchSelect(SelectionType.allMatching)} disabled={batchStats.selectedCount===batchStats.allDedupesCount}/>
             <Button title={'Select only this page'} tooltip={'Select only the dedupes that are currently visible on this page'} onClick={()=>batchSelect(SelectionType.onlyOnPage)}/>
-            <Button title={'Unselect all'} tooltip={'Unselect all dedupes'} onClick={()=>batchSelect(SelectionType.none)}/>
+            <Button title={'Unselect all'} tooltip={'Unselect all dedupes'} onClick={()=>batchSelect(SelectionType.none)} disabled={batchStats.selectedCount===0}/>
         </Section>
         <Section title='Method'>
             <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'}/>

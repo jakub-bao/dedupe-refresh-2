@@ -112,7 +112,8 @@ function generateDedupe(selectedRows: namedRow[], groupNumber:number, filters:Fi
         },
         resolution: getResolutionDetails(selectedRows),
         duplicates: extractDuplicates(selectedRows),
-        status: null
+        status: null,
+        tableData:{}
     };
     updateStatus(dedupe);
     return dedupe;

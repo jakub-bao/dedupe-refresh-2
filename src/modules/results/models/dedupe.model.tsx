@@ -67,8 +67,8 @@ export type DedupeModel = {
     duplicates: DuplicateModel[];
     status: InternalStatus;
     tableData?: {
-        checked:boolean;
-        id:number;
+        checked?:boolean;
+        id?:number;
     }
 }
 

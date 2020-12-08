@@ -22,6 +22,7 @@ import {UnresolveConfirm} from "./unresolveConfirm.component";
 import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
 import {BatchSelect, SelectionType} from "../../menu/components/batchResolveMenu.component";
 import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
+import {generateBatchStats} from "../../batch/services/generateBatchStats.service";
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
@@ -221,6 +222,7 @@ class Main extends React.Component<{
                 menuUi={this.state.ui.menu}
                 switchMenuTab={this.switchMenuTab}
                 batchSelect={this.batchSelect}
+                batchStats={generateBatchStats(this.state.results.dedupes)}
             />
 
             <ContentWrapper ui={this.state.ui}>

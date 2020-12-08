@@ -6,7 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {colors} from "../../../values/color.values";
 import {Filters} from "./filters.component";
 import {MenuUi} from "../services/uiModel";
-import {BatchResolveMenu, BatchSelect} from "./batchResolveMenu.component";
+import {BatchResolveMenu, BatchSelect, BatchStats} from "./batchResolveMenu.component";
 
 export enum MenuVariant {
     search=0,
@@ -64,14 +64,15 @@ const MenuTab = withStyles((theme)=>({
     }
 }))(Tab)//(Tab);
 
-export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab, batchSelect}:{
+export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab, batchSelect, batchStats}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider,
     onSearchClick: ()=>void,
     menuUi: MenuUi,
     switchMenuTab: (tabIndex:MenuVariant)=>void,
-    batchSelect: BatchSelect
+    batchSelect: BatchSelect,
+    batchStats:BatchStats
 }) {
     let classStyles = useStyles();
     return <Drawer
@@ -88,6 +89,6 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
 
         {/*<MenuLogo toggleMenu={filtersUi.collapseFilters}/>*/}
         {menuUi.menuTab===0 && <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>}
-        {menuUi.menuTab===1 && <BatchResolveMenu batchStats={null} batchAction={null} batchSelect={batchSelect} batchMethod={null}/>}
+        {menuUi.menuTab===1 && <BatchResolveMenu batchStats={batchStats} batchAction={null} batchSelect={batchSelect} batchMethod={null}/>}
     </Drawer>;
 }

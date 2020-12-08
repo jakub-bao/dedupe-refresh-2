@@ -48,9 +48,9 @@ function Button({title, tooltip}){
 export function BatchResolveMenu({batchStats}:{batchStats:BatchStats}){
     return <React.Fragment>
         <Section title='Selection'>
-            <Button title={'Select all on this page'} tooltip={'Select only the dedupes that are currently visible on this page'}/>
+            <Button title={'Select only this page'} tooltip={'Select only the dedupes that are currently visible on this page'}/>
             <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'}/>
-            <Button title={'Select none'} tooltip={'Unselect all dedupes'}/>
+            <Button title={'Unselect all'} tooltip={'Unselect all dedupes'}/>
         </Section>
         <Section title='Method'>
             <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'}/>

@@ -7,7 +7,7 @@ import CheckboxFilter from "./checkboxFilter.component";
 import MenuLogo from "./filtersLogo.component";
 import {makeStyles} from "@material-ui/core/styles";
 import {colors} from "../../../values/color.values";
-import {Filters} from "../filters.component";
+import {Filters} from "./filters.component";
 import {MenuUi} from "../services/uiModel";
 
 export enum MenuVariant {
@@ -41,15 +41,14 @@ const MenuTabs = withStyles((theme)=>({
         overflow: 'visible!important'
     },
     indicator: {
-        // display:'none'
+        backgroundColor: 'grey',
         '&:after':{
             display: 'block',
             width: 0,
             height: 0,
             borderLeft: '6px solid transparent',
             borderRight: '6px solid transparent',
-            borderTop: '6px solid #f50057',
-            // backgroundColor: 'green',
+            borderTop: '6px solid grey',//#f50057
             content: 'close-quote',
             margin:'auto'
         }
@@ -92,5 +91,3 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
         {menuUi.menuTab===0 && <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>}
     </Drawer>;
 }
-
-// export default React.memo(Menu);

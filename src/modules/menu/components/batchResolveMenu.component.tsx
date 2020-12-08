@@ -1,5 +1,6 @@
 import React, {CSSProperties} from "react";
-import {Button as MuiButton, Paper, Tooltip, Typography} from "@material-ui/core";
+import {Button as MuiButton, Tooltip, Typography} from "@material-ui/core";
+import {ResolutionMethodType} from "../../results/models/dedupe.model";
 
 export type BatchStats = {
     selected: number;
@@ -37,20 +38,40 @@ function Section({title,children}){
     </div>
 }
 
-function Button({title, tooltip}){
+function Button({title, tooltip, ...props}){
     return <Tooltip title={tooltip}>
-        <MuiButton style={styles.button} size='small'>
+        <MuiButton style={styles.button} size='small' {...props}>
             {title}
         </MuiButton>
     </Tooltip>
 }
 
-export function BatchResolveMenu({batchStats}:{batchStats:BatchStats}){
+export enum SelectionType {
+    onlyOnPage='onlyOnPage',
+    allMatching='allMatching',
+    none='none'
+}
+
+export enum BatchActionType {
+    resolve='resolve',
+    unresolve='unresolve'
+}
+
+export type BatchSelect = (selection:SelectionType)=>void;
+export type BatchMethod = (method:ResolutionMethodType)=>void;
+export type BatchAction = (action:BatchActionType)=>void;
+
+export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAction}:{
+    batchStats:BatchStats,
+    batchSelect:BatchSelect,
+    batchMethod:BatchMethod,
+    batchAction:BatchAction
+}){
     return <React.Fragment>
         <Section title='Selection'>
-            <Button title={'Select only this page'} tooltip={'Select only the dedupes that are currently visible on this page'}/>
-            <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'}/>
-            <Button title={'Unselect all'} tooltip={'Unselect all dedupes'}/>
+            <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'} onClick={()=>batchSelect(SelectionType.allMatching)}/>
+            <Button title={'Select only this page'} tooltip={'Select only the dedupes that are currently visible on this page'} onClick={()=>batchSelect(SelectionType.onlyOnPage)}/>
+            <Button title={'Unselect all'} tooltip={'Unselect all dedupes'} onClick={()=>batchSelect(SelectionType.none)}/>
         </Section>
         <Section title='Method'>
             <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'}/>

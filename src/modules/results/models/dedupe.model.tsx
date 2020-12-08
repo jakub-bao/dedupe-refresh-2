@@ -66,6 +66,10 @@ export type DedupeModel = {
     resolution: DedupeResolutionModel;
     duplicates: DuplicateModel[];
     status: InternalStatus;
+    tableData?: {
+        checked:boolean;
+        id:number;
+    }
 }
 
 function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2:DedupeResolutionMethodValue):boolean{

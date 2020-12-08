@@ -20,20 +20,23 @@ import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notista
 import {Typography} from "@material-ui/core";
 import {UnresolveConfirm} from "./unresolveConfirm.component";
 import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
+import {BatchSelect, SelectionType} from "../../menu/components/batchResolveMenu.component";
+import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
     closeSnackbar: (key?: SnackbarKey) => void;
 }, {
-    selectedFilters:FiltersModel,
+    selectedFilters: FiltersModel,
     results: {
         dedupes: DedupeModel[],
         selectedFilters: FiltersModel
     },
-    toBeUnresolved:number,
+    toBeUnresolved: number,
     ui: UiModel,
 }> {
-    filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
+    filterOptionsProvider: FilterOptionsProvider = new FilterOptionsProvider();
+
     constructor(props) {
         super(props);
         this.state = {
@@ -57,61 +60,67 @@ class Main extends React.Component<{
                     menuTab: MenuVariant.search
                 },
                 error: {},
-                loading:{
+                loading: {
                     filters: true
                 },
                 unresolveConfirmOpen: false
             },
-            toBeUnresolved:null
+            toBeUnresolved: null
         };
-        this.filterOptionsProvider.init().then(()=>{
+        this.filterOptionsProvider.init().then(() => {
             this.updateUi([{action: UiActionType.loadingFilters, value: false}]);
-        }).catch(()=>{
+        }).catch(() => {
             this.updateUi([{action: UiActionType.errorFilters, value: true}]);
         });
     }
 
     showMessage = this.props.enqueueSnackbar;
 
-    updateUi = (actions:ActionValue[])=>{
+    updateUi = (actions: ActionValue[]) => {
         let ui = updateUi(this.state.ui, actions);
         this.setState({ui});
     }
 
-    onSearchClick = ()=>{
-        this.updateUi([{action: UiActionType.loadingResults, value: true},{action:UiActionType.errorResults, value: false}])
+    onSearchClick = () => {
+        this.updateUi([{action: UiActionType.loadingResults, value: true}, {
+            action: UiActionType.errorResults,
+            value: false
+        }])
         let selectedFilters = {...this.state.selectedFilters};
-        fetchDedupes(this.state.selectedFilters).then(dedupes=>{
+        fetchDedupes(this.state.selectedFilters).then(dedupes => {
             this.setState({results: {dedupes, selectedFilters}});
             this.updateUi([{action: UiActionType.loadingResults, value: false}])
-        }).catch(()=>{
+        }).catch(() => {
             this.setState({results: {dedupes: null, selectedFilters}});
-            this.updateUi([{action: UiActionType.loadingResults, value: false},{action:UiActionType.errorResults, value: true}])
+            this.updateUi([{action: UiActionType.loadingResults, value: false}, {
+                action: UiActionType.errorResults,
+                value: true
+            }])
         });
     };
 
-    onFiltersSelect = (filterType:FilterType, filterValue:string|boolean):void=>{
-        if (this.state.selectedFilters[filterType]===filterValue) return;
+    onFiltersSelect = (filterType: FilterType, filterValue: string | boolean): void => {
+        if (this.state.selectedFilters[filterType] === filterValue) return;
         let selectedFilters = {...this.state.selectedFilters};
         // @ts-ignore
         selectedFilters[filterType] = filterValue;
         this.setState({selectedFilters});
     };
 
-    updateDedupes = (dedupes:DedupeModel[])=>{
-        this.setState({results:{dedupes, selectedFilters: this.state.results.selectedFilters}});
+    updateDedupes = (dedupes: DedupeModel[]) => {
+        this.setState({results: {dedupes, selectedFilters: this.state.results.selectedFilters}});
     }
 
-    changeResolutionMethod:ChangeResolutionMethod = (dedupeId:number, resolvedBy:DedupeResolutionMethodValue)=>{
+    changeResolutionMethod: ChangeResolutionMethod = (dedupeId: number, resolvedBy: DedupeResolutionMethodValue) => {
         this.updateDedupes(changeResolutionMethod(this.state.results.dedupes, dedupeId, resolvedBy));
     };
 
-    setResolutionValue:SetResolutionValue = (dedupeId:number, customValue)=>{
+    setResolutionValue: SetResolutionValue = (dedupeId: number, customValue) => {
         this.updateDedupes(setResolutionValue(this.state.results.dedupes, dedupeId, customValue));
     };
 
-    renderResults(){
-        if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100} />;
+    renderResults() {
+        if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100}/>;
         if (this.state.ui.error.results) return <NetworkError/>;
         if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
         return <Results
@@ -123,64 +132,65 @@ class Main extends React.Component<{
         />;
     }
 
-    resolveDedupe = (id:number)=>{
-        let dedupe:DedupeModel = this.state.results.dedupes[id-1];
+    resolveDedupe = (id: number) => {
+        let dedupe: DedupeModel = this.state.results.dedupes[id - 1];
         dedupe.status = InternalStatus.processing;
-        this.setState({results:this.state.results});
-        resolveDedupe(dedupe).then((worked:boolean)=>{
+        this.setState({results: this.state.results});
+        resolveDedupe(dedupe).then((worked: boolean) => {
             this.showMessage(`Resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
-            this.setState({results:this.state.results});
+            this.setState({results: this.state.results});
         });
     }
 
-    // uiSetFiltersOpen = (open:boolean)=>{
-    //     this.updateUi([{action: UiActionType.menuOpen, value: open}])
-    // };
 
-    switchMenuTab = (tab:MenuVariant)=>{
-        this.updateUi([{action: UiActionType.menuTab,value: tab}]);
+    switchMenuTab = (tab: MenuVariant) => {
+        this.updateUi([{action: UiActionType.menuTab, value: tab}]);
     }
 
-    onUnresolveDialogClose = (confirmed:boolean)=>{
+    onUnresolveDialogClose = (confirmed: boolean) => {
         this.updateUi([{action: UiActionType.unresolveConfirm, value: false}])
         if (confirmed) {
             const index = this.state.toBeUnresolved;
-            this.state.results.dedupes[index-1].status = InternalStatus.processing;
-            this.setState({results:this.state.results});
-            unresolveDedupe(this.state.results.dedupes[index-1]).then(()=>{
+            this.state.results.dedupes[index - 1].status = InternalStatus.processing;
+            this.setState({results: this.state.results});
+            unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
                 this.showMessage(`Unresolved`);
                 let results = this.state.results;
-                let dedupe = results.dedupes[index-1];
-                dedupe.resolution.resolutionMethodValue=null;
-                dedupe.resolution.original_resolutionMethodValue=null;
+                let dedupe = results.dedupes[index - 1];
+                dedupe.resolution.resolutionMethodValue = null;
+                dedupe.resolution.original_resolutionMethodValue = null;
                 dedupe.status = InternalStatus.unresolved;
                 this.setState({results});
             });
         }
     }
 
-    unresolveDedupe = (id:number)=>{
-        this.updateUi([{action: UiActionType.unresolveConfirm, value:true}]);
+    unresolveDedupe = (id: number) => {
+        this.updateUi([{action: UiActionType.unresolveConfirm, value: true}]);
         this.setState({toBeUnresolved: id});
     }
 
-    renderPreselect(){
-        if(process.env.NODE_ENV === 'production') return null;
-        if(this.state.results.dedupes) return null;
+    renderPreselect() {
+        if (process.env.NODE_ENV === 'production') return null;
+        if (this.state.results.dedupes) return null;
         return <div style={{position: 'fixed', top: 50, right: 10}}>
-            <Typography onClick={()=>this.preselect('XtxUYCsDWrR','2020Q4', DedupeType.pure)}>1.Rwanda</Typography>
-            <Typography onClick={()=>this.preselect('PqlFzhuPcF1','2020Q4',DedupeType.pure)}>2.Nigeria</Typography>
-            <Typography onClick={()=>this.preselect('f5RoebaDLMx','2020Q4',DedupeType.crosswalk)}>3.Zambia</Typography>
-            <Typography onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q4',DedupeType.pure)}>4.Botswana</Typography>
-            <Typography onClick={()=>this.preselect('bQQJe0cC1eD','2020Q4',DedupeType.crosswalk)}>5.Cameroon</Typography>
-            <Typography onClick={()=>this.preselect('IH1kchw86uA','2020Q4',DedupeType.crosswalk)}>6.Ethiopia</Typography>
-            <Typography onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q3',DedupeType.pure)}>7.Full list</Typography>
+            <Typography onClick={() => this.preselect('XtxUYCsDWrR', '2020Q4', DedupeType.pure)}>1.Rwanda</Typography>
+            <Typography onClick={() => this.preselect('PqlFzhuPcF1', '2020Q4', DedupeType.pure)}>2.Nigeria</Typography>
+            <Typography
+                onClick={() => this.preselect('f5RoebaDLMx', '2020Q4', DedupeType.crosswalk)}>3.Zambia</Typography>
+            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q4', DedupeType.pure)}>4.Botswana</Typography>
+            <Typography
+                onClick={() => this.preselect('bQQJe0cC1eD', '2020Q4', DedupeType.crosswalk)}>5.Cameroon</Typography>
+            <Typography
+                onClick={() => this.preselect('IH1kchw86uA', '2020Q4', DedupeType.crosswalk)}>6.Ethiopia</Typography>
+            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q3', DedupeType.pure)}>7.Full
+                list</Typography>
         </div>;
     }
 
-    preselect = (orgUnitId:string, period:string, dedupeType:DedupeType)=>{
+    preselect = (orgUnitId: string, period: string, dedupeType: DedupeType) => {
         let selectedFilters = {...this.state.selectedFilters};
         selectedFilters.operatingUnit = orgUnitId;
         selectedFilters.dataType = DataType.results;
@@ -189,6 +199,13 @@ class Main extends React.Component<{
         selectedFilters.includeResolved = true;
         this.setState({selectedFilters});
         setTimeout(this.onSearchClick, 0);
+    };
+
+    batchSelect:BatchSelect = (selectionType:SelectionType)=>{
+        let results = this.state.results;
+        results.dedupes = batchSelectDedupes(results.dedupes, selectionType);
+        console.log(this.state.results.dedupes);
+        this.setState({results});
     };
 
 
@@ -203,6 +220,7 @@ class Main extends React.Component<{
                 onSearchClick={this.onSearchClick}
                 menuUi={this.state.ui.menu}
                 switchMenuTab={this.switchMenuTab}
+                batchSelect={this.batchSelect}
             />
 
             <ContentWrapper ui={this.state.ui}>
@@ -213,12 +231,13 @@ class Main extends React.Component<{
                 {this.renderResults()}
                 {this.renderPreselect()}
             </ContentWrapper>
-            {this.state.results.dedupes&&<UnresolveConfirm
+            {this.state.results.dedupes && <UnresolveConfirm
                 isOpen={this.state.ui.unresolveConfirmOpen}
                 onClose={this.onUnresolveDialogClose}
-                toBeUnresolved={this.state.results.dedupes[this.state.toBeUnresolved-1]}
+                toBeUnresolved={this.state.results.dedupes[this.state.toBeUnresolved - 1]}
             />}
         </React.Fragment>;
     }
 }
+
 export default withSnackbar(Main);

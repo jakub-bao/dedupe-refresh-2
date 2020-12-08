@@ -1,8 +1,8 @@
 import {searchDedupes} from "../shared/sharedBasics.testService";
 import {Nigeria1} from "../renderDedupes/3.renderDedupes.testCases";
-import { click } from "../../test/domServices/click.testService";
+import {click} from "../../test/domServices/click.testService";
 import {noTextsIn, textsIn} from "../../test/domServices/textsIn.testService";
-import {noText, pause, text, texts} from "../../test/domServices/domUtils.testService";
+import {noText, pause, text} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
 
 

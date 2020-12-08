@@ -1,4 +1,4 @@
-import {Button, Drawer} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import React from "react";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";

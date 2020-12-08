@@ -3,7 +3,6 @@ import {IconButton, Tooltip, Typography} from "@material-ui/core";
 import {FiltersModel} from "../../menu/models/filters.model";
 import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.service";
 import {Menu} from "@material-ui/icons";
-import {UiModel} from "../../menu/services/uiModel";
 
 const styles = {
     chip: {marginLeft: 5},

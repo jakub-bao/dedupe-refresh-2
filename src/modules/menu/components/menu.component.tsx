@@ -9,6 +9,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {colors} from "../../../values/color.values";
 import {Filters} from "./filters.component";
 import {MenuUi} from "../services/uiModel";
+import {BatchResolveMenu} from "./batchResolveMenu.component";
 
 export enum MenuVariant {
     search=0,
@@ -89,5 +90,6 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
 
         {/*<MenuLogo toggleMenu={filtersUi.collapseFilters}/>*/}
         {menuUi.menuTab===0 && <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>}
+        {menuUi.menuTab===1 && <BatchResolveMenu batchStats={null}/>}
     </Drawer>;
 }

@@ -31,7 +31,7 @@ class Main extends React.Component<{
         selectedFilters: FiltersModel
     },
     toBeUnresolved:number,
-    ui: UiModel
+    ui: UiModel,
 }> {
     filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
     constructor(props) {

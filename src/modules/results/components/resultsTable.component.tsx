@@ -79,12 +79,13 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
 ];
 
 
-export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe}:{
+export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange}:{
     filteredDedupes: DedupeModel[],
     setResolutionValue:SetResolutionValue,
     changeResolutionMethod: ChangeResolutionMethod,
     resolveDedupe:ResolveDedupe,
-    unresolveDedupe:UnresolveDedupe
+    unresolveDedupe:UnresolveDedupe,
+    onSelectChange: ()=>void
 }) {
     return <MaterialTable
         style={{borderTop: border}}
@@ -93,5 +94,6 @@ export default function ResultsTable({filteredDedupes, setResolutionValue, chang
         columns={getColumnSettings(setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe)}
         data={filteredDedupes}
         components={components}
+        onSelectionChange={onSelectChange}
     />;
 }

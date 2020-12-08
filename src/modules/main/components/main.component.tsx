@@ -120,6 +120,10 @@ class Main extends React.Component<{
         this.updateDedupes(setResolutionValue(this.state.results.dedupes, dedupeId, customValue));
     };
 
+    onSelectChange = ()=>{
+        this.setState({results:this.state.results});
+    }
+
     renderResults() {
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100}/>;
         if (this.state.ui.error.results) return <NetworkError/>;
@@ -130,6 +134,7 @@ class Main extends React.Component<{
             changeResolutionMethod={this.changeResolutionMethod}
             resolveDedupe={this.resolveDedupe}
             unresolveDedupe={this.unresolveDedupe}
+            onSelectChange={this.onSelectChange}
         />;
     }
 

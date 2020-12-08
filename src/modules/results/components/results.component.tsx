@@ -7,6 +7,7 @@ import {
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 import {ResolveDedupe, UnresolveDedupe} from "../../resolutionMethodCell/components/statusCell.component";
+import MaterialTable from "material-table";
 
 const styles = {
     info: {
@@ -14,12 +15,13 @@ const styles = {
     }
 };
 
-export default function Results({filteredDedupes,setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe}:{
+export default function Results({filteredDedupes,setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange}:{
     filteredDedupes: DedupeModel[],
     setResolutionValue:SetResolutionValue,
     changeResolutionMethod: ChangeResolutionMethod,
     resolveDedupe: ResolveDedupe,
-    unresolveDedupe: UnresolveDedupe
+    unresolveDedupe: UnresolveDedupe,
+    onSelectChange: ()=>void
 }) {
     if (!filteredDedupes) return null;
     if (filteredDedupes.length===0) return <Typography style={styles.info}>No duplicates found matching the selected criteria</Typography>
@@ -29,5 +31,6 @@ export default function Results({filteredDedupes,setResolutionValue, changeResol
         setResolutionValue={setResolutionValue}
         resolveDedupe={resolveDedupe}
         unresolveDedupe={unresolveDedupe}
+        onSelectChange={onSelectChange}
     />;
 }

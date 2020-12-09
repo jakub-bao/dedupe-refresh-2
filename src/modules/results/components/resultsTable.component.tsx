@@ -35,7 +35,7 @@ const tableOptions:Options<DedupeModel> = {
         borderBottom: darkBorder,
     },
     draggable: false,
-    selectionProps: (data:DedupeModel)=>({'data-testid':`batch_checkbox_${data.meta.internalId}`}),
+    selectionProps: (data:DedupeModel)=>({'data-testid':`batch_checkbox_${data.meta.internalId}`,'data-internalId':data.meta.internalId,'data-type':'batch_checkbox'}),
     headerSelectionProps: {'data-testid':'batch_checkbox_all'}
 } as Options<DedupeModel>;
 
@@ -72,7 +72,7 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
 }
 
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod, resolveDedupe: ResolveDedupe, unresolveDedupe: UnresolveDedupe)=> [
-    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}, defaultSort:'asc'} as Column<any>,
+    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}/*, defaultSort:'asc'*/} as Column<any>,
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}},

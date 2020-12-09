@@ -1,6 +1,6 @@
 import React from "react";
 import {DedupeModel} from "../models/dedupe.model";
-import ResultsTable from "./resultsTable.component";
+import ResultsTable, {OnPageChange} from "./resultsTable.component";
 import {Typography} from "@material-ui/core";
 import {
     ChangeResolutionMethod,
@@ -15,13 +15,14 @@ const styles = {
     }
 };
 
-export default function Results({filteredDedupes,setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange}:{
+export default function Results({filteredDedupes,setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange,onPageChange}:{
     filteredDedupes: DedupeModel[],
     setResolutionValue:SetResolutionValue,
     changeResolutionMethod: ChangeResolutionMethod,
     resolveDedupe: ResolveDedupe,
     unresolveDedupe: UnresolveDedupe,
-    onSelectChange: ()=>void
+    onSelectChange: ()=>void,
+    onPageChange:OnPageChange
 }) {
     if (!filteredDedupes) return null;
     if (filteredDedupes.length===0) return <Typography style={styles.info}>No duplicates found matching the selected criteria</Typography>
@@ -32,5 +33,6 @@ export default function Results({filteredDedupes,setResolutionValue, changeResol
         resolveDedupe={resolveDedupe}
         unresolveDedupe={unresolveDedupe}
         onSelectChange={onSelectChange}
+        onPageChange={onPageChange}
     />;
 }

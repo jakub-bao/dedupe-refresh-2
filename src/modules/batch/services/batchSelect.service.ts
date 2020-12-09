@@ -7,6 +7,7 @@ export function batchSelectDedupes(dedupes:DedupeModel[], selectionType:Selectio
             dedupes.forEach(d=>d.tableData.checked=true);
             break;
         case SelectionType.onlyOnPage:
+
             break;
         case SelectionType.none:
             dedupes.forEach(d=>d.tableData.checked=false);

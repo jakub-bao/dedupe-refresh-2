@@ -71,7 +71,7 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
     return <React.Fragment>
         <Section title='Selection'>
             <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'} onClick={()=>batchSelect(SelectionType.allMatching)} disabled={batchStats.selectedCount===batchStats.allDedupesCount} data-testid='batch_selectAll'/>
-            <Button title={'Select only this page'} tooltip={'Select only the dedupes that are currently visible on this page'} onClick={()=>batchSelect(SelectionType.onlyOnPage)} data-testid='batch_selectPage'/>
+            <Button title={'Select this page'} tooltip={'Add this page of dedupes to existing selection'} onClick={()=>batchSelect(SelectionType.onlyOnPage)} data-testid='batch_selectPage'/>
             <Button title={'Unselect all'} tooltip={'Unselect all dedupes'} onClick={()=>batchSelect(SelectionType.none)} disabled={batchStats.selectedCount===0} data-testid='batch_selectNone'/>
         </Section>
         <Section title='Method'>

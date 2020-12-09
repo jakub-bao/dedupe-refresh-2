@@ -5,7 +5,7 @@ import {testAs} from "../../test/apiCache/getData/getData.service";
 import {DedupeTestCase} from "./models/test.models";
 import {noTextIn, textIn} from "../../test/domServices/textsIn.testService";
 import {exist, noExist} from "../../test/domServices/texts.testService";
-import {screen} from "@testing-library/react";
+import {fireEvent, screen} from "@testing-library/react";
 import {InternalStatus} from "../../modules/results/models/dedupe.model";
 import {SnackbarProvider} from "notistack";
 
@@ -51,3 +51,9 @@ export const switchToBatch = ()=>{
 }
 
 export const isDisabled = (id:string)=>expect(screen.getByTestId(id).hasAttribute('disabled')).toBeTruthy();
+
+export const checkbox = (id:number|string,value:boolean)=>{
+    expect(screen.getByTestId(`batch_checkbox_${id}`).querySelector('input').checked).toEqual(value);
+};
+
+export const nextPage = ()=>fireEvent.click(document.querySelector('[title="Next Page"] button'));

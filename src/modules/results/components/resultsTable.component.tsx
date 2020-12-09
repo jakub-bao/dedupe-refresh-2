@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import MaterialTable, {MTableBodyRow, Options} from "material-table";
+import MaterialTable, {Column, MTableBodyRow, Options} from "material-table";
 import {DedupeModel, InternalStatus} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
@@ -34,7 +34,9 @@ const tableOptions:Options<DedupeModel> = {
         borderRight: darkBorder,
         borderBottom: darkBorder,
     },
-    draggable: false
+    draggable: false,
+    selectionProps: (data:DedupeModel)=>({'data-testid':`batch_checkbox_${data.meta.internalId}`}),
+    headerSelectionProps: {'data-testid':'batch_checkbox_all'}
 } as Options<DedupeModel>;
 
 export const Row = withStyles((theme) => ({
@@ -70,7 +72,7 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
 }
 
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod, resolveDedupe: ResolveDedupe, unresolveDedupe: UnresolveDedupe)=> [
-    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
+    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}, defaultSort:'asc'} as Column<any>,
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}},
@@ -79,13 +81,31 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
 ];
 
 
-export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange}:{
+export enum SortColumn{
+    dataElement,
+}
+export enum SortDirection{
+    asc,
+    desc
+}
+export enum PageChangeType{
+    pageNumber,
+    pageSize,
+    sortColumn,
+    sortDirection,
+}
+export type OnPageChange = (type:PageChangeType, value:number)=>void;
+
+
+export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange, onPageChange}:{
     filteredDedupes: DedupeModel[],
     setResolutionValue:SetResolutionValue,
     changeResolutionMethod: ChangeResolutionMethod,
     resolveDedupe:ResolveDedupe,
     unresolveDedupe:UnresolveDedupe,
-    onSelectChange: ()=>void
+    onSelectChange: ()=>void,
+    onPageChange: OnPageChange
+    // onChangePage:(page:number)=>void
 }) {
     return <MaterialTable
         style={{borderTop: border}}
@@ -95,5 +115,7 @@ export default function ResultsTable({filteredDedupes, setResolutionValue, chang
         data={filteredDedupes}
         components={components}
         onSelectionChange={onSelectChange}
+
+        // onChangePage={onChangePage}
     />;
 }

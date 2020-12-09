@@ -210,7 +210,6 @@ class Main extends React.Component<{
     batchSelect:BatchSelect = (selectionType:SelectionType)=>{
         let results = this.state.results;
         results.dedupes = batchSelectDedupes(results.dedupes, selectionType);
-        console.log(this.state.results.dedupes);
         this.setState({results});
     };
 

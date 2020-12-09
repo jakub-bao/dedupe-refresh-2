@@ -83,7 +83,7 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
     >
         <MenuTabs value={menuUi.menuTab} onChange={(event, tabIndex:number)=>switchMenuTab(tabIndex)} variant='fullWidth'>
             <MenuTab label="Search"/>
-            <MenuTab label="Batch"/>
+            <MenuTab label="Batch" data-testid={'menu_tab_batch'} disabled={!batchStats || !batchStats.allDedupesCount || batchStats.allDedupesCount===0}/>
         </MenuTabs>
 
 

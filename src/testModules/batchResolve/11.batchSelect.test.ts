@@ -1,6 +1,9 @@
 import {DedupeTestCase} from "../shared/models/test.models";
 import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
-import {searchDedupes} from "../shared/sharedBasics.testService";
+import {isDisabled, searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
+import {screen} from "@testing-library/react";
+import {Simulate} from "react-dom/test-utils";
+import { click } from "../../test/domServices/click.testService";
 
 export const BotswanaAllCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -29,4 +32,8 @@ export const BotswanaAllCase:DedupeTestCase = {
 
 test('11 > Batch Select', async ()=>{
     await searchDedupes(BotswanaAllCase);
+    switchToBatch();
+    isDisabled('batch_selectNone');
+    click('batch_selectAll');
+    isDisabled('batch_selectAll');
 });

@@ -44,3 +44,10 @@ function asInp(el:Element):HTMLInputElement{
 
 
 export const checkCustomValue = (customValue:number)=>expect(asInp(screen.getByTestId('resolution_custom_input')).value).toBe(customValue.toString());
+
+export const switchToBatch = ()=>{
+    click('menu_tab_batch');
+    texts(['Select everything']);
+}
+
+export const isDisabled = (id:string)=>expect(screen.getByTestId(id).hasAttribute('disabled')).toBeTruthy();

@@ -83,6 +83,8 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
 
 export enum SortColumn{
     dataElement,
+    disaggregation,
+    ou,
 }
 export enum SortDirection{
     asc,
@@ -91,10 +93,9 @@ export enum SortDirection{
 export enum PageChangeType{
     pageNumber,
     pageSize,
-    sortColumn,
-    sortDirection,
+    sort,
 }
-export type OnPageChange = (type:PageChangeType, value:number)=>void;
+export type OnPageChange = (type:PageChangeType, value:number, value2?: number)=>void;
 
 
 export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange, onPageChange}:{
@@ -115,7 +116,8 @@ export default function ResultsTable({filteredDedupes, setResolutionValue, chang
         data={filteredDedupes}
         components={components}
         onSelectionChange={onSelectChange}
-
-        // onChangePage={onChangePage}
+        onChangePage={(page:number)=>onPageChange(PageChangeType.pageNumber, page)}
+        onChangeRowsPerPage={(pageSize: number)=>onPageChange(PageChangeType.pageSize, pageSize)}
+        onOrderChange={(orderBy: number, orderDirection: "asc" | "desc")=>onPageChange(PageChangeType.sort,orderBy,SortDirection[orderDirection])}
     />;
 }

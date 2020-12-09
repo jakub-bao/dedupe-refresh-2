@@ -139,8 +139,8 @@ class Main extends React.Component<{
         this.setState({results:this.state.results});
     }
 
-    onPageChange:OnPageChange = (type:PageChangeType, value:number)=>{
-        let batchPage = this.state.batchPage;
+    onPageChange:OnPageChange = (type:PageChangeType, value:number, value2?:number)=>{
+        let batchPage:BatchPage = this.state.batchPage;
         switch (type){
             case PageChangeType.pageNumber:
                 batchPage.page = value;
@@ -148,14 +148,12 @@ class Main extends React.Component<{
             case PageChangeType.pageSize:
                 batchPage.pageSize = value;
                 break;
-            case PageChangeType.sortColumn:
+            case PageChangeType.sort:
                 batchPage.sortBy = value;
+                batchPage.sortDirection = value2;
                 break;
-            case PageChangeType.sortDirection:
-                batchPage.sortDirection = value;
-                break;
-
         }
+        console.log(batchPage);
         this.setState({batchPage});
     }
 
@@ -245,7 +243,7 @@ class Main extends React.Component<{
 
     batchSelect:BatchSelect = (selectionType:SelectionType)=>{
         let results = this.state.results;
-        results.dedupes = batchSelectDedupes(results.dedupes, selectionType);
+        results.dedupes = batchSelectDedupes(results.dedupes, selectionType, this.state.batchPage);
         this.setState({results});
     };
 

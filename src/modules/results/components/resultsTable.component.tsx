@@ -81,32 +81,13 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
 ];
 
 
-export enum SortColumn{
-    dataElement,
-    disaggregation,
-    ou,
-}
-export enum SortDirection{
-    asc,
-    desc
-}
-export enum PageChangeType{
-    pageNumber,
-    pageSize,
-    sort,
-}
-export type OnPageChange = (type:PageChangeType, value:number, value2?: number)=>void;
-
-
-export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange, onPageChange}:{
+export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange}:{
     filteredDedupes: DedupeModel[],
     setResolutionValue:SetResolutionValue,
     changeResolutionMethod: ChangeResolutionMethod,
     resolveDedupe:ResolveDedupe,
     unresolveDedupe:UnresolveDedupe,
     onSelectChange: ()=>void,
-    onPageChange: OnPageChange
-    // onChangePage:(page:number)=>void
 }) {
     return <MaterialTable
         style={{borderTop: border}}
@@ -116,8 +97,5 @@ export default function ResultsTable({filteredDedupes, setResolutionValue, chang
         data={filteredDedupes}
         components={components}
         onSelectionChange={onSelectChange}
-        onChangePage={(page:number)=>onPageChange(PageChangeType.pageNumber, page)}
-        onChangeRowsPerPage={(pageSize: number)=>onPageChange(PageChangeType.pageSize, pageSize)}
-        onOrderChange={(orderBy: number, orderDirection: "asc" | "desc")=>onPageChange(PageChangeType.sort,orderBy,SortDirection[orderDirection])}
     />;
 }

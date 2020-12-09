@@ -23,15 +23,7 @@ import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../m
 import {BatchSelect, SelectionType} from "../../menu/components/batchResolveMenu.component";
 import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
 import {generateBatchStats} from "../../batch/services/generateBatchStats.service";
-import {OnPageChange, PageChangeType, SortColumn, SortDirection} from "../../results/components/resultsTable.component";
 
-
-export type BatchPage = {
-    page: number;
-    pageSize: number;
-    sortBy: SortColumn;
-    sortDirection: number;
-}
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
     closeSnackbar: (key?: SnackbarKey) => void;
@@ -43,7 +35,6 @@ class Main extends React.Component<{
     },
     toBeUnresolved: number,
     ui: UiModel,
-    batchPage: BatchPage
 }> {
     filterOptionsProvider: FilterOptionsProvider = new FilterOptionsProvider();
 
@@ -76,12 +67,6 @@ class Main extends React.Component<{
                 unresolveConfirmOpen: false
             },
             toBeUnresolved: null,
-            batchPage:{
-                page: 1,
-                pageSize: 20,
-                sortBy: SortColumn.dataElement,
-                sortDirection: SortDirection.asc
-            }
         };
         this.filterOptionsProvider.init().then(() => {
             this.updateUi([{action: UiActionType.loadingFilters, value: false}]);
@@ -139,24 +124,6 @@ class Main extends React.Component<{
         this.setState({results:this.state.results});
     }
 
-    onPageChange:OnPageChange = (type:PageChangeType, value:number, value2?:number)=>{
-        let batchPage:BatchPage = this.state.batchPage;
-        switch (type){
-            case PageChangeType.pageNumber:
-                batchPage.page = value;
-                break;
-            case PageChangeType.pageSize:
-                batchPage.pageSize = value;
-                break;
-            case PageChangeType.sort:
-                batchPage.sortBy = value;
-                batchPage.sortDirection = value2;
-                break;
-        }
-        console.log(batchPage);
-        this.setState({batchPage});
-    }
-
     renderResults() {
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100}/>;
         if (this.state.ui.error.results) return <NetworkError/>;
@@ -168,7 +135,6 @@ class Main extends React.Component<{
             resolveDedupe={this.resolveDedupe}
             unresolveDedupe={this.unresolveDedupe}
             onSelectChange={this.onSelectChange}
-            onPageChange={this.onPageChange}
         />;
     }
 
@@ -243,7 +209,7 @@ class Main extends React.Component<{
 
     batchSelect:BatchSelect = (selectionType:SelectionType)=>{
         let results = this.state.results;
-        results.dedupes = batchSelectDedupes(results.dedupes, selectionType, this.state.batchPage);
+        results.dedupes = batchSelectDedupes(results.dedupes, selectionType);
         this.setState({results});
     };
 

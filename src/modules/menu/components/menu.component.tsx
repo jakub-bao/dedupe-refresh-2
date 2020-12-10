@@ -6,7 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {colors} from "../../../values/color.values";
 import {Filters} from "./filters.component";
 import {MenuUi} from "../services/uiModel";
-import {BatchResolveMenu, BatchSelect} from "./batchResolveMenu.component";
+import {BatchAction, BatchMethod, BatchResolveMenu, BatchSelect} from "./batchResolveMenu.component";
 import {BatchStatsModel} from "../../batch/services/generateBatchStats.service";
 
 export enum MenuVariant {
@@ -57,7 +57,7 @@ const MenuTab = withStyles((theme)=>({
     }
 }))(Tab)//(Tab);
 
-export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab, batchSelect, batchStats}:{
+export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab, batchSelect, batchMethod, batchAction, batchStats}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider,
@@ -65,6 +65,8 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
     menuUi: MenuUi,
     switchMenuTab: (tabIndex:MenuVariant)=>void,
     batchSelect: BatchSelect,
+    batchMethod:BatchMethod,
+    batchAction:BatchAction,
     batchStats:BatchStatsModel
 }) {
     let classStyles = useStyles();
@@ -82,6 +84,6 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
 
         {/*<MenuLogo toggleMenu={filtersUi.collapseFilters}/>*/}
         {menuUi.menuTab===0 && <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>}
-        {menuUi.menuTab===1 && <BatchResolveMenu batchStats={batchStats} batchAction={null} batchSelect={batchSelect} batchMethod={null}/>}
+        {menuUi.menuTab===1 && <BatchResolveMenu batchStats={batchStats} batchAction={batchAction} batchSelect={batchSelect} batchMethod={batchMethod}/>}
     </Drawer>;
 }

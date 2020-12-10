@@ -71,16 +71,18 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
             <Button title={'Select this page'} tooltip={'Add this page of dedupes to existing selection'} onClick={()=>batchSelect(SelectionType.onlyOnPage)} data-testid='batch_selectPage'/>
             <Button title={'Unselect all'} tooltip={'Unselect all dedupes'} onClick={()=>batchSelect(SelectionType.none)} disabled={batchStats.selectedCount===0} data-testid='batch_selectNone'/>
         </Section>
-        <Section title='Method'>
-            <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'}/>
-            <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'}/>
-        </Section>
-        <Section title='Overview'>
-            <BatchStats batchStats={batchStats}/>
-        </Section>
-        <Section title='Action'>
-            <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'}/>
-            <Button title={'Unresolve'} tooltip={'Delete the resolutions for all selected dedupes from DATIM'}/>
-        </Section>
+        {batchStats.selectedCount>0&&<React.Fragment>
+            <Section title='Method'>
+                <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.maximum)}/>
+                <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.sum)}/>
+            </Section>
+            <Section title='Overview'>
+                <BatchStats batchStats={batchStats}/>
+            </Section>
+            <Section title='Action'>
+                <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'}/>
+                <Button title={'Unresolve'} tooltip={'Delete the resolutions for all selected dedupes from DATIM'}/>
+            </Section>
+        </React.Fragment>}
     </React.Fragment>
 }

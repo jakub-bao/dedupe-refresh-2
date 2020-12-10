@@ -2,7 +2,12 @@ import React from "react";
 import Menu from "../../menu/components/menu.component";
 import {DataType, DedupeType, FiltersModel, FilterType} from "../../menu/models/filters.model";
 import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.service";
-import {DedupeModel, DedupeResolutionMethodValue, InternalStatus} from "../../results/models/dedupe.model";
+import {
+    DedupeModel,
+    DedupeResolutionMethodValue,
+    InternalStatus,
+    ResolutionMethodType
+} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
 import Header from "../../header/components/header.component";
@@ -20,9 +25,15 @@ import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notista
 import {Typography} from "@material-ui/core";
 import {UnresolveConfirm} from "./unresolveConfirm.component";
 import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
-import {BatchSelect, SelectionType} from "../../menu/components/batchResolveMenu.component";
+import {
+    BatchAction, BatchMethod,
+    BatchResolveMenu,
+    BatchSelect,
+    SelectionType
+} from "../../menu/components/batchResolveMenu.component";
 import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
 import {generateBatchStats} from "../../batch/services/generateBatchStats.service";
+import {batchSetMethod} from "../../batch/services/batchSetMethod.service";
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
@@ -213,6 +224,13 @@ class Main extends React.Component<{
         this.setState({results});
     };
 
+    batchMethod:BatchMethod = (method:ResolutionMethodType)=>{
+        batchSetMethod(this.state.results.dedupes, method);
+        this.setState({results:this.state.results});
+    };
+
+    batchAction:BatchAction = ()=>{};
+
 
     render() {
         if (this.state.ui.error.filters) return <NetworkError/>;
@@ -226,6 +244,8 @@ class Main extends React.Component<{
                 menuUi={this.state.ui.menu}
                 switchMenuTab={this.switchMenuTab}
                 batchSelect={this.batchSelect}
+                batchAction={this.batchAction}
+                batchMethod={this.batchMethod}
                 batchStats={generateBatchStats(this.state.results.dedupes)}
             />
 

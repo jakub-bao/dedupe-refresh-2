@@ -35,7 +35,7 @@ function checkButtons(){
     isDisabled('batch_selectNone');
     checkCheckbox('all', false);
     checkCheckbox(1, false);
-    textIn('batch_stats_selected','No dedupes');
+    // textIn('batch_stats_selected','No dedupes');
 }
 
 function selectAll(){
@@ -58,7 +58,7 @@ function unselect(){
     click('batch_selectNone');
     checkCheckbox('all', false);
     checkCheckbox(21, false);
-    textIn('batch_stats_selected','No dedupes');
+    // textIn('batch_stats_selected','No dedupes');
 }
 
 function pageOnly(){

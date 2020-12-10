@@ -35,7 +35,7 @@ const tableOptions:Options<DedupeModel> = {
         borderBottom: darkBorder,
     },
     draggable: false,
-    selectionProps: (data:DedupeModel)=>({'data-testid':`batch_checkbox_${data.meta.internalId}`,'data-internalId':data.meta.internalId,'data-type':'batch_checkbox'}),
+    selectionProps: (data:DedupeModel)=>({'data-testid':`batch_checkbox_${data.meta.internalId}`,'data-id':data.meta.internalId,'data-type':'batch_checkbox'}),
     headerSelectionProps: {'data-testid':'batch_checkbox_all'}
 } as Options<DedupeModel>;
 

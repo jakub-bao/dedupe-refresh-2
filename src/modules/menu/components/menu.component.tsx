@@ -6,7 +6,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import {colors} from "../../../values/color.values";
 import {Filters} from "./filters.component";
 import {MenuUi} from "../services/uiModel";
-import {BatchResolveMenu, BatchSelect, BatchStats} from "./batchResolveMenu.component";
+import {BatchResolveMenu, BatchSelect} from "./batchResolveMenu.component";
+import {BatchStatsModel} from "../../batch/services/generateBatchStats.service";
 
 export enum MenuVariant {
     search=0,
@@ -21,14 +22,6 @@ const useStyles = makeStyles({
         paddingTop:0
     },
 });
-
-// const MenuTab = styled(Tab)({
-//     minWidth: 100,
-//     height: 40,
-//     '&$selected':{
-//         color: 'red'
-//     }
-// });
 
 const MenuTabs = withStyles((theme)=>({
     root: {
@@ -72,7 +65,7 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
     menuUi: MenuUi,
     switchMenuTab: (tabIndex:MenuVariant)=>void,
     batchSelect: BatchSelect,
-    batchStats:BatchStats
+    batchStats:BatchStatsModel
 }) {
     let classStyles = useStyles();
     return <Drawer
@@ -83,7 +76,7 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
     >
         <MenuTabs value={menuUi.menuTab} onChange={(event, tabIndex:number)=>switchMenuTab(tabIndex)} variant='fullWidth'>
             <MenuTab label="Search"/>
-            <MenuTab label="Batch" data-testid={'menu_tab_batch'} disabled={!batchStats || !batchStats.allDedupesCount || batchStats.allDedupesCount===0}/>
+            <MenuTab label="Batch" data-testid={'menu_tab_batch'} disabled={!batchStats || !batchStats.allCount || batchStats.allCount===0}/>
         </MenuTabs>
 
 

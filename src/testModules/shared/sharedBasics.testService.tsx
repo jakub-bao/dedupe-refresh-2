@@ -52,8 +52,12 @@ export const switchToBatch = ()=>{
 
 export const isDisabled = (id:string)=>expect(screen.getByTestId(id).hasAttribute('disabled')).toBeTruthy();
 
-export const checkbox = (id:number|string,value:boolean)=>{
+export const checkCheckbox = (id:number|string, value:boolean)=>{
     expect(screen.getByTestId(`batch_checkbox_${id}`).querySelector('input').checked).toEqual(value);
+};
+
+export const clickCheckbox = (id:number|string)=>{
+    fireEvent.click(screen.getByTestId(`batch_checkbox_${id}`).querySelector('input'));
 };
 
 export const nextPage = ()=>fireEvent.click(document.querySelector('[title="Next Page"] button'));

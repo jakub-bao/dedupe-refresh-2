@@ -1,9 +1,10 @@
 import {DedupeTestCase} from "../shared/models/test.models";
 import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
-import {checkbox, isDisabled, nextPage, searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
+import {checkCheckbox, isDisabled, nextPage, searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
 import {screen} from "@testing-library/react";
 import {Simulate} from "react-dom/test-utils";
 import { click } from "../../test/domServices/click.testService";
+import {textIn} from "../../test/domServices/textsIn.testService";
 
 export const BotswanaAllCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -32,37 +33,42 @@ export const BotswanaAllCase:DedupeTestCase = {
 
 function checkButtons(){
     isDisabled('batch_selectNone');
-    checkbox('all', false);
-    checkbox(1, false);
+    checkCheckbox('all', false);
+    checkCheckbox(1, false);
+    textIn('batch_selected','No dedupes');
 }
 
 function selectAll(){
     click('batch_selectAll');
     isDisabled('batch_selectAll');
-    checkbox('all', true);
-    checkbox(1, true);
+    checkCheckbox('all', true);
+    checkCheckbox(1, true);
+    textIn('batch_selected','All \\(918\\) dedupes');
 }
 
 function page2(){
     nextPage();
-    checkbox(21, true);
+    checkCheckbox(21, true);
+    textIn('batch_selected','All \\(918\\) dedupes');
 }
 
 function unselect(){
     click('batch_selectNone');
-    checkbox('all', false);
-    checkbox(21, false);
+    checkCheckbox('all', false);
+    checkCheckbox(21, false);
+    textIn('batch_selected','No dedupes');
 }
 
 function pageOnly(){
     click('batch_selectPage');
-    checkbox('all', false);
-    checkbox(21, true);
+    checkCheckbox('all', false);
+    checkCheckbox(21, true);
+    textIn('batch_selected','20 out of 918 dedupes');
 }
 
 function page3(){
     nextPage();
-    checkbox(41, false);
+    checkCheckbox(41, false);
 }
 
 test('11 > Batch Select', async ()=>{

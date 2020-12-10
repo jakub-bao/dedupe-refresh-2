@@ -1,11 +1,8 @@
 import React, {CSSProperties} from "react";
 import {Button as MuiButton, Tooltip, Typography} from "@material-ui/core";
 import {ResolutionMethodType} from "../../results/models/dedupe.model";
-
-export type BatchStats = {
-    selectedCount: number;
-    allDedupesCount: number;
-}
+import BatchStats from "../../batch/components/batchStats.component";
+import {BatchStatsModel} from "../../batch/services/generateBatchStats.service";
 
 const styles = {
     section: {
@@ -63,14 +60,17 @@ export type BatchMethod = (method:ResolutionMethodType)=>void;
 export type BatchAction = (action:BatchActionType)=>void;
 
 export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAction}:{
-    batchStats:BatchStats,
+    batchStats:BatchStatsModel,
     batchSelect:BatchSelect,
     batchMethod:BatchMethod,
     batchAction:BatchAction
 }){
     return <React.Fragment>
+        <Section title='Overview'>
+            <BatchStats batchStats={batchStats}/>
+        </Section>
         <Section title='Selection'>
-            <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'} onClick={()=>batchSelect(SelectionType.allMatching)} disabled={batchStats.selectedCount===batchStats.allDedupesCount} data-testid='batch_selectAll'/>
+            <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'} onClick={()=>batchSelect(SelectionType.allMatching)} disabled={batchStats.selectedCount===batchStats.allCount} data-testid='batch_selectAll'/>
             <Button title={'Select this page'} tooltip={'Add this page of dedupes to existing selection'} onClick={()=>batchSelect(SelectionType.onlyOnPage)} data-testid='batch_selectPage'/>
             <Button title={'Unselect all'} tooltip={'Unselect all dedupes'} onClick={()=>batchSelect(SelectionType.none)} disabled={batchStats.selectedCount===0} data-testid='batch_selectNone'/>
         </Section>

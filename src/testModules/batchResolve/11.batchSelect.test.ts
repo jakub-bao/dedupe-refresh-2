@@ -35,7 +35,7 @@ function checkButtons(){
     isDisabled('batch_selectNone');
     checkCheckbox('all', false);
     checkCheckbox(1, false);
-    textIn('batch_selected','No dedupes');
+    textIn('batch_stats_selected','No dedupes');
 }
 
 function selectAll(){
@@ -43,27 +43,29 @@ function selectAll(){
     isDisabled('batch_selectAll');
     checkCheckbox('all', true);
     checkCheckbox(1, true);
-    textIn('batch_selected','All \\(918\\) dedupes');
+    textIn('batch_stats_selected','All \\(918\\) dedupes');
+    textIn('batch_stats_already','308 sum, 591 maximum');
+    textIn('batch_stats_unresolved','19 dedupes');
 }
 
 function page2(){
     nextPage();
     checkCheckbox(21, true);
-    textIn('batch_selected','All \\(918\\) dedupes');
+    textIn('batch_stats_selected','All \\(918\\) dedupes');
 }
 
 function unselect(){
     click('batch_selectNone');
     checkCheckbox('all', false);
     checkCheckbox(21, false);
-    textIn('batch_selected','No dedupes');
+    textIn('batch_stats_selected','No dedupes');
 }
 
 function pageOnly(){
     click('batch_selectPage');
     checkCheckbox('all', false);
     checkCheckbox(21, true);
-    textIn('batch_selected','20 out of 918 dedupes');
+    textIn('batch_stats_selected','20 out of 918 dedupes');
 }
 
 function page3(){

@@ -66,9 +66,6 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
     batchAction:BatchAction
 }){
     return <React.Fragment>
-        <Section title='Overview'>
-            <BatchStats batchStats={batchStats}/>
-        </Section>
         <Section title='Selection'>
             <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'} onClick={()=>batchSelect(SelectionType.allMatching)} disabled={batchStats.selectedCount===batchStats.allCount} data-testid='batch_selectAll'/>
             <Button title={'Select this page'} tooltip={'Add this page of dedupes to existing selection'} onClick={()=>batchSelect(SelectionType.onlyOnPage)} data-testid='batch_selectPage'/>
@@ -77,6 +74,9 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
         <Section title='Method'>
             <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'}/>
             <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'}/>
+        </Section>
+        <Section title='Overview'>
+            <BatchStats batchStats={batchStats}/>
         </Section>
         <Section title='Action'>
             <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'}/>

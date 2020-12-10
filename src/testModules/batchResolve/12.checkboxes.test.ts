@@ -4,7 +4,7 @@ import {textIn} from "../../test/domServices/textsIn.testService";
 
 function selectAll(){
     clickCheckbox('all');
-    textIn('batch_selected','All \\(918\\) dedupes');
+    textIn('batch_stats_selected','All \\(918\\) dedupes');
     checkCheckbox(1, true);
 }
 

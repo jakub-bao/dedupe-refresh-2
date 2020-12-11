@@ -26,7 +26,7 @@ import {Typography} from "@material-ui/core";
 import {UnresolveConfirm} from "./unresolveConfirm.component";
 import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
 import {
-    BatchAction, BatchMethod,
+    BatchAction, BatchActionType, BatchMethod,
     BatchResolveMenu,
     BatchSelect,
     SelectionType
@@ -229,7 +229,9 @@ class Main extends React.Component<{
         this.setState({results:this.state.results});
     };
 
-    batchAction:BatchAction = ()=>{};
+    batchAction:BatchAction = (action:BatchActionType)=>{
+
+    };
 
 
     render() {

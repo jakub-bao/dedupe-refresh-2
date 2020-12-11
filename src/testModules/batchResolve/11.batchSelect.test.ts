@@ -4,7 +4,7 @@ import {checkCheckbox, isDisabled, nextPage, searchDedupes, switchToBatch} from 
 import {screen} from "@testing-library/react";
 import {Simulate} from "react-dom/test-utils";
 import { click } from "../../test/domServices/click.testService";
-import {textIn} from "../../test/domServices/textsIn.testService";
+import {textIn, textsIn} from "../../test/domServices/textsIn.testService";
 
 export const BotswanaAllCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -35,7 +35,6 @@ function checkButtons(){
     isDisabled('batch_selectNone');
     checkCheckbox('all', false);
     checkCheckbox(1, false);
-    // textIn('batch_stats_selected','No dedupes');
 }
 
 function selectAll(){
@@ -43,29 +42,27 @@ function selectAll(){
     isDisabled('batch_selectAll');
     checkCheckbox('all', true);
     checkCheckbox(1, true);
-    textIn('batch_stats_selected','All \\(918\\) dedupes');
-    textIn('batch_stats_already','308 sum, 591 maximum');
-    textIn('batch_stats_unresolved','19 dedupes');
+    textsIn('batch_stats',['918 out of 918 selected','899 already resolved','19 unresolved']);
 }
 
 function page2(){
     nextPage();
     checkCheckbox(21, true);
-    textIn('batch_stats_selected','All \\(918\\) dedupes');
+    textsIn('batch_stats',['918 out of 918 selected','899 already resolved','19 unresolved']);
 }
 
 function unselect(){
     click('batch_selectNone');
     checkCheckbox('all', false);
     checkCheckbox(21, false);
-    // textIn('batch_stats_selected','No dedupes');
+    textsIn('batch_stats',['0 out of 918 selected']);
 }
 
 function pageOnly(){
     click('batch_selectPage');
     checkCheckbox('all', false);
     checkCheckbox(21, true);
-    textIn('batch_stats_selected','20 out of 918 dedupes');
+    textsIn('batch_stats',['20 out of 918 selected','20 already resolved','0 unresolved']);
 }
 
 function page3(){

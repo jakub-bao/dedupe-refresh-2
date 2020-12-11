@@ -13,6 +13,9 @@ const styles = {
         padding: 4,
         color: 'rgba(0,0,0,0.6)'
     } as CSSProperties,
+    sectionDisabled:{
+        opacity: 0.5
+    },
     sectionTitle: {
         fontSize: 13,
         position: 'absolute',
@@ -29,8 +32,8 @@ const styles = {
     }
 };
 
-function Section({title,children}){
-    return <div style={styles.section}>
+function Section({title,children, disabled}:{title:string, children:any, disabled?:boolean}){
+    return <div style={Object.assign({},styles.section,disabled?styles.sectionDisabled:null)}>
         <Typography style={styles.sectionTitle}>{title}</Typography>
         {children}
     </div>
@@ -66,23 +69,23 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
     batchAction:BatchAction
 }){
     return <React.Fragment>
+        <Section title='Status'>
+            <BatchStats batchStats={batchStats}/>
+        </Section>
         <Section title='Selection'>
             <Button title={'Select everything'} tooltip={'Select all dedupes on all pages that match the current search'} onClick={()=>batchSelect(SelectionType.allMatching)} disabled={batchStats.selectedCount===batchStats.allCount} data-testid='batch_selectAll'/>
             <Button title={'Select this page'} tooltip={'Add this page of dedupes to existing selection'} onClick={()=>batchSelect(SelectionType.onlyOnPage)} data-testid='batch_selectPage'/>
             <Button title={'Unselect all'} tooltip={'Unselect all dedupes'} onClick={()=>batchSelect(SelectionType.none)} disabled={batchStats.selectedCount===0} data-testid='batch_selectNone'/>
         </Section>
-        {batchStats.selectedCount>0&&<React.Fragment>
-            <Section title='Method'>
-                <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.maximum)}/>
-                <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.sum)}/>
-            </Section>
-            <Section title='Overview'>
-                <BatchStats batchStats={batchStats}/>
-            </Section>
-            <Section title='Action'>
-                <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'}/>
-                <Button title={'Unresolve'} tooltip={'Delete the resolutions for all selected dedupes from DATIM'}/>
-            </Section>
-        </React.Fragment>}
+
+        <Section title='Method' disabled={batchStats.selectedCount===0}>
+            <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.maximum)} data-testid='batch_method_max'/>
+            <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.sum)} data-testid='batch_method_sum'/>
+        </Section>
+
+        <Section title='Action' disabled={batchStats.selectedCount===0}>
+            <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchAction(BatchActionType.resolve)} data-testid='batch_action_resolve'/>
+            <Button title={'Unresolve'} tooltip={'Delete the resolutions for all selected dedupes from DATIM'} onClick={()=>batchAction(BatchActionType.unresolve)} data-testid='batch_action_unresolve'/>
+        </Section>
     </React.Fragment>
 }

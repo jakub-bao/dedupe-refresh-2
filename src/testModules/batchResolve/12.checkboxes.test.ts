@@ -6,28 +6,18 @@ import {
     switchToCustom
 } from "../shared/sharedBasics.testService";
 import {BotswanaAllCase} from "./11.batchSelect.test";
-import {textIn} from "../../test/domServices/textsIn.testService";
+import {textIn, textsIn} from "../../test/domServices/textsIn.testService";
 import {click} from "../../test/domServices/click.testService";
 
 function selectAll(){
     clickCheckbox('all');
-    textIn('batch_stats_selected','All \\(918\\) dedupes');
+    textsIn('batch_stats',['918 out of 918 selected','899 already resolve','19 unresolved']);
     checkCheckbox(1, true);
 }
 
 function unselectOne(){
     clickCheckbox(1);
-    textIn('batch_stats_selected','917 out of 918 dedupes');
-    textIn('batch_stats_already','307 sum, 591 maximum');
-}
-
-function changeMethod(){
-    click(`resolution_${1}_custom`);
-    textIn('batch_stats_selected','917 out of 918 dedupes');
-    textIn('batch_stats_already','307 sum, 591 maximum');
-    click(`resolution_${2}_custom`);
-    textIn('batch_stats_already','306 sum, 591 maximum');
-    textIn('batch_stats_ready','1 custom');
+    textsIn('batch_stats',['917 out of 918 selected','898 already resolve','19 unresolved']);
 }
 
 test(`12 > Checkboxes`, async ()=>{
@@ -35,5 +25,4 @@ test(`12 > Checkboxes`, async ()=>{
     switchToBatch();
     selectAll();
     unselectOne();
-    changeMethod();
 });

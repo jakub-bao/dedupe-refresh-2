@@ -1,7 +1,7 @@
 import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 import {DedupeTestCase} from "../shared/models/test.models";
 
-const Rwanda1:DedupeTestCase = {
+export const Rwanda1:DedupeTestCase = {
     testAs: 'test-de-interAgency-rwanda',
     name: `Rwanda > MER Results > 2020 Q4`,
     filters: {

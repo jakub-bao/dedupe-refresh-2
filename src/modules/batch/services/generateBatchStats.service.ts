@@ -3,33 +3,38 @@ import {DedupeModel, InternalStatus, ResolutionMethodType} from "../../results/m
 export type BatchStatsModel = {
     allCount: number;
     selectedCount: number;
-    readyToResolve: {
-        maximum: number;
-        sum:number;
-        custom:number;
-    };
-    alreadyResolved: {
-        maximum: number;
-        sum: number;
-        custom: number;
-    };
+    // readyToResolve: {
+    //     maximum: number;
+    //     sum:number;
+    //     custom:number;
+    // };
+    // alreadyResolved: {
+    //     maximum: number;
+    //     sum: number;
+    //     custom: number;
+    // };
+    readyToResolve:number;
+    alreadyResolved:number;
     unresolved: number;
 }
 
 let empty = {
     allCount: null,
     selectedCount: null,
-    readyToResolve: {
-        maximum: null,
-        sum:null,
-        custom:null,
-    },
-    alreadyResolved: {
-        maximum: null,
-        sum: null,
-        custom: null,
-    },
+    readyToResolve:null,
+    alreadyResolved:null,
     unresolved: null,
+    // readyToResolve: {
+    //     maximum: null,
+    //     sum:null,
+    //     custom:null,
+    // },
+    // alreadyResolved: {
+    //     maximum: null,
+    //     sum: null,
+    //     custom: null,
+    // },
+    // unresolved: null,
 }
 
 function count(dedupes:DedupeModel[],method:ResolutionMethodType):number{
@@ -46,15 +51,17 @@ export function generateBatchStats(allDedupes:DedupeModel[]):BatchStatsModel{
         allCount: allDedupes.length,
         selectedCount: selectedDedupes.length,
         unresolved: unresolved.length,
-        readyToResolve: {
-            sum: count(readyToResolve, ResolutionMethodType.sum),
-            maximum: count(readyToResolve, ResolutionMethodType.maximum),
-            custom: count(readyToResolve, ResolutionMethodType.custom),
-        },
-        alreadyResolved: {
-            sum: count(alreadyResolved, ResolutionMethodType.sum),
-            maximum: count(alreadyResolved, ResolutionMethodType.maximum),
-            custom: count(alreadyResolved, ResolutionMethodType.custom),
-        }
+        readyToResolve: readyToResolve.length,
+        alreadyResolved: alreadyResolved.length
+        // readyToResolve: {
+        //     sum: count(readyToResolve, ResolutionMethodType.sum),
+        //     maximum: count(readyToResolve, ResolutionMethodType.maximum),
+        //     custom: count(readyToResolve, ResolutionMethodType.custom),
+        // },
+        // alreadyResolved: {
+        //     sum: count(alreadyResolved, ResolutionMethodType.sum),
+        //     maximum: count(alreadyResolved, ResolutionMethodType.maximum),
+        //     custom: count(alreadyResolved, ResolutionMethodType.custom),
+        // }
     }
 }

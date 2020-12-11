@@ -4,7 +4,6 @@ export enum UiActionType{
     loadingFilters,
     errorResults,
     errorFilters,
-    unresolveConfirm,
     menuOpen,
     menuTab,
 }
@@ -20,13 +19,11 @@ export type ActionValue = {
 
 export type MenuUi = {
     open: boolean,
-    // batchOpen: boolean
     menuTab: MenuVariant
 };
 
 export type UiModel = {
     menu: MenuUi,
-    unresolveConfirmOpen: boolean,
     error: {
         filters?: boolean,
         results?: boolean
@@ -51,8 +48,6 @@ export function updateUi(ui:UiModel, actions: ActionValue[]){
                     ui.error.results = value; break;
                 case UiActionType.errorFilters:
                     ui.error.filters = value; break;
-                case UiActionType.unresolveConfirm:
-                    ui.unresolveConfirmOpen = value; break;
                 case UiActionType.menuOpen:
                     ui.menu.open = value; break;
             }

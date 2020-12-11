@@ -44,7 +44,6 @@ class Main extends React.Component<{
         dedupes: DedupeModel[],
         selectedFilters: FiltersModel
     },
-    toBeUnresolved: number,
     ui: UiModel,
 }> {
     filterOptionsProvider: FilterOptionsProvider = new FilterOptionsProvider();
@@ -68,16 +67,13 @@ class Main extends React.Component<{
             ui: {
                 menu: {
                     open: true,
-                    // batchOpen: false
                     menuTab: MenuVariant.search
                 },
                 error: {},
                 loading: {
                     filters: true
                 },
-                unresolveConfirmOpen: false
             },
-            toBeUnresolved: null,
         };
         this.filterOptionsProvider.init().then(() => {
             this.updateUi([{action: UiActionType.loadingFilters, value: false}]);
@@ -166,27 +162,18 @@ class Main extends React.Component<{
         this.updateUi([{action: UiActionType.menuTab, value: tab}]);
     }
 
-    onUnresolveDialogClose = (confirmed: boolean) => {
-        this.updateUi([{action: UiActionType.unresolveConfirm, value: false}])
-        if (confirmed) {
-            const index = this.state.toBeUnresolved;
-            this.state.results.dedupes[index - 1].status = InternalStatus.processing;
-            this.setState({results: this.state.results});
-            unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
-                this.showMessage(`Unresolved`);
-                let results = this.state.results;
-                let dedupe = results.dedupes[index - 1];
-                dedupe.resolution.resolutionMethodValue = null;
-                dedupe.resolution.original_resolutionMethodValue = null;
-                dedupe.status = InternalStatus.unresolved;
-                this.setState({results});
-            });
-        }
-    }
-
-    unresolveDedupe = (id: number) => {
-        this.updateUi([{action: UiActionType.unresolveConfirm, value: true}]);
-        this.setState({toBeUnresolved: id});
+    unresolveDedupe = (index: number) => {
+        this.state.results.dedupes[index - 1].status = InternalStatus.processing;
+        this.setState({results: this.state.results});
+        unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
+            this.showMessage(`Unresolved`);
+            let results = this.state.results;
+            let dedupe = results.dedupes[index - 1];
+            dedupe.resolution.resolutionMethodValue = null;
+            dedupe.resolution.original_resolutionMethodValue = null;
+            dedupe.status = InternalStatus.unresolved;
+            this.setState({results});
+        });
     }
 
     renderPreselect() {
@@ -259,11 +246,6 @@ class Main extends React.Component<{
                 {this.renderResults()}
                 {this.renderPreselect()}
             </ContentWrapper>
-            {this.state.results.dedupes && <UnresolveConfirm
-                isOpen={this.state.ui.unresolveConfirmOpen}
-                onClose={this.onUnresolveDialogClose}
-                toBeUnresolved={this.state.results.dedupes[this.state.toBeUnresolved - 1]}
-            />}
         </React.Fragment>;
     }
 }

@@ -23,11 +23,11 @@ import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData
 import {resolveDedupe, unresolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
-import {UnresolveConfirm} from "./unresolveConfirm.component";
 import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
 import {
-    BatchAction, BatchActionType, BatchMethod,
-    BatchResolveMenu,
+    BatchAction,
+    BatchActionType,
+    BatchMethod,
     BatchSelect,
     SelectionType
 } from "../../menu/components/batchResolveMenu.component";
@@ -217,13 +217,23 @@ class Main extends React.Component<{
         this.setState({results:this.state.results});
     };
 
+    markSelectedAs = (status:InternalStatus)=>{
+        this.state.results.dedupes
+            .filter(d=>d.tableData.checked&&(d.status===InternalStatus.readyToResolve||d.status===InternalStatus.processing))
+            .forEach(d=>d.status=status);
+        this.updateDedupes(this.state.results.dedupes);
+    };
+
     batchAction:BatchAction = async (action:BatchActionType)=>{
         let dedupes = this.state.results.dedupes.filter(d=>d.tableData.checked);
+        this.markSelectedAs(InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
             this.showMessage('Batch processed');
+            this.markSelectedAs(InternalStatus.resolvedOnServer);
         } else {
             this.showMessage('Batch processing failed', {variant: 'error'});
+            this.markSelectedAs(InternalStatus.readyToResolve);
         }
     };
 

@@ -6,8 +6,10 @@ import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.servic
 
 import resolveRwanda from "./13.batchResolveRequest.json";
 import {text, waitForTexts} from "../../test/domServices/texts.testService";
+import {Simulate} from "react-dom/test-utils";
+import {debug, pause} from "../../test/domServices/domUtils.testService";
 
-let response  = {"responseType":"ImportSummary","status":"SUCCESS","importOptions":{"idSchemes":{},"dryRun":false,"preheatCache":false,"async":false,"importStrategy":"CREATE_AND_UPDATE","mergeMode":"REPLACE","reportMode":"FULL","skipExistingCheck":false,"sharing":false,"skipNotifications":false,"skipAudit":false,"datasetAllowsPeriods":false,"strictPeriods":false,"strictDataElements":false,"strictCategoryOptionCombos":false,"strictAttributeOptionCombos":false,"strictOrganisationUnits":false,"requireCategoryOptionCombo":false,"requireAttributeOptionCombo":false,"skipPatternValidation":false,"ignoreEmptyCollection":false,"force":false,"firstRowIsHeader":true,"skipLastUpdated":false},"description":"Import process completed successfully","importCount":{"imported":2,"updated":0,"ignored":0,"deleted":0},"dataSetComplete":"false"};
+let response  = {ok:true, "responseType":"ImportSummary","status":"SUCCESS","importOptions":{"idSchemes":{},"dryRun":false,"preheatCache":false,"async":false,"importStrategy":"CREATE_AND_UPDATE","mergeMode":"REPLACE","reportMode":"FULL","skipExistingCheck":false,"sharing":false,"skipNotifications":false,"skipAudit":false,"datasetAllowsPeriods":false,"strictPeriods":false,"strictDataElements":false,"strictCategoryOptionCombos":false,"strictAttributeOptionCombos":false,"strictOrganisationUnits":false,"requireCategoryOptionCombo":false,"requireAttributeOptionCombo":false,"skipPatternValidation":false,"ignoreEmptyCollection":false,"force":false,"firstRowIsHeader":true,"skipLastUpdated":false},"description":"Import process completed successfully","importCount":{"imported":2,"updated":0,"ignored":0,"deleted":0},"dataSetComplete":"false"};
 
 test(`13 > Unresolved to max`,async ()=>{
     await searchDedupes(Rwanda1);
@@ -24,5 +26,6 @@ test(`13 > Unresolved to max`,async ()=>{
         expect(body).toStrictEqual(resolveRwanda);
     });
     click('batch_action_resolve');
+    await pause(0.8);
     await waitForTexts(['Batch processed']);
 });

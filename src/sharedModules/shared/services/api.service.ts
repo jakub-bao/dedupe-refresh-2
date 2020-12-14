@@ -30,5 +30,5 @@ export function putData(url:string, data:any):Promise<any>{
 }
 
 export function deleteData(url:string, data?:any):Promise<any>{
-    return httpCall('DELETE', url, data);
+    return httpCall('DELETE', url, data||null);
 }

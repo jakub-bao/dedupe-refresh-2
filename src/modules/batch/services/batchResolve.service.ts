@@ -1,6 +1,7 @@
 import {DedupeModel} from "../../results/models/dedupe.model";
 import {BatchActionType} from "../../menu/components/batchResolveMenu.component";
 import {deleteData, postData} from "../../../sharedModules/shared/services/api.service";
+import {crosswalkDedupesCategoryOptionCombo, pureDedupesCategoryOptionCombo} from "../../../config/deduplicationMechanism.values";
 
 type DataValue = {
     dataElement: string,
@@ -11,9 +12,14 @@ type DataValue = {
     value: string
 }
 
+const dedupeMechanismCombo = {
+    PURE: pureDedupesCategoryOptionCombo,
+    CROSSWALK: crosswalkDedupesCategoryOptionCombo
+}
+
 function dedupeToDataValue(dedupe:DedupeModel):DataValue{
     return {
-        attributeOptionCombo: '',
+        attributeOptionCombo: dedupeMechanismCombo[dedupe.meta.dedupeType],
         categoryOptionCombo: dedupe.data.categoryOptionComboId,
         dataElement: dedupe.data.dataElementId,
         orgUnit: dedupe.meta.orgUnitId,

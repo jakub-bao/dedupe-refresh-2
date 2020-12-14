@@ -34,6 +34,7 @@ import {
 import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
 import {generateBatchStats} from "../../batch/services/generateBatchStats.service";
 import {batchSetMethod} from "../../batch/services/batchSetMethod.service";
+import {batchResolve} from "../../batch/services/batchResolve.service";
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
@@ -216,8 +217,14 @@ class Main extends React.Component<{
         this.setState({results:this.state.results});
     };
 
-    batchAction:BatchAction = (action:BatchActionType)=>{
-
+    batchAction:BatchAction = async (action:BatchActionType)=>{
+        let dedupes = this.state.results.dedupes.filter(d=>d.tableData.checked);
+        let result = await batchResolve(dedupes, action);
+        if (result) {
+            this.showMessage('Batch processed');
+        } else {
+            this.showMessage('Batch processing failed', {variant: 'error'});
+        }
     };
 
 

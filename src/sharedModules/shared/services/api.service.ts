@@ -29,6 +29,6 @@ export function putData(url:string, data:any):Promise<any>{
     return httpCall('PUT', url, data)
 }
 
-export function deleteData(url:string):Promise<any>{
-    return httpCall('DELETE', url, null);
+export function deleteData(url:string, data?:any):Promise<any>{
+    return httpCall('DELETE', url, data);
 }

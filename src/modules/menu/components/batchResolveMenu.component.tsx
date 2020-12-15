@@ -27,7 +27,7 @@ const styles = {
     } as CSSProperties,
     button:{
         padding: '2px 5px',
-        marginTop: 4,
+        margin: '8px 3px 8px',
         display:'block'
     }
 };
@@ -79,12 +79,12 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
         </Section>
 
         <Section title='Method' disabled={batchStats.selectedCount===0}>
-            <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.maximum)} data-testid='batch_method_max' disabled={batchStats.selectedCount===0}/>
-            <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.sum)} data-testid='batch_method_sum' disabled={batchStats.selectedCount===0}/>
+            <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.maximum)} data-testid='batch_method_max' disabled={batchStats.selectedCount===0||batchStats.selectedCount===batchStats.maximum}/>
+            <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.sum)} data-testid='batch_method_sum' disabled={batchStats.selectedCount===0||batchStats.selectedCount===batchStats.sum}/>
         </Section>
 
         <Section title='Action' disabled={batchStats.selectedCount===0}>
-            <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchAction(BatchActionType.resolve)} data-testid='batch_action_resolve' disabled={batchStats.readyToResolve===0}/>
+            <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchAction(BatchActionType.resolve)} data-testid='batch_action_resolve' disabled={batchStats.readyToResolve===0} color='secondary' variant='outlined'/>
             {/*<Button title={'Unresolve'} tooltip={'Delete the resolutions for all selected dedupes from DATIM'} onClick={()=>batchAction(BatchActionType.unresolve)} data-testid='batch_action_unresolve'/>*/}
         </Section>
     </React.Fragment>

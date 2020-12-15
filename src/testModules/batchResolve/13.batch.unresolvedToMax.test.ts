@@ -1,13 +1,12 @@
 import {searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
 import {Rwanda1} from "../renderDedupes/3.renderDedupes.testCases";
-import {checkboxValue, checkRadioValue, click} from "../../test/domServices/click.testService";
+import {checkRadioValue, click} from "../../test/domServices/click.testService";
 import {textIn, textsIn} from "../../test/domServices/textsIn.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
 
 import resolveRwanda from "./13.batchResolveRequest.json";
-import {text, waitForTexts} from "../../test/domServices/texts.testService";
-import {Simulate} from "react-dom/test-utils";
-import {debug, pause} from "../../test/domServices/domUtils.testService";
+import {waitForTexts} from "../../test/domServices/texts.testService";
+import {pause} from "../../test/domServices/domUtils.testService";
 
 let response  = {ok:true, "responseType":"ImportSummary","status":"SUCCESS","importOptions":{"idSchemes":{},"dryRun":false,"preheatCache":false,"async":false,"importStrategy":"CREATE_AND_UPDATE","mergeMode":"REPLACE","reportMode":"FULL","skipExistingCheck":false,"sharing":false,"skipNotifications":false,"skipAudit":false,"datasetAllowsPeriods":false,"strictPeriods":false,"strictDataElements":false,"strictCategoryOptionCombos":false,"strictAttributeOptionCombos":false,"strictOrganisationUnits":false,"requireCategoryOptionCombo":false,"requireAttributeOptionCombo":false,"skipPatternValidation":false,"ignoreEmptyCollection":false,"force":false,"firstRowIsHeader":true,"skipLastUpdated":false},"description":"Import process completed successfully","importCount":{"imported":2,"updated":0,"ignored":0,"deleted":0},"dataSetComplete":"false"};
 
@@ -27,5 +26,5 @@ test(`13 > Unresolved to max`,async ()=>{
     });
     click('batch_action_resolve');
     await pause(0.8);
-    await waitForTexts(['Batch processed']);
+    await waitForTexts(['2 dedupes successfully resolved']);
 });

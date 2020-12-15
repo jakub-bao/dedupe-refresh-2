@@ -1,10 +1,8 @@
 import {DedupeTestCase} from "../shared/models/test.models";
 import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 import {checkCheckbox, isDisabled, nextPage, searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
-import {screen} from "@testing-library/react";
-import {Simulate} from "react-dom/test-utils";
-import { click } from "../../test/domServices/click.testService";
-import {textIn, textsIn} from "../../test/domServices/textsIn.testService";
+import {click} from "../../test/domServices/click.testService";
+import {textsIn} from "../../test/domServices/textsIn.testService";
 
 export const BotswanaAllCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',

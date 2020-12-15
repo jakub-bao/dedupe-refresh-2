@@ -164,8 +164,9 @@ class Main extends React.Component<{
     }
 
     unresolveDedupe = (index: number) => {
-        this.state.results.dedupes[index - 1].status = InternalStatus.processing;
-        this.setState({results: this.state.results});
+        let results = this.state.results;
+        results.dedupes[index - 1].status = InternalStatus.processing;
+        this.setState({results});
         unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
             this.showMessage(`Unresolved`);
             let results = this.state.results;
@@ -229,7 +230,7 @@ class Main extends React.Component<{
         this.markSelectedAs(InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
-            this.showMessage('Batch processed');
+            this.showMessage(`${dedupes.length} dedupes successfully resolved`);
             this.markSelectedAs(InternalStatus.resolvedOnServer);
         } else {
             this.showMessage('Batch processing failed', {variant: 'error'});

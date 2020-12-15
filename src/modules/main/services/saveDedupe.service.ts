@@ -1,6 +1,9 @@
 import {DedupeModel} from "../../results/models/dedupe.model";
 import {deleteData, postData} from "../../../sharedModules/shared/services/api.service";
-import {crosswalkDedupesMechCategoryOption, pureDedupesMechCategoryOption} from "../../../config/deduplicationMechanism.values";
+import {
+    crosswalkDedupesMechCategoryOption,
+    pureDedupesMechCategoryOption
+} from "../../../config/deduplicationMechanism.values";
 
 const dedupeMechanisms = {
     PURE: pureDedupesMechCategoryOption,

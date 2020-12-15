@@ -12,7 +12,7 @@ const theme = createMuiTheme({
             main: colors.primaryDatim
         },
         secondary: {
-            main: '#f50057'
+            main: 'rgb(156, 13, 56)'
         },
         error:{
             main: '#D72638'

@@ -1,21 +1,13 @@
-import {DedupeModel, InternalStatus, ResolutionMethodType} from "../../results/models/dedupe.model";
+import {DedupeModel, InternalStatus} from "../../results/models/dedupe.model";
 
 export type BatchStatsModel = {
     allCount: number;
     selectedCount: number;
-    // readyToResolve: {
-    //     maximum: number;
-    //     sum:number;
-    //     custom:number;
-    // };
-    // alreadyResolved: {
-    //     maximum: number;
-    //     sum: number;
-    //     custom: number;
-    // };
     readyToResolve:number;
     alreadyResolved:number;
     unresolved: number;
+    maximum: number;
+    sum: number;
 }
 
 let empty = {
@@ -24,21 +16,8 @@ let empty = {
     readyToResolve:null,
     alreadyResolved:null,
     unresolved: null,
-    // readyToResolve: {
-    //     maximum: null,
-    //     sum:null,
-    //     custom:null,
-    // },
-    // alreadyResolved: {
-    //     maximum: null,
-    //     sum: null,
-    //     custom: null,
-    // },
-    // unresolved: null,
-}
-
-function count(dedupes:DedupeModel[],method:ResolutionMethodType):number{
-    return dedupes.filter(d=>d.resolution.resolutionMethodValue.resolutionMethod===method).length;
+    sum:null,
+    maximum: null
 }
 
 export function generateBatchStats(allDedupes:DedupeModel[]):BatchStatsModel{
@@ -52,16 +31,8 @@ export function generateBatchStats(allDedupes:DedupeModel[]):BatchStatsModel{
         selectedCount: selectedDedupes.length,
         unresolved: unresolved.length,
         readyToResolve: readyToResolve.length,
-        alreadyResolved: alreadyResolved.length
-        // readyToResolve: {
-        //     sum: count(readyToResolve, ResolutionMethodType.sum),
-        //     maximum: count(readyToResolve, ResolutionMethodType.maximum),
-        //     custom: count(readyToResolve, ResolutionMethodType.custom),
-        // },
-        // alreadyResolved: {
-        //     sum: count(alreadyResolved, ResolutionMethodType.sum),
-        //     maximum: count(alreadyResolved, ResolutionMethodType.maximum),
-        //     custom: count(alreadyResolved, ResolutionMethodType.custom),
-        // }
+        alreadyResolved: alreadyResolved.length,
+        sum: null,
+        maximum: null
     }
 }

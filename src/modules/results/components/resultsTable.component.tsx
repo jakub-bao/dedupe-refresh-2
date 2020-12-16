@@ -4,7 +4,7 @@ import {DedupeModel, InternalStatus} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
 import {colors} from "../../../values/color.values";
-import {withStyles} from "@material-ui/core";
+import {Table, TableBody, TableCell, TableHead, TableRow, withStyles} from "@material-ui/core";
 import {
     ChangeResolutionMethod,
     ResolutionMethodCell,
@@ -19,7 +19,7 @@ const darkBorder = `1px solid rgba(0,0,0,0.3)`;
 const lightBorder = `1px solid rgba(0,0,0,0.075)`;
 const fontFamily ='"Roboto", "Helvetica", "Arial", sans-serif';
 const fontSize = '0.875rem'
-
+const fontWeight=500;
 
 const tableOptions:Options<DedupeModel> = {
     pageSize: 20,
@@ -71,11 +71,22 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
     }as CSSProperties;
 }
 
+const Cell = ({children})=><TableCell style={{fontWeight}}>{children}</TableCell>;
+
+const DuplicatesHeader = <Table>
+    <TableBody>
+        <TableRow>
+            <Cell>Agency</Cell><Cell>Partner</Cell><Cell>Mechanism</Cell><Cell>Value</Cell>
+        </TableRow>
+    </TableBody>
+</Table>
+
+
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod, resolveDedupe: ResolveDedupe, unresolveDedupe: UnresolveDedupe)=> [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}/*, defaultSort:'asc'*/} as Column<any>,
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
-    {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}},
+    {title: DuplicatesHeader, render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}} as any as Column<any>,
     {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>, ...noSort, cellStyle: {padding}},
     {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe} resolveDedupe={resolveDedupe} unresolveDedupe={unresolveDedupe}/>, ...noSort, cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe)}
 ];

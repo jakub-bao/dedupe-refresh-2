@@ -84,7 +84,7 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
         </Section>
 
         <Section title='Action' disabled={batchStats.selectedCount===0}>
-            <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchAction(BatchActionType.resolve)} data-testid='batch_action_resolve' disabled={batchStats.readyToResolve===0} color='secondary' variant='outlined'/>
+            <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchAction(BatchActionType.resolve)} data-testid='batch_action_resolve' disabled={batchStats.readyToResolve===0} color='secondary' /*variant='outlined'*/ variant={'contained'} disableElevation/>
             {/*<Button title={'Unresolve'} tooltip={'Delete the resolutions for all selected dedupes from DATIM'} onClick={()=>batchAction(BatchActionType.unresolve)} data-testid='batch_action_unresolve'/>*/}
         </Section>
     </React.Fragment>

@@ -58,6 +58,7 @@ export default class FilterOptionsProvider {
             .then(res=>transformIdNameList(res.categoryOptionGroups))
             .then((agencyList)=>{
                 this.agencyList = agencyList;
+                this.agencyList.unshift({id:null,name:null});
         });
     }
 
@@ -70,6 +71,7 @@ export default class FilterOptionsProvider {
             }}))
             .then((technicalAreaList)=> {
                 this.technicalAreaList = technicalAreaList;
+                this.technicalAreaList.unshift({id:null,name:null})
             });
     }
 

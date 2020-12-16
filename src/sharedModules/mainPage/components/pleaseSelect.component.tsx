@@ -21,7 +21,7 @@ export enum PleaseSelectType{
 }
 
 const messages = {
-    ou: 'Please select an Operating Unit'
+    ou: 'Please select an Operating Unit, Data Type, and Period, and then click Search Dedupes'
 }
 
 export default function PleaseSelect({type}:{type:PleaseSelectType}) {

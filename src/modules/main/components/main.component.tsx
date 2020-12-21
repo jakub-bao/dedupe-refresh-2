@@ -131,6 +131,7 @@ class Main extends React.Component<{
 
     onSelectChange = ()=>{
         this.setState({results:this.state.results});
+        if (this.state.ui.menu.menuTab!==MenuVariant.batch) this.updateUi([{action: UiActionType.menuTab, value: MenuVariant.batch}]);
     }
 
     triggerExport = ()=>{

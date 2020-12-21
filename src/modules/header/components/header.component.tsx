@@ -1,8 +1,7 @@
 import React, {CSSProperties} from "react";
 import {IconButton, Tooltip, Typography} from "@material-ui/core";
-import {FiltersUiModel} from "../../filters/components/filtersUi.model";
-import {FiltersModel} from "../../filters/models/filters.model";
-import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
+import {FiltersModel} from "../../menu/models/filters.model";
+import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.service";
 import {Menu} from "@material-ui/icons";
 
 const styles = {
@@ -17,16 +16,6 @@ const styles = {
     } as CSSProperties,
 };
 
-// function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:FilterOptionsProvider) {
-//     if (!selectedFilters) return null;
-//     return Object.keys(selectedFilters)
-//         .filter(filterType=>selectedFilters[filterType])
-//         .map((filterType:FilterType)=>{
-//             const valueName = filterOptionsProvider.getValueNameById(filterType, selectedFilters[filterType]);
-//             return <Chip label={valueName} size="small" style={styles.chip} key={valueName}/>
-//     });
-// }
-
 export function MenuIcon({toggleMenu}:{toggleMenu: ()=>void}){
     return <Tooltip title='Show menu'>
         <IconButton onClick={toggleMenu}>
@@ -37,13 +26,13 @@ export function MenuIcon({toggleMenu}:{toggleMenu: ()=>void}){
 
 
 
-export default function Header({selectedFilters, filterOptionsProvider, filtersUi}:{
+export default function Header({selectedFilters, filterOptionsProvider/*, ui*/}:{
     selectedFilters: FiltersModel,
     filterOptionsProvider: FilterOptionsProvider
-    filtersUi: FiltersUiModel
+    // ui: UiModel
 }) {
     return <React.Fragment>
-        <MenuIcon toggleMenu={filtersUi.collapseFilters}/>
+        <MenuIcon toggleMenu={null}/>
         <Typography color='primary' variant='h6' style={styles.title}>
             Data Deduplication
         </Typography>

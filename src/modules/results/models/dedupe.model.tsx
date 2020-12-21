@@ -1,4 +1,4 @@
-import {DedupeType} from "../../filters/models/filters.model";
+import {DedupeType} from "../../menu/models/filters.model";
 
 export type DedupeMetaModel = {
     orgUnitId: string;
@@ -54,6 +54,8 @@ export enum InternalStatus{
     unresolved='unresolved',
     readyToResolve='readyToResolve',
     resolvedOnServer='resolvedOnServer',
+    processing='processing',
+    invalidValue='invalidValue'
 };
 
 
@@ -64,6 +66,10 @@ export type DedupeModel = {
     resolution: DedupeResolutionModel;
     duplicates: DuplicateModel[];
     status: InternalStatus;
+    tableData?: {
+        checked?:boolean;
+        id?:number;
+    }
 }
 
 function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2:DedupeResolutionMethodValue):boolean{
@@ -73,9 +79,20 @@ function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2
     && resolution1.resolutionValue===resolution2.resolutionValue;
 }
 
+function checkValid(dedupe:DedupeModel):boolean{
+    let res = dedupe.resolution;
+    let min = res.availableValues.minimum;
+    let sum = res.availableValues.sum;
+    let val = res.resolutionMethodValue.resolutionValue;
+    return min <= val && val <= sum;
+}
+
 function getDedupeStatus(dedupe:DedupeModel):InternalStatus{
     if (!dedupe.resolution || !dedupe.resolution.resolutionMethodValue) return InternalStatus.unresolved;
-    if (!compareResolutions(dedupe.resolution.resolutionMethodValue, dedupe.resolution.original_resolutionMethodValue)) return InternalStatus.readyToResolve;
+    if (!compareResolutions(dedupe.resolution.resolutionMethodValue, dedupe.resolution.original_resolutionMethodValue)) {
+        if (checkValid(dedupe)) return InternalStatus.readyToResolve;
+        else return InternalStatus.invalidValue;
+    }
     if (dedupe.resolution.resolutionMethodValue && dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue!==null) return InternalStatus.resolvedOnServer;
 }
 

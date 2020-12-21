@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 function generateLabel(filterType:string){
     let required = '';
-    if ([FilterType.operatingUnit, FilterType.dataType, FilterType.period].includes(filterType as FilterType)) required = ' *';
+    if ([FilterType.dedupeType, FilterType.operatingUnit, FilterType.dataType, FilterType.period].includes(filterType as FilterType)) required = ' *';
     return camelCaseToHuman(filterType) + required;
 }
 
@@ -49,7 +49,7 @@ export default function SelectFilter({filterType, filterValue, onFilterSelect, f
             onChange={(event:ChangeEvent<any>)=>onFilterSelect(event.target.value)}
             className={classes.select}
         >
-            {filterOptions.map(option=><MenuItem value={option.id} key={option.id}>{option.name}</MenuItem>)}
+            {filterOptions.map(option=><MenuItem value={option.id} key={option.id}>{option.name||<em>Unspecified</em>}</MenuItem>)}
         </Select>
     </FormControl>;
 }

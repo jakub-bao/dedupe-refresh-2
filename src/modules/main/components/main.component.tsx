@@ -1,11 +1,15 @@
 import React from "react";
-import Filters from "../../filters/components/filters.component";
-import {DataType, DedupeType, FiltersModel, FilterType} from "../../filters/models/filters.model";
-import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
-import {DedupeModel, DedupeResolutionMethodValue, InternalStatus} from "../../results/models/dedupe.model";
+import Menu from "../../menu/components/menu.component";
+import {DataType, DedupeType, FiltersModel, FilterType} from "../../menu/models/filters.model";
+import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.service";
+import {
+    DedupeModel,
+    DedupeResolutionMethodValue,
+    InternalStatus,
+    ResolutionMethodType
+} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
-import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
@@ -19,34 +23,33 @@ import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData
 import {resolveDedupe, unresolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
-import {UnresolveConfirm} from "./unresolveConfirm.component";
-
+import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
+import {
+    BatchAction,
+    BatchActionType,
+    BatchMethod,
+    BatchSelect,
+    SelectionType
+} from "../../menu/components/batchResolveMenu.component";
+import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
+import {generateBatchStats} from "../../batch/services/generateBatchStats.service";
+import {batchSetMethod} from "../../batch/services/batchSetMethod.service";
+import {batchResolve} from "../../batch/services/batchResolve.service";
+import {exportCsv} from "../services/exportCsv.service";
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
     closeSnackbar: (key?: SnackbarKey) => void;
 }, {
-    selectedFilters:FiltersModel,
+    selectedFilters: FiltersModel,
     results: {
         dedupes: DedupeModel[],
         selectedFilters: FiltersModel
     },
-    toBeUnresolved:number,
-    ui: {
-        filtersOpen: boolean,
-        unresolveConfirmOpen: boolean,
-        error: {
-            filters?: boolean,
-            results?: boolean
-        },
-        loading: {
-            filters?: boolean,
-            results?: boolean,
-        },
-    },
+    ui: UiModel,
 }> {
-    filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
-    filtersUi:FiltersUiModel;
+    filterOptionsProvider: FilterOptionsProvider = new FilterOptionsProvider();
+
     constructor(props) {
         super(props);
         this.state = {
@@ -64,73 +67,78 @@ class Main extends React.Component<{
                 selectedFilters: null
             },
             ui: {
-                filtersOpen: true,
+                menu: {
+                    open: true,
+                    menuTab: MenuVariant.search
+                },
                 error: {},
-                loading:{
+                loading: {
                     filters: true
                 },
-                unresolveConfirmOpen: false
             },
-            toBeUnresolved:null
         };
-        this.filterOptionsProvider.init().then(()=>{
-            this.updateUi({filters: false}, {filters: false});
-        }).catch(()=>{
-            this.updateUi({filters: false}, {filters: true});
+        this.filterOptionsProvider.init().then(() => {
+            this.updateUi([{action: UiActionType.loadingFilters, value: false}]);
+        }).catch(() => {
+            this.updateUi([{action: UiActionType.errorFilters, value: true}]);
         });
-        this.filtersUi = {
-            filtersOpen: null,
-            closeFilters: ()=>this.uiSetFiltersOpen(false),
-            collapseFilters: ()=>this.uiSetFiltersOpen(!this.state.ui.filtersOpen),
-            openFilters: ()=>this.uiSetFiltersOpen(true)
-        };
     }
 
     showMessage = this.props.enqueueSnackbar;
 
-    updateUi = (loading:{filters?:boolean, results?:boolean}, error: {filters?:boolean, results?:boolean},filtersOpen?:boolean, unresolveConfirmOpen?:boolean)=>{
-        let ui = this.state.ui;
-        if (loading) ui.loading = loading;
-        if (error) ui.error = error;
-        if (typeof filtersOpen==='boolean') ui.filtersOpen = filtersOpen;
-        if (typeof unresolveConfirmOpen==='boolean') ui.unresolveConfirmOpen = unresolveConfirmOpen;
+    updateUi = (actions: ActionValue[]) => {
+        let ui = updateUi(this.state.ui, actions);
         this.setState({ui});
     }
 
-    onSearchClick = ()=>{
-        this.updateUi({results: true}, {results: false});
+    onSearchClick = () => {
+        this.updateUi([{action: UiActionType.loadingResults, value: true}, {
+            action: UiActionType.errorResults,
+            value: false
+        }])
         let selectedFilters = {...this.state.selectedFilters};
-        fetchDedupes(this.state.selectedFilters).then(dedupes=>{
+        fetchDedupes(this.state.selectedFilters).then(dedupes => {
             this.setState({results: {dedupes, selectedFilters}});
-            this.updateUi({results: false}, {results: false});
-        }).catch(()=>{
+            this.updateUi([{action: UiActionType.loadingResults, value: false}])
+        }).catch(() => {
             this.setState({results: {dedupes: null, selectedFilters}});
-            this.updateUi({results: false}, {results: true});
+            this.updateUi([{action: UiActionType.loadingResults, value: false}, {
+                action: UiActionType.errorResults,
+                value: true
+            }])
         });
     };
 
-    onFiltersSelect = (filterType:FilterType, filterValue:string|boolean):void=>{
-        if (this.state.selectedFilters[filterType]===filterValue) return;
+    onFiltersSelect = (filterType: FilterType, filterValue: string | boolean): void => {
+        if (this.state.selectedFilters[filterType] === filterValue) return;
         let selectedFilters = {...this.state.selectedFilters};
         // @ts-ignore
         selectedFilters[filterType] = filterValue;
         this.setState({selectedFilters});
     };
 
-    updateDedupes = (dedupes:DedupeModel[])=>{
-        this.setState({results:{dedupes, selectedFilters: this.state.results.selectedFilters}});
+    updateDedupes = (dedupes: DedupeModel[]) => {
+        this.setState({results: {dedupes, selectedFilters: this.state.results.selectedFilters}});
     }
 
-    changeResolutionMethod:ChangeResolutionMethod = (dedupeId:number, resolvedBy:DedupeResolutionMethodValue)=>{
+    changeResolutionMethod: ChangeResolutionMethod = (dedupeId: number, resolvedBy: DedupeResolutionMethodValue) => {
         this.updateDedupes(changeResolutionMethod(this.state.results.dedupes, dedupeId, resolvedBy));
     };
 
-    setResolutionValue:SetResolutionValue = (dedupeId:number, customValue)=>{
+    setResolutionValue: SetResolutionValue = (dedupeId: number, customValue) => {
         this.updateDedupes(setResolutionValue(this.state.results.dedupes, dedupeId, customValue));
     };
 
-    renderResults(){
-        if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100} />;
+    onSelectChange = ()=>{
+        this.setState({results:this.state.results});
+    }
+
+    triggerExport = ()=>{
+        exportCsv(this.state.results.selectedFilters);
+    };
+
+    renderResults() {
+        if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100}/>;
         if (this.state.ui.error.results) return <NetworkError/>;
         if (!this.state.results.dedupes) return <PleaseSelect type={PleaseSelectType.ou}/>;
         return <Results
@@ -139,59 +147,62 @@ class Main extends React.Component<{
             changeResolutionMethod={this.changeResolutionMethod}
             resolveDedupe={this.resolveDedupe}
             unresolveDedupe={this.unresolveDedupe}
+            onSelectChange={this.onSelectChange}
+            triggerExport={this.triggerExport}
         />;
     }
 
-    resolveDedupe = (id:number)=>{
-        let dedupe:DedupeModel = this.state.results.dedupes[id-1];
-        resolveDedupe(dedupe).then((worked:boolean)=>{
+    resolveDedupe = (id: number) => {
+        let dedupe: DedupeModel = this.state.results.dedupes[id - 1];
+        dedupe.status = InternalStatus.processing;
+        this.setState({results: this.state.results});
+        resolveDedupe(dedupe).then((worked: boolean) => {
             this.showMessage(`Resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
-            this.setState({results:this.state.results});
+            this.setState({results: this.state.results});
         });
     }
 
-    uiSetFiltersOpen = (open:boolean)=>{
-        this.updateUi(null,null,open,null);
-    };
 
-    onUnresolveDialogClose = (confirmed:boolean)=>{
-        this.updateUi(null,null,null,false);
-        if (confirmed) {
-            const index = this.state.toBeUnresolved;
-            unresolveDedupe(this.state.results.dedupes[index-1]).then(()=>{
-                this.showMessage(`Unresolved`);
-                let results = this.state.results;
-                let dedupe = results.dedupes[index-1];
-                dedupe.resolution.resolutionMethodValue=null;
-                dedupe.resolution.original_resolutionMethodValue=null;
-                dedupe.status = InternalStatus.unresolved;
-                this.setState({results});
-            });
-        }
+    switchMenuTab = (tab: MenuVariant) => {
+        this.updateUi([{action: UiActionType.menuTab, value: tab}]);
     }
 
-    unresolveDedupe = (id:number)=>{
-        this.updateUi(null,null,null,true);
-        this.setState({toBeUnresolved: id});
+    unresolveDedupe = (index: number) => {
+        let results = this.state.results;
+        results.dedupes[index - 1].status = InternalStatus.processing;
+        this.setState({results});
+        unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
+            this.showMessage(`Unresolved`);
+            let results = this.state.results;
+            let dedupe = results.dedupes[index - 1];
+            dedupe.resolution.resolutionMethodValue = null;
+            dedupe.resolution.original_resolutionMethodValue = null;
+            dedupe.status = InternalStatus.unresolved;
+            this.setState({results});
+        });
     }
 
-    renderPreselect(){
-        if(process.env.NODE_ENV === 'production') return null;
-        if(this.state.results.dedupes) return null;
+    renderPreselect() {
+        if (process.env.NODE_ENV === 'production') return null;
+        if (this.state.results.dedupes) return null;
         return <div style={{position: 'fixed', top: 50, right: 10}}>
-            <Typography onClick={()=>this.preselect('XtxUYCsDWrR','2020Q4', DedupeType.pure)}>1.Rwanda</Typography>
-            <Typography onClick={()=>this.preselect('PqlFzhuPcF1','2020Q4',DedupeType.pure)}>2.Nigeria</Typography>
-            <Typography onClick={()=>this.preselect('f5RoebaDLMx','2020Q4',DedupeType.crosswalk)}>3.Zambia</Typography>
-            <Typography onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q4',DedupeType.pure)}>4.Botswana</Typography>
-            <Typography onClick={()=>this.preselect('bQQJe0cC1eD','2020Q4',DedupeType.crosswalk)}>5.Cameroon</Typography>
-            <Typography onClick={()=>this.preselect('IH1kchw86uA','2020Q4',DedupeType.crosswalk)}>6.Ethiopia</Typography>
-            <Typography onClick={()=>this.preselect('l1KFEXKI4Dg','2020Q3',DedupeType.pure)}>7.Full list</Typography>
+            <Typography onClick={() => this.preselect('XtxUYCsDWrR', '2020Q4', DedupeType.pure)}>1.Rwanda</Typography>
+            <Typography onClick={() => this.preselect('PqlFzhuPcF1', '2020Q4', DedupeType.pure)}>2.Nigeria</Typography>
+            <Typography
+                onClick={() => this.preselect('f5RoebaDLMx', '2020Q4', DedupeType.crosswalk)}>3.Zambia</Typography>
+            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q4', DedupeType.pure)}>4.Botswana</Typography>
+            <Typography
+                onClick={() => this.preselect('bQQJe0cC1eD', '2020Q4', DedupeType.crosswalk)}>5.Cameroon</Typography>
+            <Typography
+                onClick={() => this.preselect('IH1kchw86uA', '2020Q4', DedupeType.crosswalk)}>6.Ethiopia</Typography>
+            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q3', DedupeType.pure)}>7.Full
+                list</Typography>
         </div>;
     }
 
-    preselect = (orgUnitId:string, period:string, dedupeType:DedupeType)=>{
+    preselect = (orgUnitId: string, period: string, dedupeType: DedupeType) => {
         let selectedFilters = {...this.state.selectedFilters};
         selectedFilters.operatingUnit = orgUnitId;
         selectedFilters.dataType = DataType.results;
@@ -202,33 +213,65 @@ class Main extends React.Component<{
         setTimeout(this.onSearchClick, 0);
     };
 
+    batchSelect:BatchSelect = (selectionType:SelectionType)=>{
+        let results = this.state.results;
+        results.dedupes = batchSelectDedupes(results.dedupes, selectionType);
+        this.setState({results});
+    };
+
+    batchMethod:BatchMethod = (method:ResolutionMethodType)=>{
+        batchSetMethod(this.state.results.dedupes, method);
+        this.setState({results:this.state.results});
+    };
+
+    markSelectedAs = (status:InternalStatus)=>{
+        this.state.results.dedupes
+            .filter(d=>d.tableData.checked&&(d.status===InternalStatus.readyToResolve||d.status===InternalStatus.processing))
+            .forEach(d=>d.status=status);
+        this.updateDedupes(this.state.results.dedupes);
+    };
+
+    batchAction:BatchAction = async (action:BatchActionType)=>{
+        let dedupes = this.state.results.dedupes.filter(d=>d.tableData.checked);
+        this.markSelectedAs(InternalStatus.processing);
+        let result = await batchResolve(dedupes, action);
+        if (result) {
+            this.showMessage(`${dedupes.length} dedupes successfully resolved`);
+            this.markSelectedAs(InternalStatus.resolvedOnServer);
+        } else {
+            this.showMessage('Batch processing failed', {variant: 'error'});
+            this.markSelectedAs(InternalStatus.readyToResolve);
+        }
+    };
+
 
     render() {
         if (this.state.ui.error.filters) return <NetworkError/>;
         if (this.state.ui.loading.filters) return <Loading message={'Loading...'} margin={100}/>;
         return <React.Fragment>
-            <Filters
+            <Menu
                 selectedFilters={this.state.selectedFilters}
                 onFiltersSelect={this.onFiltersSelect}
                 filterOptionsProvider={this.filterOptionsProvider}
                 onSearchClick={this.onSearchClick}
-                filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
+                menuUi={this.state.ui.menu}
+                switchMenuTab={this.switchMenuTab}
+                batchSelect={this.batchSelect}
+                batchAction={this.batchAction}
+                batchMethod={this.batchMethod}
+                batchStats={generateBatchStats(this.state.results.dedupes)}
             />
-            <ContentWrapper filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}>
-                {!this.state.ui.filtersOpen && <Header
+
+            <ContentWrapper ui={this.state.ui}>
+                {!this.state.ui.menu.open && <Header
                     selectedFilters={this.state.results.selectedFilters}
                     filterOptionsProvider={this.filterOptionsProvider}
-                    filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
                 />}
                 {this.renderResults()}
                 {this.renderPreselect()}
             </ContentWrapper>
-            {this.state.results.dedupes&&<UnresolveConfirm
-                isOpen={this.state.ui.unresolveConfirmOpen}
-                onClose={this.onUnresolveDialogClose}
-                toBeUnresolved={this.state.results.dedupes[this.state.toBeUnresolved-1]}
-            />}
         </React.Fragment>;
     }
 }
+
 export default withSnackbar(Main);

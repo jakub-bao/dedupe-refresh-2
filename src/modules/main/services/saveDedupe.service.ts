@@ -1,12 +1,13 @@
 import {DedupeModel} from "../../results/models/dedupe.model";
 import {deleteData, postData} from "../../../sharedModules/shared/services/api.service";
-
-const pureDedupesMech = 'xEzelmtHWPn';
-const crosswalkDedupesMech = 'OM58NubPbx1';
+import {
+    crosswalkDedupesMechCategoryOption,
+    pureDedupesMechCategoryOption
+} from "../../../config/deduplicationMechanism.values";
 
 const dedupeMechanisms = {
-    PURE: pureDedupesMech,
-    CROSSWALK: crosswalkDedupesMech
+    PURE: pureDedupesMechCategoryOption,
+    CROSSWALK: crosswalkDedupesMechCategoryOption
 }
 
 const getQuery = (toSave:DedupeModel)=>`de=${toSave.data.dataElementId}&co=${toSave.data.categoryOptionComboId}&ou=${toSave.meta.orgUnitId}&pe=${toSave.meta.periodId}&value=${toSave.resolution.resolutionMethodValue.deduplicationAdjustmentValue}&cc=wUpfppgjEza&cp=${dedupeMechanisms[toSave.meta.dedupeType]}`;

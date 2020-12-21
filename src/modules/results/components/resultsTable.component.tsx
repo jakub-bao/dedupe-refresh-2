@@ -1,16 +1,21 @@
 import React, {CSSProperties} from "react";
-import MaterialTable, {MTableBodyRow, Options} from "material-table";
+import MaterialTable, {Column, MTableBodyRow, Options} from "material-table";
 import {DedupeModel, InternalStatus} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
 import {DuplicateList} from "./duplicateList.component";
 import {colors} from "../../../values/color.values";
-import {withStyles} from "@material-ui/core";
+import {Table, TableBody, TableCell, TableHead, TableRow, withStyles} from "@material-ui/core";
 import {
     ChangeResolutionMethod,
     ResolutionMethodCell,
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
-import StatusCell, {ResolveDedupe, UnresolveDedupe} from "../../resolutionMethodCell/components/statusCell.component";
+import StatusCell, {
+    ResolveDedupe,
+    statusToText,
+    UnresolveDedupe
+} from "../../resolutionMethodCell/components/statusCell.component";
+import "./resultsTable.component.css";
 
 const noSort = {sorting: false};
 const padding = '5px';
@@ -19,7 +24,7 @@ const darkBorder = `1px solid rgba(0,0,0,0.3)`;
 const lightBorder = `1px solid rgba(0,0,0,0.075)`;
 const fontFamily ='"Roboto", "Helvetica", "Arial", sans-serif';
 const fontSize = '0.875rem'
-
+const fontWeight=500;
 
 const tableOptions:Options<DedupeModel> = {
     pageSize: 20,
@@ -34,7 +39,9 @@ const tableOptions:Options<DedupeModel> = {
         borderRight: darkBorder,
         borderBottom: darkBorder,
     },
-    draggable: false
+    draggable: false,
+    selectionProps: (data:DedupeModel)=>({'data-testid':`batch_checkbox_${data.meta.internalId}`,'data-id':data.meta.internalId,'data-type':'batch_checkbox'}),
+    headerSelectionProps: {'data-testid':'batch_checkbox_all'}
 } as Options<DedupeModel>;
 
 export const Row = withStyles((theme) => ({
@@ -56,6 +63,8 @@ function statusToColor(status:InternalStatus):string{
         case InternalStatus.unresolved: return '#00000000';
         case InternalStatus.readyToResolve: return '#9C0D38';
         case InternalStatus.resolvedOnServer: return '#307351';
+        case InternalStatus.processing: return '#E8C547';
+        case InternalStatus.invalidValue: return '#A4BAB7';
     }
 }
 
@@ -67,22 +76,51 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
     }as CSSProperties;
 }
 
+const Cell = ({children})=><TableCell style={{fontWeight}}>{children}</TableCell>;
+
+const DuplicatesHeader = <Table>
+    <TableBody>
+        <TableRow>
+            <Cell>Agency</Cell><Cell>Partner</Cell><Cell>Mechanism</Cell><Cell>Value</Cell>
+        </TableRow>
+    </TableBody>
+</Table>
+
+
+
+const includes = (field:string, token:string)=>field.toLowerCase().includes(token.toLowerCase());
+
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod, resolveDedupe: ResolveDedupe, unresolveDedupe: UnresolveDedupe)=> [
-    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
+    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}/*, defaultSort:'asc'*/} as Column<any>,
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
-    {title: 'Duplicates', render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}},
-    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>, ...noSort, cellStyle: {padding}},
-    {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe} resolveDedupe={resolveDedupe} unresolveDedupe={unresolveDedupe}/>, ...noSort, cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe)}
+    {
+        title: DuplicatesHeader,
+        render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>,
+        ...noSort,
+        cellStyle: {padding:0,borderRight:border}
+    } as any as Column<any>, {
+        title: 'Resolution',
+        render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>,
+        ...noSort,
+        cellStyle: {padding}
+    }, {
+        title: 'Status',
+        render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe} resolveDedupe={resolveDedupe} unresolveDedupe={unresolveDedupe}/>,
+        // ...noSort,
+        cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe),
+        customFilterAndSearch: (token:string, data:DedupeModel)=>includes(statusToText(data.status),token)
+    }
 ];
 
 
-export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe}:{
+export default function ResultsTable({filteredDedupes, setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange}:{
     filteredDedupes: DedupeModel[],
     setResolutionValue:SetResolutionValue,
     changeResolutionMethod: ChangeResolutionMethod,
     resolveDedupe:ResolveDedupe,
-    unresolveDedupe:UnresolveDedupe
+    unresolveDedupe:UnresolveDedupe,
+    onSelectChange: ()=>void,
 }) {
     return <MaterialTable
         style={{borderTop: border}}
@@ -91,5 +129,6 @@ export default function ResultsTable({filteredDedupes, setResolutionValue, chang
         columns={getColumnSettings(setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe)}
         data={filteredDedupes}
         components={components}
+        onSelectionChange={onSelectChange}
     />;
 }

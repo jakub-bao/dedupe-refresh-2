@@ -3,11 +3,9 @@ import {DedupeModel, DedupeResolutionMethodValue, updateStatus} from "../../resu
 const findDedupe = (dedupes: DedupeModel[],dedupeId:number, cb:any)=>{
     let dedupe = dedupes[dedupeId-1];
     if (dedupe.meta.internalId!==dedupeId) throw new Error('dedupe search wrong');
-    // dedupes.forEach((dedupe:DedupeModel)=>{
-        if (dedupe.meta.internalId!==dedupeId) return;
-        cb(dedupe);
-        updateStatus(dedupe);
-    // });
+    if (dedupe.meta.internalId!==dedupeId) return;
+    cb(dedupe);
+    updateStatus(dedupe);
     return dedupes;
 }
 

@@ -7,12 +7,12 @@ import {
     ResolutionMethodType,
     updateStatus
 } from "../models/dedupe.model";
-import {DedupeType, FiltersModel} from "../../filters/models/filters.model";
+import {DedupeType, FiltersModel} from "../../menu/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";
 
 const random = ()=>Math.random()*10e15
 
-function generateDedupeUrl(selectedFilters:FiltersModel):string{
+export function generateDedupeUrl(selectedFilters:FiltersModel):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
         + `&var=ou:${selectedFilters.operatingUnit}`
         + `&var=dt:${selectedFilters.dataType}`
@@ -112,7 +112,8 @@ function generateDedupe(selectedRows: namedRow[], groupNumber:number, filters:Fi
         },
         resolution: getResolutionDetails(selectedRows),
         duplicates: extractDuplicates(selectedRows),
-        status: null
+        status: null,
+        tableData:{}
     };
     updateStatus(dedupe);
     return dedupe;

@@ -1,0 +1,20 @@
+{
+  "dataValues": [
+    {
+      "dataElement": "qhGxKnmrZBd",
+      "period": "2020Q4",
+      "orgUnit": "TAPALAZae2l",
+      "categoryOptionCombo": "nEKvoyX7K7X",
+      "attributeOptionCombo": "X8hrDf6bLDC",
+      "value": "-10020"
+    },
+    {
+      "dataElement": "qhGxKnmrZBd",
+      "period": "2020Q4",
+      "orgUnit": "TAPALAZae2l",
+      "categoryOptionCombo": "xYyVHiXrvSi",
+      "attributeOptionCombo": "X8hrDf6bLDC",
+      "value": "-10010"
+    }
+  ]
+}

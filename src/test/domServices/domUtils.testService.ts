@@ -9,7 +9,7 @@ export {click, clickByText, checkboxValue, checkRadioValue, checkSelectValue, se
 export async function loadingDone():Promise<any>{
     await pause(0.2);
     if (!screen.queryByTestId('loading')) return Promise.resolve();
-    return waitForElementToBeRemoved(() => screen.queryAllByTestId('loading'),{timeout: 10000});
+    return waitForElementToBeRemoved(() => screen.queryAllByTestId('loading'),{timeout: 15000});
 }
 
 export async function setUpComponent(component:ReactElement, toContain: string[]):Promise<any>{

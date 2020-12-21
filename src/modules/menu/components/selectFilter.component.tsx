@@ -4,6 +4,7 @@ import {FilterType} from "../models/filters.model";
 import {camelCaseToHuman} from "../../../sharedModules/shared/services/camelCase.service";
 import {idName} from "../../../sharedModules/shared/models/idNameList.model";
 import {makeStyles} from "@material-ui/core/styles";
+import "./selectFilter.css";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {

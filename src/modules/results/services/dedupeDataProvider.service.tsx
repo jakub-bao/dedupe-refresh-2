@@ -12,7 +12,7 @@ import {getData} from "../../../sharedModules/shared/services/api.service";
 
 const random = ()=>Math.random()*10e15
 
-function generateDedupeUrl(selectedFilters:FiltersModel):string{
+export function generateDedupeUrl(selectedFilters:FiltersModel):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
         + `&var=ou:${selectedFilters.operatingUnit}`
         + `&var=dt:${selectedFilters.dataType}`

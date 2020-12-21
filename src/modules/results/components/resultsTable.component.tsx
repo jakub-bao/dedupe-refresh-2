@@ -10,7 +10,12 @@ import {
     ResolutionMethodCell,
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
-import StatusCell, {ResolveDedupe, UnresolveDedupe} from "../../resolutionMethodCell/components/statusCell.component";
+import StatusCell, {
+    ResolveDedupe,
+    statusToText,
+    UnresolveDedupe
+} from "../../resolutionMethodCell/components/statusCell.component";
+import "./resultsTable.component.css";
 
 const noSort = {sorting: false};
 const padding = '5px';
@@ -82,13 +87,30 @@ const DuplicatesHeader = <Table>
 </Table>
 
 
+
+const includes = (field:string, token:string)=>field.toLowerCase().includes(token.toLowerCase());
+
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod, resolveDedupe: ResolveDedupe, unresolveDedupe: UnresolveDedupe)=> [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}/*, defaultSort:'asc'*/} as Column<any>,
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
-    {title: DuplicatesHeader, render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>, ...noSort, cellStyle: {padding:0,borderRight:border}} as any as Column<any>,
-    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>, ...noSort, cellStyle: {padding}},
-    {title: 'Status', render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe} resolveDedupe={resolveDedupe} unresolveDedupe={unresolveDedupe}/>, ...noSort, cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe)}
+    {
+        title: DuplicatesHeader,
+        render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>,
+        ...noSort,
+        cellStyle: {padding:0,borderRight:border}
+    } as any as Column<any>, {
+        title: 'Resolution',
+        render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>,
+        ...noSort,
+        cellStyle: {padding}
+    }, {
+        title: 'Status',
+        render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe} resolveDedupe={resolveDedupe} unresolveDedupe={unresolveDedupe}/>,
+        // ...noSort,
+        cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe),
+        customFilterAndSearch: (token:string, data:DedupeModel)=>includes(statusToText(data.status),token)
+    }
 ];
 
 

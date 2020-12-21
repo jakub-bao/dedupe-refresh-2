@@ -40,7 +40,7 @@ function camelCaseToHuman(text:string):string {
     return words.join(" ");
 }
 
-function statusToText(status:InternalStatus):string{
+export function statusToText(status:InternalStatus):string{
     if (status===InternalStatus.processing) return 'Processing...';
     return camelCaseToHuman(status);
 }

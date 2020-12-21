@@ -35,6 +35,7 @@ import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
 import {generateBatchStats} from "../../batch/services/generateBatchStats.service";
 import {batchSetMethod} from "../../batch/services/batchSetMethod.service";
 import {batchResolve} from "../../batch/services/batchResolve.service";
+import {exportCsv} from "../services/exportCsv.service";
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
@@ -132,6 +133,10 @@ class Main extends React.Component<{
         this.setState({results:this.state.results});
     }
 
+    triggerExport = ()=>{
+        exportCsv(this.state.results.selectedFilters);
+    };
+
     renderResults() {
         if (this.state.ui.loading.results) return <Loading message={'Searching duplicates...'} margin={100}/>;
         if (this.state.ui.error.results) return <NetworkError/>;
@@ -143,6 +148,7 @@ class Main extends React.Component<{
             resolveDedupe={this.resolveDedupe}
             unresolveDedupe={this.unresolveDedupe}
             onSelectChange={this.onSelectChange}
+            triggerExport={this.triggerExport}
         />;
     }
 

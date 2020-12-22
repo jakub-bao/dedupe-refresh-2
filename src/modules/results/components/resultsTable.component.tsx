@@ -2,7 +2,7 @@ import React, {CSSProperties} from "react";
 import MaterialTable, {Column, MTableBodyRow, Options} from "material-table";
 import {DedupeModel, InternalStatus} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
-import {DuplicateList} from "./duplicateList.component";
+import {ColWidths, DuplicateList} from "./duplicateList.component";
 import {colors} from "../../../values/color.values";
 import {Table, TableBody, TableCell, TableHead, TableRow, withStyles} from "@material-ui/core";
 import {
@@ -16,6 +16,7 @@ import StatusCell, {
     UnresolveDedupe
 } from "../../resolutionMethodCell/components/statusCell.component";
 import "./resultsTable.component.css";
+import {isTestEnv} from "../../../test/apiCache/apiCache.index";
 
 const noSort = {sorting: false};
 const padding = '5px';
@@ -24,7 +25,12 @@ const darkBorder = `1px solid rgba(0,0,0,0.3)`;
 const lightBorder = `1px solid rgba(0,0,0,0.075)`;
 const fontFamily ='"Roboto", "Helvetica", "Arial", sans-serif';
 const fontSize = '0.875rem'
-const fontWeight=500;
+
+const styles = {
+    duplicateHeader:{
+        fontWeight: 500,
+    }
+};
 
 const tableOptions:Options<DedupeModel> = {
     pageSize: 20,
@@ -76,12 +82,14 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
     }as CSSProperties;
 }
 
-const Cell = ({children})=><TableCell style={{fontWeight}}>{children}</TableCell>;
+const Cell = ({children})=><TableCell style={styles.duplicateHeader}>{children}</TableCell>;
 
-const DuplicatesHeader = <Table>
+const DuplicatesHeader = <Table size="small">
+    <ColWidths/>
     <TableBody>
         <TableRow>
-            <Cell>Agency</Cell><Cell>Partner</Cell><Cell>Mechanism</Cell><Cell>Value</Cell>
+            <Cell>Agency</Cell><Cell>Partner</Cell><Cell>Mech</Cell><Cell>Value</Cell>
+            {/*<Cell>A</Cell><Cell>P</Cell><Cell>M</Cell><Cell>V</Cell>*/}
         </TableRow>
     </TableBody>
 </Table>
@@ -92,13 +100,14 @@ const includes = (field:string, token:string)=>field.toLowerCase().includes(toke
 
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod, resolveDedupe: ResolveDedupe, unresolveDedupe: UnresolveDedupe)=> [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}/*, defaultSort:'asc'*/} as Column<any>,
-    {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
+    {title: 'Disaggreg', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
     {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
     {
         title: DuplicatesHeader,
         render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>,
         ...noSort,
-        cellStyle: {padding:0,borderRight:border}
+        cellStyle: {padding:0,borderRight:border},
+        headerStyle:{paddingLeft:0, paddingRight:0}
     } as any as Column<any>, {
         title: 'Resolution',
         render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>,
@@ -109,7 +118,8 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
         render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe} resolveDedupe={resolveDedupe} unresolveDedupe={unresolveDedupe}/>,
         // ...noSort,
         cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe),
-        customFilterAndSearch: (token:string, data:DedupeModel)=>includes(statusToText(data.status),token)
+        customFilterAndSearch: (token:string, data:DedupeModel)=>includes(statusToText(data.status),token),
+        // width: 90
     }
 ];
 
@@ -122,6 +132,7 @@ export default function ResultsTable({filteredDedupes, setResolutionValue, chang
     unresolveDedupe:UnresolveDedupe,
     onSelectChange: ()=>void,
 }) {
+    tweakTable();
     return <MaterialTable
         style={{borderTop: border}}
         icons={tableIcons}
@@ -131,4 +142,21 @@ export default function ResultsTable({filteredDedupes, setResolutionValue, chang
         components={components}
         onSelectionChange={onSelectChange}
     />;
+}
+
+function tweakTable() {
+    setTimeout(() => {
+        if (isTestEnv()) return;
+        if (document.querySelector('#resultsTableColgroup')) return;
+        let colSettings = document.createElement('colgroup');
+        colSettings.setAttribute('id','resultsTableColgroup');
+        [1, 30, 10, 10, 30, 10,10].forEach(width => {
+            let col = document.createElement('col');
+            col.setAttribute('span', "1");
+            col.setAttribute('style', `width: ${width}%`);
+            colSettings.appendChild(col);
+        });
+        let table = document.querySelector('.MuiTable-root')
+        table.insertBefore(colSettings, table.firstChild);
+    }, 50);
 }

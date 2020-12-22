@@ -1,10 +1,9 @@
 .idea
+.eslintcache
 node_modules
 package-lock.json
 coverage
 cachedApiCalls
-mochawesome-report
-cypress/screenshots
 
 Data-Deduplication.zip
 Data-Deduplication-2.zip

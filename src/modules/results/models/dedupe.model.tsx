@@ -33,7 +33,6 @@ export type DedupeResolutionMethodValue = {
 export type DedupeResolutionAvailableValues = {
     maximum: number;
     sum: number;
-    // minimum?: number;
 };
 
 export type DedupeResolutionModel = {

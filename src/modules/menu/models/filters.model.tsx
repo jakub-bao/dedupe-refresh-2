@@ -15,7 +15,12 @@ export enum FilterType {
     agency='agency',
     technicalArea='technicalArea',
     dedupeType='dedupeType',
-    includeResolved='includeResolved'
+    status='status'
+}
+
+export enum FilterDedupeStatus{
+    unresolved='unresolved',
+    resolvedAndUnresolved='resolvedAndUnresolved'
 }
 
 export type FiltersModel = {
@@ -25,5 +30,5 @@ export type FiltersModel = {
     agency: string,
     technicalArea: string,
     dedupeType: DedupeType,
-    includeResolved: boolean
+    status: FilterDedupeStatus
 }

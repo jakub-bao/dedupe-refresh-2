@@ -12,7 +12,7 @@ export const CameroonTestCase:DedupeTestCase = {
         operatingUnit: 'Cameroon',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        includeResolved: true,
+        status: "Include resolved",
         crosswalk: true
     },
     expectedTokens: [

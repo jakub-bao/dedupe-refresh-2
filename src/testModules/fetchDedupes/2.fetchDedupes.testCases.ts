@@ -1,4 +1,4 @@
-import {DataType, DedupeType, FiltersModel} from "../../modules/menu/models/filters.model";
+import {DataType, DedupeType, FilterDedupeStatus, FiltersModel} from "../../modules/menu/models/filters.model";
 import {DedupeModel, InternalStatus, ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 
 export type FdTestCase = {
@@ -18,7 +18,7 @@ const RwandaResults2020Q4:FdTestCase = {
         agency: null,
         technicalArea: null,
         dedupeType: DedupeType.pure,
-        includeResolved: false
+        status: FilterDedupeStatus.unresolved
     },
     dedupes: [{
         status: InternalStatus.unresolved,
@@ -71,7 +71,7 @@ const Nigeria1:FdTestCase = {
         agency: null,
         technicalArea: null,
         dedupeType: DedupeType.pure,
-        includeResolved: true
+        status: FilterDedupeStatus.resolvedAndUnresolved
     },
     dedupes: [{
         status: InternalStatus.resolvedOnServer,

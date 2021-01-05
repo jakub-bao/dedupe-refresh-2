@@ -4,7 +4,7 @@ export type TestFilters = {
     operatingUnit: string;
     dataType: string;
     period: string;
-    includeResolved: boolean;
+    status: string;
     crosswalk?:boolean;
 };
 

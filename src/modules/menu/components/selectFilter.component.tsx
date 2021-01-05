@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 function generateLabel(filterType:string){
     let required = '';
-    if ([FilterType.dedupeType, FilterType.operatingUnit, FilterType.dataType, FilterType.period].includes(filterType as FilterType)) required = ' *';
+    if ([FilterType.dedupeType, FilterType.operatingUnit, FilterType.dataType, FilterType.period, FilterType.status].includes(filterType as FilterType)) required = ' *';
     return camelCaseToHuman(filterType) + required;
 }
 

@@ -11,7 +11,7 @@ export const BotswanaAllCase:DedupeTestCase = {
         operatingUnit: 'Botswana',
         dataType: 'MER Results',
         period: 'Jul - Sep 2020',
-        includeResolved: true
+        status: "Include resolved"
     },
     expectedTokens: [
         'OVC_HIVSTAT (N, DSD, ReportedStatus): OVC Disclosed Known HIV Status',

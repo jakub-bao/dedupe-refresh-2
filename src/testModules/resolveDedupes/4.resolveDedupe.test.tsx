@@ -13,7 +13,7 @@ export const BotswanaTestCase:DedupeTestCase = {
         operatingUnit: 'Botswana',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        includeResolved: true
+        status: "Include resolved"
     },
     expectedTokens: [
         'HTS_TST (N, DSD, KeyPop/Result): HTS received results',

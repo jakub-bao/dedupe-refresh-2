@@ -15,7 +15,7 @@ export default class FilterOptionsProvider {
     private agencyList: idName[];
     private technicalAreaList: idName[];
     private dedupeTypeList: idName[] = [{id: 'PURE', name: 'Pure Dedupes'}, {id:'CROSSWALK', name: 'Crosswalk Dedupes'}];
-    private includeResolvedList: idName[] = [{id: 'true', name: 'Yes'}, {id:'false', name: 'No'}];
+    private statusList:idName[] = [{id: 'unresolved', name: 'Only unresolved'},{id:'resolvedAndUnresolved',name:'Include resolved'}]
 
     init():Promise<any>{
         return Promise.all([
@@ -84,11 +84,7 @@ export default class FilterOptionsProvider {
         return this.periodList[dataType.toLocaleLowerCase()];
     }
 
-    getValueNameById(filterType:FilterType, filterValue:string|boolean):string{
-        if (filterType===FilterType.includeResolved) {
-            if (filterValue) return 'Include Resolved';
-            return 'Unresolved Only';
-        }
+    getValueNameById(filterType:FilterType, filterValue:string):string{
         if (filterType===FilterType.period) {
             return [].concat(this.periodList.results,this.periodList.targets).filter(idName=>idName.id===filterValue)[0].name;
         }

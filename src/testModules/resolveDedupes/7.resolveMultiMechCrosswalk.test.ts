@@ -12,7 +12,7 @@ const EthiopiaTest:DedupeTestCase = {
         operatingUnit: 'Ethiopia',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        includeResolved: true,
+        status: "Include resolved",
         crosswalk: true
     },
     expectedTokens: [

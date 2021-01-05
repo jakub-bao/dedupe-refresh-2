@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "../../menu/components/menu.component";
-import {DataType, DedupeType, FiltersModel, FilterType} from "../../menu/models/filters.model";
+import {DataType, DedupeType, FilterDedupeStatus, FiltersModel, FilterType} from "../../menu/models/filters.model";
 import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.service";
 import {
     DedupeModel,
@@ -60,7 +60,7 @@ class Main extends React.Component<{
                 period: null,
                 agency: null,
                 technicalArea: null,
-                includeResolved: false,
+                status: FilterDedupeStatus.unresolved,
             },
             results: {
                 dedupes: null,
@@ -209,7 +209,7 @@ class Main extends React.Component<{
         selectedFilters.dataType = DataType.results;
         selectedFilters.period = period;
         selectedFilters.dedupeType = dedupeType;
-        selectedFilters.includeResolved = true;
+        selectedFilters.status = FilterDedupeStatus.resolvedAndUnresolved;
         this.setState({selectedFilters});
         setTimeout(this.onSearchClick, 0);
     };

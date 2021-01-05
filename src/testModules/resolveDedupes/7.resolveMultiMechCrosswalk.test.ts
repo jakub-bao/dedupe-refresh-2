@@ -3,6 +3,7 @@ import {searchDedupes} from "../shared/sharedBasics.testService";
 import {checkRadioValue, click} from "../../test/domServices/click.testService";
 import {waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 
 const EthiopiaTest:DedupeTestCase = {
@@ -12,7 +13,7 @@ const EthiopiaTest:DedupeTestCase = {
         operatingUnit: 'Ethiopia',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        status: "Include resolved",
+        status: FilterDedupeStatus.resolvedAndUnresolved,
         crosswalk: true
     },
     expectedTokens: [

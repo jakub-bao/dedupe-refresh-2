@@ -3,6 +3,7 @@ import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 import {checkCheckbox, isDisabled, nextPage, searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
 import {click} from "../../test/domServices/click.testService";
 import {textsIn} from "../../test/domServices/textsIn.testService";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 export const BotswanaAllCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -11,7 +12,7 @@ export const BotswanaAllCase:DedupeTestCase = {
         operatingUnit: 'Botswana',
         dataType: 'MER Results',
         period: 'Jul - Sep 2020',
-        status: "Include resolved"
+        status: FilterDedupeStatus.resolvedAndUnresolved
     },
     expectedTokens: [
         'OVC_HIVSTAT (N, DSD, ReportedStatus): OVC Disclosed Known HIV Status',

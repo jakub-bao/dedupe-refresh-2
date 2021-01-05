@@ -4,6 +4,7 @@ import {searchDedupes} from "../shared/sharedBasics.testService";
 import {checkRadioValue} from "../../test/domServices/click.testService";
 import {noTexts} from "../../test/domServices/texts.testService";
 import {DedupeTestCase} from "../shared/models/test.models";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 const EthiopiaTest:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -12,7 +13,7 @@ const EthiopiaTest:DedupeTestCase = {
         operatingUnit: 'Ethiopia',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        status: "Include resolved",
+        status: FilterDedupeStatus.resolvedAndUnresolved,
         crosswalk: true
     },
     expectedTokens: [

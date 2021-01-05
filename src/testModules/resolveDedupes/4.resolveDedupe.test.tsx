@@ -3,6 +3,7 @@ import {checkCustomValue, searchDedupes, switchToCustom} from "../shared/sharedB
 import {click, type} from "../../test/domServices/click.testService";
 import {text, waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 //delete data: env-load-dhis jakub && dhis_api -a "dataValues.json?de=qhGxKnmrZBd&co=xYyVHiXrvSi&ou=gGqaAXuUGpb&pe=2020Q4&cc=wUpfppgjEza&cp=xEzelmtHWPn" -X DELETE
 
@@ -13,7 +14,7 @@ export const BotswanaTestCase:DedupeTestCase = {
         operatingUnit: 'Botswana',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        status: "Include resolved"
+        status: FilterDedupeStatus.resolvedAndUnresolved
     },
     expectedTokens: [
         'HTS_TST (N, DSD, KeyPop/Result): HTS received results',

@@ -1,10 +1,11 @@
 import {ResolutionMethodType} from "../../../modules/results/models/dedupe.model";
+import {FilterDedupeStatus} from "../../../modules/menu/models/filters.model";
 
 export type TestFilters = {
     operatingUnit: string;
     dataType: string;
     period: string;
-    status: string;
+    status: FilterDedupeStatus;
     crosswalk?:boolean;
 };
 

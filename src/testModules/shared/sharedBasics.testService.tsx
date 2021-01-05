@@ -8,6 +8,7 @@ import {exist, noExist} from "../../test/domServices/texts.testService";
 import {fireEvent, screen} from "@testing-library/react";
 import {InternalStatus} from "../../modules/results/models/dedupe.model";
 import {SnackbarProvider} from "notistack";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 export async function renderMain(){
     return await setUpComponent(<SnackbarProvider><Main/></SnackbarProvider>,['Dedupe Type *', 'Operating Unit *']);
@@ -17,9 +18,10 @@ export async function searchDedupes(testCase:DedupeTestCase){
     testAs(testCase.testAs);
     await renderMain();
     if (testCase.filters.crosswalk) select(`filter_dedupeType`,'Crosswalk Dedupes');
-    ['operatingUnit','dataType','period','status'].forEach((filter:string)=>{
+    ['operatingUnit','dataType','period'].forEach((filter:string)=>{
         select(`filter_${filter}`,testCase.filters[filter]);
     });
+    if (testCase.filters.status===FilterDedupeStatus.resolvedAndUnresolved) select('filter_status','Include resolved');
     click('searchDedupes');
     await loadingDone();
     texts(testCase.expectedTokens);

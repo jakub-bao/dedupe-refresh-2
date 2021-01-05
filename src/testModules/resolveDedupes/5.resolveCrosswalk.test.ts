@@ -3,6 +3,7 @@ import {checkCustomValue, searchDedupes, switchToCustom} from "../shared/sharedB
 import {click, type} from "../../test/domServices/click.testService";
 import {text, waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 
 const CameroonTestCase:DedupeTestCase = {
@@ -12,7 +13,7 @@ const CameroonTestCase:DedupeTestCase = {
         operatingUnit: 'Cameroon',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        status: "Include resolved",
+        status: FilterDedupeStatus.resolvedAndUnresolved,
         crosswalk: true
     },
     expectedTokens: [

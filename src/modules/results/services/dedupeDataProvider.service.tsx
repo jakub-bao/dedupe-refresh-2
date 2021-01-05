@@ -68,7 +68,7 @@ function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableVa
     return {
         sum: enteredValues.reduce((a,b)=>a+b,0),
         maximum: Math.max(...enteredValues),
-        minimum: Math.min(...enteredValues)
+        // minimum: Math.min(...enteredValues)
     };
 }
 

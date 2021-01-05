@@ -10,7 +10,7 @@ function transformIdNameList(list:{id:string, displayName}[]):idName[]{
 
 export default class FilterOptionsProvider {
     private operatingUnitList: idName[];
-    private dataTypeList: idName[] = [{id: 'TARGETS', name: 'MER Targets'}, {id: 'RESULTS', name: 'MER Results'}];
+    private dataTypeList: idName[] = [{id: 'RESULTS', name: 'MER Results'},{id: 'TARGETS', name: 'MER Targets'}];
     private periodList: DataTypePeriodList;
     private agencyList: idName[];
     private technicalAreaList: idName[];

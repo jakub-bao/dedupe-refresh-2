@@ -18,17 +18,29 @@ import StatusCell, {
 import "./resultsTable.component.css";
 import {isTestEnv} from "../../../test/apiCache/apiCache.index";
 
-const noSort = {sorting: false};
 const padding = '5px';
 const border = '1px solid #00000021';
 const darkBorder = `1px solid rgba(0,0,0,0.3)`;
 const lightBorder = `1px solid rgba(0,0,0,0.075)`;
-const fontFamily ='"Roboto", "Helvetica", "Arial", sans-serif';
-const fontSize = '0.875rem'
 
 const styles = {
     duplicateHeader:{
         fontWeight: 500,
+    },
+    columnHeader: {
+        padding: '6px'
+    },
+    tableColumn:{
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        fontSize: '0.875rem',
+        borderLeft: lightBorder,
+        padding: '6px 10px'
+    },
+    duplicatesColumn:{
+        padding: 0
+    },
+    resolutionColumn:{
+        padding: 5
     }
 };
 
@@ -98,28 +110,42 @@ const DuplicatesHeader = <Table size="small">
 
 const includes = (field:string, token:string)=>field.toLowerCase().includes(token.toLowerCase());
 
+const mergeStyles = (...styles)=>Object.assign({},...styles);
+
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod, resolveDedupe: ResolveDedupe, unresolveDedupe: UnresolveDedupe)=> [
-    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}/*, defaultSort:'asc'*/} as Column<any>,
-    {title: 'Disaggreg', field: 'data.disAggregation', cellStyle: {padding,fontFamily,fontSize, borderLeft: lightBorder}},
-    {title: 'OU', field: 'info.orgUnitName', cellStyle: {padding, borderRight: border,fontFamily,fontSize, borderLeft: lightBorder}},
     {
+        title: 'Data Element',
+        field: 'info.dataElementName',
+        cellStyle: styles.tableColumn,
+        headerStyle: styles.columnHeader,
+    } as Column<any>, {
+        title: 'Disaggreg',
+        field: 'data.disAggregation',
+        cellStyle: styles.tableColumn,
+        headerStyle: styles.columnHeader,
+    }, {
+        title: 'OU',
+        field: 'info.orgUnitName',
+        cellStyle: styles.tableColumn,
+        headerStyle: styles.columnHeader,
+    }, {
         title: DuplicatesHeader,
         render: (dedupe:DedupeModel)=><DuplicateList duplicates={dedupe.duplicates}/>,
-        ...noSort,
-        cellStyle: {padding:0,borderRight:border},
-        headerStyle:{paddingLeft:0, paddingRight:0}
+        sorting: false,
+        cellStyle: mergeStyles(styles.tableColumn, styles.duplicatesColumn),
+        headerStyle: styles.duplicatesColumn
     } as any as Column<any>, {
         title: 'Resolution',
         render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} changeResolutionMethod={changeResolutionMethod} setResolutionValue={setResolutionValue}/>,
-        ...noSort,
-        cellStyle: {padding}
+        sorting: false,
+        cellStyle: mergeStyles(styles.tableColumn, styles.resolutionColumn),
+        headerStyle: styles.columnHeader,
     }, {
         title: 'Status',
+        headerStyle: styles.columnHeader,
         render: (dedupe:DedupeModel)=><StatusCell dedupe={dedupe} resolveDedupe={resolveDedupe} unresolveDedupe={unresolveDedupe}/>,
-        // ...noSort,
         cellStyle: (all, dedupe)=>getStatusCellStyle(dedupe),
         customFilterAndSearch: (token:string, data:DedupeModel)=>includes(statusToText(data.status),token),
-        // width: 90
     }
 ];
 

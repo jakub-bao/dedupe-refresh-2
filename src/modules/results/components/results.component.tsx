@@ -42,6 +42,6 @@ export default function Results({filteredDedupes,setResolutionValue, changeResol
         unresolveDedupe={unresolveDedupe}
         onSelectChange={onSelectChange}
         />
-        <Button style={styles.export} onClick={triggerExport}>Export dedupes</Button>
+        <Button style={styles.export} onClick={triggerExport}>Export as CSV</Button>
     </div>
 }

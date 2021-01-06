@@ -33,6 +33,13 @@ function generateLabel(filterType:string){
     return camelCaseToHuman(filterType) + required;
 }
 
+function getUnselectedLabel(filterType:FilterType):string{
+    switch (filterType){
+        case FilterType.agency: return 'All Agencies';
+        case FilterType.technicalArea: return 'All Technical Areas'
+    }
+}
+
 export default function SelectFilter({filterType, filterValue, onFilterSelect, filterOptions}:{
     filterType:FilterType,
     filterValue:string,
@@ -50,7 +57,7 @@ export default function SelectFilter({filterType, filterValue, onFilterSelect, f
             onChange={(event:ChangeEvent<any>)=>onFilterSelect(event.target.value)}
             className={classes.select}
         >
-            {filterOptions.map(option=><MenuItem value={option.id} key={option.id}>{option.name||<em>Unspecified</em>}</MenuItem>)}
+            {filterOptions.map(option=><MenuItem value={option.id} key={option.id}>{option.name||<em>{getUnselectedLabel(filterType)}</em>}</MenuItem>)}
         </Select>
     </FormControl>;
 }

@@ -157,10 +157,14 @@ class Main extends React.Component<{
         let dedupe: DedupeModel = this.state.results.dedupes[id - 1];
         dedupe.status = InternalStatus.processing;
         this.setState({results: this.state.results});
-        resolveDedupe(dedupe).then((worked: boolean) => {
-            this.showMessage(`Resolved`);
+        resolveDedupe(dedupe).then(()=>{
+            this.showMessage(`Dedupe resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
+            this.setState({results: this.state.results});
+        }).catch(()=>{
+            this.showMessage(`Error resolving dedupe`, {variant: 'error'});
+            dedupe.status = InternalStatus.readyToResolve;
             this.setState({results: this.state.results});
         });
     }
@@ -172,16 +176,20 @@ class Main extends React.Component<{
 
     unresolveDedupe = (index: number) => {
         let results = this.state.results;
-        results.dedupes[index - 1].status = InternalStatus.processing;
+        let dedupe = results.dedupes[index - 1];
+        dedupe.status = InternalStatus.processing;
         this.setState({results});
         unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
             this.showMessage(`Unresolved`);
             let results = this.state.results;
-            let dedupe = results.dedupes[index - 1];
             dedupe.resolution.resolutionMethodValue = null;
             dedupe.resolution.original_resolutionMethodValue = null;
             dedupe.status = InternalStatus.unresolved;
             this.setState({results});
+        }).catch(()=>{
+            this.showMessage(`Error: Cannot unresolve dedupe`, {variant: 'error'});
+            dedupe.status = InternalStatus.resolvedOnServer;
+            this.setState({results: this.state.results});
         });
     }
 

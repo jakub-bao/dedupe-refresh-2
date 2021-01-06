@@ -35,7 +35,7 @@ export function switchToCustom(index:number){
     exist('resolution_custom_input');
 }
 
-export function checkStatus(index:number, status:InternalStatus){
+export function checkStatus(index:number, status:string){
     textIn(`status_${index}`, status);
 }
 

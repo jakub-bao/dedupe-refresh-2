@@ -3,6 +3,7 @@ import {checkCustomValue, searchDedupes, switchToCustom} from "../shared/sharedB
 import {click, type} from "../../test/domServices/click.testService";
 import {text, waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 
 const CameroonTestCase:DedupeTestCase = {
@@ -12,7 +13,7 @@ const CameroonTestCase:DedupeTestCase = {
         operatingUnit: 'Cameroon',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        includeResolved: true,
+        status: FilterDedupeStatus.resolvedAndUnresolved,
         crosswalk: true
     },
     expectedTokens: [
@@ -36,6 +37,6 @@ test(`5 > Resolve Crosswalk Dedupes > Cameroon`, async ()=>{
     });
     click(`dedupe_1_resolve`);
     text('Processing...');
-    await waitForTexts(['Resolved','Resolved on server']);
+    await waitForTexts(['Dedupe resolved','Resolved on server']);
     checkCustomValue(70080);
 });

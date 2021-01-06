@@ -3,6 +3,7 @@ import {searchDedupes} from "../shared/sharedBasics.testService";
 import {checkRadioValue, click} from "../../test/domServices/click.testService";
 import {waitForTexts} from "../../test/domServices/domUtils.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 
 const EthiopiaTest:DedupeTestCase = {
@@ -12,7 +13,7 @@ const EthiopiaTest:DedupeTestCase = {
         operatingUnit: 'Ethiopia',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        includeResolved: true,
+        status: FilterDedupeStatus.resolvedAndUnresolved,
         crosswalk: true
     },
     expectedTokens: [
@@ -32,6 +33,6 @@ test(`7 > Resolve Multi-mech Crosswalk Dedupe > Ethiopia`, async ()=>{
         expect(data).toBe('de=kt5rPumWUBE&co=xYyVHiXrvSi&ou=Dl0yK0OhftZ&pe=2020Q4&value=-80010&cc=wUpfppgjEza&cp=OM58NubPbx1');
     });
     click(`dedupe_1_resolve`);
-    await waitForTexts(['Resolved','Resolved on server']);
+    await waitForTexts(['Dedupe resolved','Resolved on server']);
     checkRadioValue(`resolution_1`, 'maximum');
 });

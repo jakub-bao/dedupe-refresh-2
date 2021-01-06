@@ -66,7 +66,7 @@ function SetCustomValue({value, setValue, visible}:{value:number, setValue:(valu
             variant="outlined"
             type="number"
             size='small'
-            value={value||''}
+            value={value!==null?value:''}
             onChange={(event)=>setValue(parseInt(event.target.value))}
             inputProps={{'data-testid':'resolution_custom_input'}}
         />}

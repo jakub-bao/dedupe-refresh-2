@@ -12,20 +12,14 @@ const dedupeMechanisms = {
 
 const getQuery = (toSave:DedupeModel)=>`de=${toSave.data.dataElementId}&co=${toSave.data.categoryOptionComboId}&ou=${toSave.meta.orgUnitId}&pe=${toSave.meta.periodId}&value=${toSave.resolution.resolutionMethodValue.deduplicationAdjustmentValue}&cc=wUpfppgjEza&cp=${dedupeMechanisms[toSave.meta.dedupeType]}`;
 
-export async function resolveDedupe(toSave:DedupeModel):Promise<boolean>{
-    return postData(`/dataValues`,getQuery(toSave)).then(res=>{
-        return res.ok;
-    }).catch(e => {
-        console.error(e);
-        return false;
-    });
+const handleRequest = res=>{
+    if (!res || !res.ok || res.redirected) throw new Error(`Cannot resolve dedupe`);
+};
+
+export async function resolveDedupe(toSave:DedupeModel):Promise<void>{
+    return postData(`/dataValues`,getQuery(toSave)).then(handleRequest);
 }
 
-export async function unresolveDedupe(toSave:DedupeModel):Promise<boolean>{
-    return deleteData(`/dataValues?${getQuery(toSave)}`).then(res=>{
-        return res.ok;
-    }).catch(e => {
-        console.error(e);
-        return false;
-    });
+export async function unresolveDedupe(toSave:DedupeModel):Promise<void>{
+    return deleteData(`/dataValues?${getQuery(toSave)}`).then(handleRequest);
 }

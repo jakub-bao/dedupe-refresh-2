@@ -33,7 +33,6 @@ export type DedupeResolutionMethodValue = {
 export type DedupeResolutionAvailableValues = {
     maximum: number;
     sum: number;
-    minimum?: number;
 };
 
 export type DedupeResolutionModel = {
@@ -79,12 +78,13 @@ function compareResolutions(resolution1:DedupeResolutionMethodValue, resolution2
     && resolution1.resolutionValue===resolution2.resolutionValue;
 }
 
+
 function checkValid(dedupe:DedupeModel):boolean{
     let res = dedupe.resolution;
-    let min = res.availableValues.minimum;
+    let max = res.availableValues.maximum;
     let sum = res.availableValues.sum;
     let val = res.resolutionMethodValue.resolutionValue;
-    return min <= val && val <= sum;
+    return max <= val && val <= sum;
 }
 
 function getDedupeStatus(dedupe:DedupeModel):InternalStatus{

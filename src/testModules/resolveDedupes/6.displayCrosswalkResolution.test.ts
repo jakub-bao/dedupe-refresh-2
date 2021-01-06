@@ -4,6 +4,7 @@ import {searchDedupes} from "../shared/sharedBasics.testService";
 import {noTexts} from "../../test/domServices/texts.testService";
 import {DedupeTestCase} from "../shared/models/test.models";
 import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 export const CameroonTestCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -12,7 +13,7 @@ export const CameroonTestCase:DedupeTestCase = {
         operatingUnit: 'Cameroon',
         dataType: 'MER Results',
         period: 'Oct - Dec 2020',
-        includeResolved: true,
+        status: FilterDedupeStatus.resolvedAndUnresolved,
         crosswalk: true
     },
     expectedTokens: [

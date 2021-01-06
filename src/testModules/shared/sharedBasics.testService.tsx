@@ -8,9 +8,10 @@ import {exist, noExist} from "../../test/domServices/texts.testService";
 import {fireEvent, screen} from "@testing-library/react";
 import {InternalStatus} from "../../modules/results/models/dedupe.model";
 import {SnackbarProvider} from "notistack";
+import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 
 export async function renderMain(){
-    return await setUpComponent(<SnackbarProvider><Main/></SnackbarProvider>,[/*'Data Deduplication',*/'Include Resolved','Dedupe Type *', 'Operating Unit *']);
+    return await setUpComponent(<SnackbarProvider><Main/></SnackbarProvider>,['Dedupe Type *', 'Operating Unit *']);
 }
 
 export async function searchDedupes(testCase:DedupeTestCase){
@@ -20,7 +21,7 @@ export async function searchDedupes(testCase:DedupeTestCase){
     ['operatingUnit','dataType','period'].forEach((filter:string)=>{
         select(`filter_${filter}`,testCase.filters[filter]);
     });
-    if (testCase.filters.includeResolved) click('filter_includeResolved');
+    if (testCase.filters.status===FilterDedupeStatus.resolvedAndUnresolved) select('filter_status','Include resolved');
     click('searchDedupes');
     await loadingDone();
     texts(testCase.expectedTokens);
@@ -34,7 +35,7 @@ export function switchToCustom(index:number){
     exist('resolution_custom_input');
 }
 
-export function checkStatus(index:number, status:InternalStatus){
+export function checkStatus(index:number, status:string){
     textIn(`status_${index}`, status);
 }
 

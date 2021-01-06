@@ -7,7 +7,7 @@ import {
     ResolutionMethodType,
     updateStatus
 } from "../models/dedupe.model";
-import {DedupeType, FiltersModel} from "../../menu/models/filters.model";
+import {DedupeType, FilterDedupeStatus, FiltersModel} from "../../menu/models/filters.model";
 import {getData} from "../../../sharedModules/shared/services/api.service";
 
 const random = ()=>Math.random()*10e15
@@ -18,13 +18,14 @@ export function generateDedupeUrl(selectedFilters:FiltersModel):string{
         + `&var=dt:${selectedFilters.dataType}`
         + `&var=pe:${selectedFilters.period}`
         + `&var=ty:${selectedFilters.dedupeType||'PURE'}`
-        + `&var=rs:${selectedFilters.includeResolved||false}`
+        + `&var=rs:${selectedFilters.status===FilterDedupeStatus.resolvedAndUnresolved}`
         + `&var=ps:100000`
         + `&var=pg:1`
         + `&var=ag:${selectedFilters.agency||'NONE'}`
         + `&var=dg:${selectedFilters.technicalArea||'NONE'}`
         + `&cache=${random()}`;
 }
+
 
 const removeAdjustment = record=>!["00000","00001"].includes(record.mechanismNumber);
 
@@ -68,7 +69,6 @@ function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableVa
     return {
         sum: enteredValues.reduce((a,b)=>a+b,0),
         maximum: Math.max(...enteredValues),
-        minimum: Math.min(...enteredValues)
     };
 }
 

@@ -81,8 +81,6 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
             <MenuTab label="Batch" data-testid={'menu_tab_batch'} disabled={!batchStats || !batchStats.allCount || batchStats.allCount===0}/>
         </MenuTabs>
 
-
-        {/*<MenuLogo toggleMenu={filtersUi.collapseFilters}/>*/}
         {menuUi.menuTab===0 && <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>}
         {menuUi.menuTab===1 && <BatchResolveMenu batchStats={batchStats} batchAction={batchAction} batchSelect={batchSelect} batchMethod={batchMethod}/>}
     </Drawer>;

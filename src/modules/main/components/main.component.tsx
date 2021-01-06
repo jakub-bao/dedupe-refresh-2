@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "../../menu/components/menu.component";
-import {DataType, DedupeType, FiltersModel, FilterType} from "../../menu/models/filters.model";
+import {DataType, DedupeType, FilterDedupeStatus, FiltersModel, FilterType} from "../../menu/models/filters.model";
 import FilterOptionsProvider from "../../menu/services/filterOptionsProvider.service";
 import {
     DedupeModel,
@@ -60,7 +60,7 @@ class Main extends React.Component<{
                 period: null,
                 agency: null,
                 technicalArea: null,
-                includeResolved: false,
+                status: FilterDedupeStatus.unresolved,
             },
             results: {
                 dedupes: null,
@@ -131,6 +131,7 @@ class Main extends React.Component<{
 
     onSelectChange = ()=>{
         this.setState({results:this.state.results});
+        if (this.state.ui.menu.menuTab!==MenuVariant.batch) this.updateUi([{action: UiActionType.menuTab, value: MenuVariant.batch}]);
     }
 
     triggerExport = ()=>{
@@ -156,10 +157,14 @@ class Main extends React.Component<{
         let dedupe: DedupeModel = this.state.results.dedupes[id - 1];
         dedupe.status = InternalStatus.processing;
         this.setState({results: this.state.results});
-        resolveDedupe(dedupe).then((worked: boolean) => {
-            this.showMessage(`Resolved`);
+        resolveDedupe(dedupe).then(()=>{
+            this.showMessage(`Dedupe resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
+            this.setState({results: this.state.results});
+        }).catch(()=>{
+            this.showMessage(`Error resolving dedupe`, {variant: 'error'});
+            dedupe.status = InternalStatus.readyToResolve;
             this.setState({results: this.state.results});
         });
     }
@@ -171,16 +176,20 @@ class Main extends React.Component<{
 
     unresolveDedupe = (index: number) => {
         let results = this.state.results;
-        results.dedupes[index - 1].status = InternalStatus.processing;
+        let dedupe = results.dedupes[index - 1];
+        dedupe.status = InternalStatus.processing;
         this.setState({results});
         unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
             this.showMessage(`Unresolved`);
             let results = this.state.results;
-            let dedupe = results.dedupes[index - 1];
             dedupe.resolution.resolutionMethodValue = null;
             dedupe.resolution.original_resolutionMethodValue = null;
             dedupe.status = InternalStatus.unresolved;
             this.setState({results});
+        }).catch(()=>{
+            this.showMessage(`Error: Cannot unresolve dedupe`, {variant: 'error'});
+            dedupe.status = InternalStatus.resolvedOnServer;
+            this.setState({results: this.state.results});
         });
     }
 
@@ -208,7 +217,7 @@ class Main extends React.Component<{
         selectedFilters.dataType = DataType.results;
         selectedFilters.period = period;
         selectedFilters.dedupeType = dedupeType;
-        selectedFilters.includeResolved = true;
+        selectedFilters.status = FilterDedupeStatus.resolvedAndUnresolved;
         this.setState({selectedFilters});
         setTimeout(this.onSearchClick, 0);
     };

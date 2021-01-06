@@ -4,6 +4,7 @@ import {FilterType} from "../models/filters.model";
 import {camelCaseToHuman} from "../../../sharedModules/shared/services/camelCase.service";
 import {idName} from "../../../sharedModules/shared/models/idNameList.model";
 import {makeStyles} from "@material-ui/core/styles";
+import "./selectFilter.css";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -28,8 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 function generateLabel(filterType:string){
     let required = '';
-    if ([FilterType.dedupeType, FilterType.operatingUnit, FilterType.dataType, FilterType.period].includes(filterType as FilterType)) required = ' *';
+    if ([FilterType.dedupeType, FilterType.operatingUnit, FilterType.dataType, FilterType.period, FilterType.status].includes(filterType as FilterType)) required = ' *';
     return camelCaseToHuman(filterType) + required;
+}
+
+function getUnselectedLabel(filterType:FilterType):string{
+    switch (filterType){
+        case FilterType.agency: return 'All Agencies';
+        case FilterType.technicalArea: return 'All Technical Areas'
+    }
 }
 
 export default function SelectFilter({filterType, filterValue, onFilterSelect, filterOptions}:{
@@ -49,7 +57,7 @@ export default function SelectFilter({filterType, filterValue, onFilterSelect, f
             onChange={(event:ChangeEvent<any>)=>onFilterSelect(event.target.value)}
             className={classes.select}
         >
-            {filterOptions.map(option=><MenuItem value={option.id} key={option.id}>{option.name||<em>Unspecified</em>}</MenuItem>)}
+            {filterOptions.map(option=><MenuItem value={option.id} key={option.id}>{option.name||<em>{getUnselectedLabel(filterType)}</em>}</MenuItem>)}
         </Select>
     </FormControl>;
 }

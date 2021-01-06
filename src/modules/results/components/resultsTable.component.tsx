@@ -26,6 +26,7 @@ const lightBorder = `1px solid rgba(0,0,0,0.075)`;
 const styles = {
     duplicateHeader:{
         fontWeight: 500,
+        padding: 6
     },
     columnHeader: {
         padding: '6px'
@@ -34,7 +35,8 @@ const styles = {
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
         fontSize: '0.875rem',
         borderLeft: lightBorder,
-        padding: '6px 10px'
+        padding: '6px 10px',
+        height: 130
     },
     duplicatesColumn:{
         padding: 0
@@ -101,7 +103,6 @@ const DuplicatesHeader = <Table size="small">
     <TableBody>
         <TableRow>
             <Cell>Agency</Cell><Cell>Partner</Cell><Cell>Mech</Cell><Cell>Value</Cell>
-            {/*<Cell>A</Cell><Cell>P</Cell><Cell>M</Cell><Cell>V</Cell>*/}
         </TableRow>
     </TableBody>
 </Table>
@@ -176,7 +177,7 @@ function tweakTable() {
         if (document.querySelector('#resultsTableColgroup')) return;
         let colSettings = document.createElement('colgroup');
         colSettings.setAttribute('id','resultsTableColgroup');
-        [1, 30, 10, 10, 30, 10,10].forEach(width => {
+        [1, 20, 10, 10, 40, 10,10].forEach(width => {
             let col = document.createElement('col');
             col.setAttribute('span', "1");
             col.setAttribute('style', `width: ${width}%`);

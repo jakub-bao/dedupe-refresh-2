@@ -2,22 +2,15 @@ import {DuplicateModel} from "../models/dedupe.model";
 import React, {CSSProperties} from "react";
 import {Table, TableBody, TableCell, TableRow, withStyles} from "@material-ui/core";
 
-// export const columnWidths = [20, 45, 20, 15];
-
-
 const styles = {
     root:{
+        height: '100%'
     } as CSSProperties,
-    col0:{width:'20%'},
+    col0:{width:'25%'},
     col1:{width:'45%'},
-    col2:{width:'20%'},
+    col2:{width:'15%'},
     col3:{width:'15%'}
-    // col0:null, col1:null, col2:null, col3:null
 }
-
-// columnWidths.forEach((v,i)=>{
-//     styles[`col${i}`] = {width: `${v}%`};
-// });
 
 export const ColWidths = ()=> <React.Fragment>
     <col span={1} style={styles.col0}/>
@@ -28,21 +21,31 @@ export const ColWidths = ()=> <React.Fragment>
 
 const Row = withStyles((theme) => ({
     root: {
-        '& .MuiTableCell-root': {
-            borderBottom: 0,
-        },
         '&:nth-of-type(odd)': {
             backgroundColor: theme.palette.action.hover,
         },
     },
 }))(TableRow);
 
+const Cell = withStyles(()=>({
+    root:{
+        borderBottom: 0,
+        padding: 5,
+        borderRight: `1px solid rgba(0,0,0,0.08)`,
+        fontSize: 13,
+        '&:last-child':{
+            paddingRight: 5,
+            borderRight: 0
+        }
+    }
+}))(TableCell);
+
 function Value({duplicate}:{duplicate:DuplicateModel}){
     return <Row>
-        <TableCell>{duplicate.agencyName}</TableCell>
-        <TableCell>{duplicate.partnerName}</TableCell>
-        <TableCell>{duplicate.mechanismNumber}</TableCell>
-        <TableCell>{duplicate.value}</TableCell>
+        <Cell>{duplicate.agencyName}</Cell>
+        <Cell>{duplicate.partnerName}</Cell>
+        <Cell>{duplicate.mechanismNumber}</Cell>
+        <Cell>{duplicate.value}</Cell>
     </Row>
 }
 

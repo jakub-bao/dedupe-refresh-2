@@ -81,6 +81,7 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
         <Section title='Method' disabled={batchStats.selectedCount===0}>
             <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.maximum)} data-testid='batch_method_max' disabled={batchStats.selectedCount===0||batchStats.selectedCount===batchStats.maximum}/>
             <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.sum)} data-testid='batch_method_sum' disabled={batchStats.selectedCount===0||batchStats.selectedCount===batchStats.sum}/>
+            <Button title={'Unset method'} tooltip={'Set resolution to sum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.sum)} data-testid='batch_method_sum' disabled={batchStats.selectedCount===0||batchStats.selectedCount===batchStats.sum}/>
         </Section>
 
         <Section title='Action' disabled={batchStats.selectedCount===0}>

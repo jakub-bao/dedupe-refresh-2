@@ -18,7 +18,6 @@ export type ActionValue = {
 };
 
 export type MenuUi = {
-    open: boolean,
     menuTab: MenuVariant
 };
 
@@ -48,8 +47,6 @@ export function updateUi(ui:UiModel, actions: ActionValue[]){
                     ui.error.results = value; break;
                 case UiActionType.errorFilters:
                     ui.error.filters = value; break;
-                case UiActionType.menuOpen:
-                    ui.menu.open = value; break;
             }
         } else {
             ui.menu.menuTab = value;

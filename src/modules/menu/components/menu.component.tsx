@@ -18,8 +18,8 @@ const useStyles = makeStyles({
     root: {
         backgroundColor: colors.backgroundSecondary,
         marginTop: 49,
-        width: 200,
-        paddingTop:0
+        width: 180,
+        padding: "0px 6px"
     },
 });
 
@@ -48,14 +48,15 @@ const MenuTabs = withStyles((theme)=>({
 
 const MenuTab = withStyles((theme)=>({
     root:{
-        minWidth: 100,
+        // width: 30,
+        minWidth: 50,
         height: 40,
     },
     selected:{
         color: 'white',
         backgroundColor: 'rgba(44, 102, 147, 88%)'
     }
-}))(Tab)//(Tab);
+}))(Tab);
 
 export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab, batchSelect, batchMethod, batchAction, batchStats}:{
     selectedFilters: FiltersModel,
@@ -73,7 +74,7 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
     return <Drawer
         anchor='left'
         variant="persistent"
-        open={menuUi.open}
+        open={true}
         classes={{paper: classStyles.root}}
     >
         <MenuTabs value={menuUi.menuTab} onChange={(event, tabIndex:number)=>switchMenuTab(tabIndex)} variant='fullWidth'>

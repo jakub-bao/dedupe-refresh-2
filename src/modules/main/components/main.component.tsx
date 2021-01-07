@@ -68,7 +68,6 @@ class Main extends React.Component<{
             },
             ui: {
                 menu: {
-                    open: true,
                     menuTab: MenuVariant.search
                 },
                 error: {},
@@ -271,11 +270,7 @@ class Main extends React.Component<{
                 batchStats={generateBatchStats(this.state.results.dedupes)}
             />
 
-            <ContentWrapper ui={this.state.ui}>
-                {!this.state.ui.menu.open && <Header
-                    selectedFilters={this.state.results.selectedFilters}
-                    filterOptionsProvider={this.filterOptionsProvider}
-                />}
+            <ContentWrapper>
                 {this.renderResults()}
                 {this.renderPreselect()}
             </ContentWrapper>

@@ -6,6 +6,12 @@ import CheckboxFilter from "./checkboxFilter.component";
 import SelectFilter from "./selectFilter.component";
 
 
+const styles = {
+    searchButton: {
+        marginTop: 3
+    }
+}
+
 function renderFilters(
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
@@ -38,8 +44,7 @@ export function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider
 }){
     return <React.Fragment>
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
-        <br/>
-        <Button variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes' disableElevation>
+        <Button style={styles.searchButton} variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes' disableElevation>
             Search Dedupes
         </Button>
     </React.Fragment>

@@ -1,5 +1,5 @@
 import React, {CSSProperties} from "react";
-import MaterialTable, {Column, MTableBodyRow, Options} from "material-table";
+import MaterialTable, {Column, MTableBodyRow, Options, MTablePagination} from "material-table";
 import {DedupeModel, InternalStatus} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
 import {ColWidths, DuplicateList} from "./duplicateList.component";
@@ -24,10 +24,6 @@ const darkBorder = `1px solid rgba(0,0,0,0.3)`;
 const lightBorder = `1px solid rgba(0,0,0,0.075)`;
 
 const styles = {
-    duplicateHeader:{
-        fontWeight: 500,
-        padding: 6
-    },
     columnHeader: {
         padding: '6px'
     },
@@ -72,7 +68,6 @@ export const Row = withStyles((theme) => ({
     },
 }))(MTableBodyRow);
 
-
 const components = {
     Container:props=>(<div {...props}/>),
     Row,
@@ -96,7 +91,18 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
     }as CSSProperties;
 }
 
-const Cell = ({children})=><TableCell style={styles.duplicateHeader}>{children}</TableCell>;
+const Cell = withStyles(()=>({
+    root: {
+        fontWeight: 400,
+        padding: 6,
+        borderRight: `1px solid rgba(0,0,0,0.08)`,
+        height: 30,
+        '&:last-child':{
+            paddingRight: 6,
+            borderRight: 0
+        }
+    }
+}))(TableCell);
 
 const DuplicatesHeader = <Table size="small">
     <ColWidths/>

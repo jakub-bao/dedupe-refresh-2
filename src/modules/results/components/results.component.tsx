@@ -14,7 +14,7 @@ const styles = {
     } as CSSProperties,
     export: {
         position: 'absolute',
-        bottom: 9,
+        bottom: 5,
         left: 5
     } as CSSProperties,
     info: {

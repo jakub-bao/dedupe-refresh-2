@@ -26,6 +26,10 @@ test(`15 > Batch Unset > From Resolved on server > Unresolve individually`,async
 
 test(`15 > Batch Unset > From Resolved on server > Unresolve as batch`,async ()=>{
     await unsetMethod();
+    registerSendMock('POST','/dataValueSets',{ok:true},(request)=>{
+        expect(request).toStrictEqual({"dataValues":[{"attributeOptionCombo":"X8hrDf6bLDC","categoryOptionCombo":"NMYN9FAPqWa","dataElement":"qhGxKnmrZBd","orgUnit":"p7M264Wg1qB","period":"2020Q4","value":" "}]});
+    });
+    click('batch_action_resolve');
 });
 
 test(`15 > Batch Unset > From Unresolved`,async ()=>{

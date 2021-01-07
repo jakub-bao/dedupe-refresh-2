@@ -60,13 +60,13 @@ export enum BatchActionType {
 
 export type BatchSelect = (selection:SelectionType)=>void;
 export type BatchMethod = (method:ResolutionMethodType)=>void;
-export type BatchAction = (action:BatchActionType)=>void;
+export type BatchExecute = ()=>void;
 
-export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAction}:{
+export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchExecute}:{
     batchStats:BatchStatsModel,
     batchSelect:BatchSelect,
     batchMethod:BatchMethod,
-    batchAction:BatchAction
+    batchExecute:BatchExecute
 }){
     return <React.Fragment>
         <Section title='Status'>
@@ -85,7 +85,7 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
         </Section>
 
         <Section title='Action' disabled={batchStats.selectedCount===0}>
-            <Button title={'Execute'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchAction(BatchActionType.resolve)} data-testid='batch_action_resolve' disabled={batchStats.readyToResolve===0&&batchStats.readyToUnresolve===0} color='secondary' /*variant='outlined'*/ variant={'contained'} disableElevation/>
+            <Button title={'Execute'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchExecute()} data-testid='batch_action_resolve' disabled={batchStats.readyToResolve===0&&batchStats.readyToUnresolve===0} color='secondary' /*variant='outlined'*/ variant={'contained'} disableElevation/>
         </Section>
     </React.Fragment>
 }

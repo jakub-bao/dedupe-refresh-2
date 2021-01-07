@@ -10,7 +10,6 @@ import {
 } from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
-import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
 import NetworkError from "../../../sharedModules/boot/components/networkError.component";
@@ -25,8 +24,8 @@ import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notista
 import {Typography} from "@material-ui/core";
 import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
 import {
-    BatchAction,
     BatchActionType,
+    BatchExecute,
     BatchMethod,
     BatchSelect,
     SelectionType
@@ -240,18 +239,25 @@ class Main extends React.Component<{
         this.updateDedupes(this.state.results.dedupes);
     };
 
-    batchAction:BatchAction = async (action:BatchActionType)=>{
-        let dedupes = this.state.results.dedupes.filter(d=>d.tableData.checked);
+    batchExecute:BatchExecute = ()=>{
+        let dedupesToResolve = this.state.results.dedupes.filter(d=>d.tableData.checked&&d.status===InternalStatus.readyToResolve);
+        let dedupesToUnresolve = this.state.results.dedupes.filter(d=>d.tableData.checked&&d.status===InternalStatus.readyToUnresolve);
+        if (dedupesToResolve.length>0) this.batchAction(dedupesToResolve, BatchActionType.resolve);
+        if (dedupesToUnresolve.length>0) this.batchAction(dedupesToUnresolve, BatchActionType.unresolve);
+    }
+
+    batchAction = async (dedupes: DedupeModel[],action:BatchActionType)=>{
         this.markSelectedAs(InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
-            this.showMessage(`${dedupes.length} dedupes successfully resolved`);
-            this.markSelectedAs(InternalStatus.resolvedOnServer);
+            this.showMessage(`${dedupes.length} dedupes successfully ${action===BatchActionType.resolve?'resolved':'unresolved'}`);
+            this.markSelectedAs(action===BatchActionType.resolve?InternalStatus.resolvedOnServer:InternalStatus.unresolved);
         } else {
             this.showMessage('Batch processing failed', {variant: 'error'});
-            this.markSelectedAs(InternalStatus.readyToResolve);
+            this.markSelectedAs(action===BatchActionType.resolve?InternalStatus.readyToResolve:InternalStatus.readyToUnresolve);
         }
     };
+
 
 
     render() {
@@ -266,7 +272,7 @@ class Main extends React.Component<{
                 menuUi={this.state.ui.menu}
                 switchMenuTab={this.switchMenuTab}
                 batchSelect={this.batchSelect}
-                batchAction={this.batchAction}
+                batchExecute={this.batchExecute}
                 batchMethod={this.batchMethod}
                 batchStats={generateBatchStats(this.state.results.dedupes)}
             />

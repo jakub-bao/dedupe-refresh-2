@@ -20,22 +20,21 @@ const dedupeMechanismCombo = {
     CROSSWALK: crosswalkDedupesCategoryOptionCombo
 }
 
-function dedupeToDataValue(dedupe:DedupeModel):DataValue{
-    return {
-        attributeOptionCombo: dedupeMechanismCombo[dedupe.meta.dedupeType],
-        categoryOptionCombo: dedupe.data.categoryOptionComboId,
-        dataElement: dedupe.data.dataElementId,
-        orgUnit: dedupe.meta.orgUnitId,
-        period: dedupe.meta.periodId,
-        value: dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue.toString()
+function dedupeToDataValue(action:BatchActionType){
+    return function dedupeToDataValue(dedupe:DedupeModel):DataValue{
+        return {
+            attributeOptionCombo: dedupeMechanismCombo[dedupe.meta.dedupeType],
+            categoryOptionCombo: dedupe.data.categoryOptionComboId,
+            dataElement: dedupe.data.dataElementId,
+            orgUnit: dedupe.meta.orgUnitId,
+            period: dedupe.meta.periodId,
+            value: action===BatchActionType.resolve?dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue.toString():" "
+        }
     }
 }
 
 export async function batchResolve(dedupes:DedupeModel[],action:BatchActionType):Promise<boolean>{
-    let dataValues:DataValue[] = dedupes.map(dedupeToDataValue);
-    let httpMethod:(url:string, payload:any)=>Promise<any>;
-    if (action===BatchActionType.resolve) httpMethod = postData;
-    else httpMethod = deleteData;
-    let response = await httpMethod('/dataValueSets', {dataValues});
+    let dataValues:DataValue[] = dedupes.map(dedupeToDataValue(action));
+    let response = await postData('/dataValueSets', {dataValues});
     return response.ok;
 }

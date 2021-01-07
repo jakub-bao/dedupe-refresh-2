@@ -19,7 +19,7 @@ export const BotswanaAllCase:DedupeTestCase = {
         'Kgatleng District',
         'STEPPING STONES INTERNATIONAL',
         'Project Concern International',
-        'Sum (1191)'
+        '(1191)'
     ],
     resolved: [{
         value:1191,

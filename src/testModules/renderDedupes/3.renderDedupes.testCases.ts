@@ -11,7 +11,7 @@ export const Rwanda1:DedupeTestCase = {
         period: 'Oct - Dec 2020',
         status: FilterDedupeStatus.unresolved
     },
-    expectedTokens: ['HTS_TST (N, DSD, KeyPop/Result): HTS received results','PWID, Negative','Gashora Sector','USAID','Cooperative Housing Foundation Corp.','17616','10040','10020','10030','10010','Maximum (10040)','Sum (20060)'],
+    expectedTokens: ['HTS_TST (N, DSD, KeyPop/Result): HTS received results','PWID, Negative','Gashora Sector','USAID','Cooperative Housing Foundation Corp.','17616','10040','10020','10030','10010','(10040)','(20060)'],
     resolved: null,
 };
 
@@ -24,7 +24,7 @@ export const Nigeria1:DedupeTestCase = {
         period: 'Oct - Dec 2020',
         status: FilterDedupeStatus.resolvedAndUnresolved
     },
-    expectedTokens: ['HTS_TST (N, DSD, KeyPop/Result): HTS received results','People in prisons and other enclosed settings, Positive','ad Demsa','HHS/CDC','CATHOLIC CARITAS FOUNDATION O F NIGERIA','16848','30010','20010','20020','Maximum (30020)','Sum (40030)'],
+    expectedTokens: ['HTS_TST (N, DSD, KeyPop/Result): HTS received results','People in prisons and other enclosed settings, Positive','ad Demsa','HHS/CDC','CATHOLIC CARITAS FOUNDATION O F NIGERIA','16848','30010','20010','20020','(30020)','(40030)'],
     resolved:[{
         value:30020,
         method: ResolutionMethodType.maximum

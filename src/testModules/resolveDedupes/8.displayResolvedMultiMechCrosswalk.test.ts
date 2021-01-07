@@ -21,7 +21,7 @@ const EthiopiaTest:DedupeTestCase = {
         'PWID, Positive',
         'Addis Ketema Woreda 1',
         'HHS/HRSA',
-        'Resolved on server','80020','80010','Sum (160030)','Maximum (80020)'
+        'Resolved on server','80020','80010','(160030)','(80020)'
     ],
     resolved: null
 };

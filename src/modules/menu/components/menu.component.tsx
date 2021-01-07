@@ -48,7 +48,6 @@ const MenuTabs = withStyles((theme)=>({
 
 const MenuTab = withStyles((theme)=>({
     root:{
-        // width: 30,
         minWidth: 50,
         height: 40,
     },

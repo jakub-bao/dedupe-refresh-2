@@ -120,7 +120,7 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
         cellStyle: styles.tableColumn,
         headerStyle: styles.columnHeader,
     } as Column<any>, {
-        title: 'Disaggreg',
+        title: 'Disagg',
         field: 'data.disAggregation',
         cellStyle: styles.tableColumn,
         headerStyle: styles.columnHeader,

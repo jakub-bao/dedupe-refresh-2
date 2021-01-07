@@ -17,6 +17,7 @@ export default function BatchStats({batchStats}:{batchStats:BatchStatsModel}) {
         {batchStats.selectedCount>0 && <React.Fragment>
             <Typography style={styles.info}>{batchStats.alreadyResolved} already resolved</Typography>
             <Typography style={styles.info}>{batchStats.readyToResolve} ready to resolve</Typography>
+            <Typography style={styles.info}>{batchStats.readyToUnresolve} ready to unresolve</Typography>
             <Typography style={styles.info}>{batchStats.unresolved} unresolved</Typography>
         </React.Fragment>}
     </div>;

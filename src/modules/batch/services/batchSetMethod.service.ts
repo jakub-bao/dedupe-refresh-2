@@ -24,3 +24,15 @@ export function batchSetMethod(dedupes:DedupeModel[], method:ResolutionMethodTyp
         d.status = InternalStatus.readyToResolve;
     })
 }
+
+export function batchUnsetMethod(dedupes:DedupeModel[]){
+    getSelected(dedupes).forEach(d=>{
+        let rmv:DedupeResolutionMethodValue = d.resolution.resolutionMethodValue;
+        if (!rmv.resolutionMethod) return;
+        if (!d.resolution.original_resolutionMethodValue||!d.resolution.original_resolutionMethodValue.resolutionMethod) d.status = InternalStatus.unresolved;
+        else d.status = InternalStatus.readyToUnresolve;
+        rmv.resolutionMethod = null;
+        rmv.resolutionValue = null;
+        rmv.deduplicationAdjustmentValue = null;
+    })
+}

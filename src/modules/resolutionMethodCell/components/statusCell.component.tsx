@@ -66,7 +66,7 @@ export default function StatusCell({dedupe, resolveDedupe, unresolveDedupe}:{ded
             size='small'>
             Resolve
         </Button>}
-        {dedupe.status===InternalStatus.resolvedOnServer && <Button
+        {(dedupe.status===InternalStatus.resolvedOnServer||dedupe.status===InternalStatus.readyToUnresolve) && <Button
             variant='contained'
             style={styles.save}
             onClick={()=>unresolveDedupe(dedupe.meta.internalId)}

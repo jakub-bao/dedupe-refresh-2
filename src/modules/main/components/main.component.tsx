@@ -33,7 +33,7 @@ import {
 } from "../../menu/components/batchResolveMenu.component";
 import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
 import {generateBatchStats} from "../../batch/services/generateBatchStats.service";
-import {batchSetMethod} from "../../batch/services/batchSetMethod.service";
+import {batchSetMethod, batchUnsetMethod} from "../../batch/services/batchSetMethod.service";
 import {batchResolve} from "../../batch/services/batchResolve.service";
 import {exportCsv} from "../services/exportCsv.service";
 
@@ -228,7 +228,8 @@ class Main extends React.Component<{
     };
 
     batchMethod:BatchMethod = (method:ResolutionMethodType)=>{
-        batchSetMethod(this.state.results.dedupes, method);
+        if(method) batchSetMethod(this.state.results.dedupes, method);
+        else batchUnsetMethod(this.state.results.dedupes);
         this.setState({results:this.state.results});
     };
 

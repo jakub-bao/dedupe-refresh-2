@@ -232,10 +232,15 @@ class Main extends React.Component<{
         this.setState({results:this.state.results});
     };
 
-    markSelectedAs = (status:InternalStatus)=>{
-        this.state.results.dedupes
-            .filter(d=>d.tableData.checked&&(d.status===InternalStatus.readyToResolve||d.status===InternalStatus.processing))
-            .forEach(d=>d.status=status);
+    // markSelectedAs = (status:InternalStatus)=>{
+    //     this.state.results.dedupes
+    //         .filter(d=>d.tableData.checked&&(d.status===InternalStatus.readyToResolve||d.status===InternalStatus.processing))
+    //         .forEach(d=>d.status=status);
+    //     this.updateDedupes(this.state.results.dedupes);
+    // };
+
+    markDedupesAs = (dedupes:DedupeModel[], status:InternalStatus)=>{
+        dedupes.forEach(d=>d.status=status);
         this.updateDedupes(this.state.results.dedupes);
     };
 
@@ -247,14 +252,25 @@ class Main extends React.Component<{
     }
 
     batchAction = async (dedupes: DedupeModel[],action:BatchActionType)=>{
-        this.markSelectedAs(InternalStatus.processing);
+        let fromStatus:InternalStatus,toStatus:InternalStatus, verb:string;
+        if (action===BatchActionType.resolve){
+            fromStatus = InternalStatus.readyToResolve;
+            toStatus = InternalStatus.resolvedOnServer;
+            verb = 'resolved';
+        }
+        if (action===BatchActionType.unresolve){
+            fromStatus = InternalStatus.readyToUnresolve;
+            toStatus = InternalStatus.unresolved;
+            verb = 'unresolved';
+        }
+        this.markDedupesAs(dedupes, InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
-            this.showMessage(`${dedupes.length} dedupes successfully ${action===BatchActionType.resolve?'resolved':'unresolved'}`);
-            this.markSelectedAs(action===BatchActionType.resolve?InternalStatus.resolvedOnServer:InternalStatus.unresolved);
+            this.showMessage(`${dedupes.length} dedupes successfully ${verb}`);
+            this.markDedupesAs(dedupes,toStatus);
         } else {
             this.showMessage('Batch processing failed', {variant: 'error'});
-            this.markSelectedAs(action===BatchActionType.resolve?InternalStatus.readyToResolve:InternalStatus.readyToUnresolve);
+            this.markDedupesAs(dedupes, fromStatus);
         }
     };
 

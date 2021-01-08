@@ -2,7 +2,7 @@ import {checkStatus, clickCheckbox, searchDedupes} from "../shared/sharedBasics.
 import {Nigeria1, Rwanda1} from "../renderDedupes/3.renderDedupes.testCases";
 import {click} from "../../test/domServices/click.testService";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
-import {text} from "../../test/domServices/texts.testService";
+import {text, waitForTexts} from "../../test/domServices/texts.testService";
 import {pause} from "../../test/domServices/domUtils.testService";
 import {noTextsIn, textsIn} from "../../test/domServices/textsIn.testService";
 
@@ -30,6 +30,9 @@ test(`15 > Batch Unset > From Resolved on server > Unresolve as batch`,async ()=
         expect(request).toStrictEqual({"dataValues":[{"attributeOptionCombo":"X8hrDf6bLDC","categoryOptionCombo":"NMYN9FAPqWa","dataElement":"qhGxKnmrZBd","orgUnit":"p7M264Wg1qB","period":"2020Q4","value":" "}]});
     });
     click('batch_action_resolve');
+    await pause(0.8);
+    await waitForTexts(['1 dedupes successfully unresolved']);
+    checkStatus(1, "Unresolved");
 });
 
 test(`15 > Batch Unset > From Unresolved`,async ()=>{

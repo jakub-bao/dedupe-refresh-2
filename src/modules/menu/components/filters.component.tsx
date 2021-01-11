@@ -2,7 +2,6 @@ import {Button} from "@material-ui/core";
 import React from "react";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
-import CheckboxFilter from "./checkboxFilter.component";
 import SelectFilter from "./selectFilter.component";
 
 

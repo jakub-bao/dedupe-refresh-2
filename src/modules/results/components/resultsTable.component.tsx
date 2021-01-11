@@ -1,10 +1,10 @@
 import React, {CSSProperties} from "react";
-import MaterialTable, {Column, MTableBodyRow, Options, MTablePagination} from "material-table";
+import MaterialTable, {Column, MTableBodyRow, Options} from "material-table";
 import {DedupeModel, InternalStatus} from "../models/dedupe.model";
 import {tableIcons} from "./resultTableIcons.component";
 import {ColWidths, DuplicateList} from "./duplicateList.component";
 import {colors} from "../../../values/color.values";
-import {Table, TableBody, TableCell, TableHead, TableRow, withStyles} from "@material-ui/core";
+import {Table, TableBody, TableCell, TableRow, withStyles} from "@material-ui/core";
 import {
     ChangeResolutionMethod,
     ResolutionMethodCell,

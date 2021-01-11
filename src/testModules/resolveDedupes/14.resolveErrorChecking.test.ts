@@ -4,7 +4,6 @@ import {text, waitForTexts} from "../../test/domServices/texts.testService";
 import {DedupeTestCase} from "../shared/models/test.models";
 import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 import {registerSendMock} from "../../test/apiCache/sendData/mockSendData.service";
-import {InternalStatus} from "../../modules/results/models/dedupe.model";
 
 export const BotswanaTestCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',

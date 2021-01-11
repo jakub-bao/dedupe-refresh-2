@@ -1,6 +1,6 @@
 import {DedupeModel} from "../../results/models/dedupe.model";
 import {BatchActionType} from "../../menu/components/batchResolveMenu.component";
-import {deleteData, postData} from "../../../sharedModules/shared/services/api.service";
+import {postData} from "../../../sharedModules/shared/services/api.service";
 import {
     crosswalkDedupesCategoryOptionCombo,
     pureDedupesCategoryOptionCombo

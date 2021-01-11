@@ -4,6 +4,7 @@ import {checkCheckbox, isDisabled, nextPage, searchDedupes, switchToBatch} from 
 import {click} from "../../test/domServices/click.testService";
 import {textsIn} from "../../test/domServices/textsIn.testService";
 import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
+import {alreadyResolved, totalDedupes, unresolved} from "./batchNums.testValues";
 
 export const BotswanaAllCase:DedupeTestCase = {
     testAs: 'test-de-superAdmin',
@@ -41,27 +42,27 @@ function selectAll(){
     isDisabled('batch_selectAll');
     checkCheckbox('all', true);
     checkCheckbox(1, true);
-    textsIn('batch_stats',['918 out of 918 selected','899 already resolved','19 unresolved']);
+    textsIn('batch_stats',[`${totalDedupes} out of ${totalDedupes} selected`,`${alreadyResolved} already resolved`,`${unresolved} unresolved`]);
 }
 
 function page2(){
     nextPage();
     checkCheckbox(21, true);
-    textsIn('batch_stats',['918 out of 918 selected','899 already resolved','19 unresolved']);
+    textsIn('batch_stats',[`${totalDedupes} out of ${totalDedupes} selected`,`${alreadyResolved} already resolved`,`${unresolved} unresolved`]);
 }
 
 function unselect(){
     click('batch_selectNone');
     checkCheckbox('all', false);
     checkCheckbox(21, false);
-    textsIn('batch_stats',['0 out of 918 selected']);
+    textsIn('batch_stats',[`0 out of ${totalDedupes} selected`]);
 }
 
 function pageOnly(){
     click('batch_selectPage');
     checkCheckbox('all', false);
     checkCheckbox(21, true);
-    textsIn('batch_stats',['20 out of 918 selected','20 already resolved','0 unresolved']);
+    textsIn('batch_stats',[`20 out of ${totalDedupes} selected`,'20 already resolved','0 unresolved']);
 }
 
 function page3(){

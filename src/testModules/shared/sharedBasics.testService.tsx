@@ -6,7 +6,6 @@ import {DedupeTestCase} from "./models/test.models";
 import {noTextIn, textIn} from "../../test/domServices/textsIn.testService";
 import {exist, noExist} from "../../test/domServices/texts.testService";
 import {fireEvent, screen} from "@testing-library/react";
-import {InternalStatus} from "../../modules/results/models/dedupe.model";
 import {SnackbarProvider} from "notistack";
 import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 

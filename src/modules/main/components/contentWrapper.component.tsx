@@ -1,5 +1,4 @@
 import React from "react";
-import {UiModel} from "../../menu/services/uiModel";
 
 
 const styles = {

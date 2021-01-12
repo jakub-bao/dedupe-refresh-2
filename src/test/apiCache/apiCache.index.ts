@@ -5,8 +5,8 @@ export function isTestEnv():boolean{
     return process.env.NODE_ENV==='test';
 }
 
-export function getViaTestCache(url:string):Promise<any>{
-    if (!isTestEnv()) return getDataInProd(url);
+export function getViaTestCache(url:string, options?: any):Promise<any>{
+    if (!isTestEnv()) return getDataInProd(url, options);
     else return getDataInTest(url);
 }
 
@@ -15,8 +15,8 @@ export function sendDataViaTest(method:string, url:string, data:any):Promise<any
     else return mockSendData(method, url, data);
 }
 
-export function getDataInProd(url:string):Promise<object>{
-    return fetch(url, {credentials: 'include'})
+export function getDataInProd(url:string, options?:any):Promise<object>{
+    return fetch(url, {credentials: 'include', ...options})
         .then(resp => resp.json());
 }
 

@@ -96,6 +96,7 @@ class Main extends React.Component<{
         }])
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes => {
+            if (JSON.stringify(this.state.selectedFilters)!==JSON.stringify(selectedFilters)) return;
             this.setState({results: {dedupes, selectedFilters}});
             this.updateUi([{action: UiActionType.loadingResults, value: false}])
         }).catch(() => {
@@ -233,7 +234,11 @@ class Main extends React.Component<{
     };
 
     markDedupesAs = (dedupes:DedupeModel[], status:InternalStatus)=>{
-        dedupes.forEach(d=>d.status=status);
+        dedupes.forEach(dedupe=>{
+            dedupe.status=status;
+            if (status===InternalStatus.resolvedOnServer) dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
+            if (status===InternalStatus.unresolved) dedupe.resolution.original_resolutionMethodValue = null;
+        });
         this.updateDedupes(this.state.results.dedupes);
     };
 

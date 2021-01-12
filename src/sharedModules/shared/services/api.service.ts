@@ -5,8 +5,8 @@ export function makeUrl(url:string):string{
     return baseUrl+'api'+url;
 }
 
-export function getData(url:string):Promise<any>{
-    return getViaTestCache(makeUrl(url));
+export function getData(url:string, options?:any):Promise<any>{
+    return getViaTestCache(makeUrl(url),options);
 }
 
 function httpCall(method:string, url:string, data:any):Promise<any>{

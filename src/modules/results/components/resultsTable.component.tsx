@@ -124,7 +124,7 @@ const mergeStyles = (...styles)=>Object.assign({},...styles);
 
 const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResolutionMethod:ChangeResolutionMethod, resolveDedupe: ResolveDedupe, unresolveDedupe: UnresolveDedupe)=> [
     {
-        title: 'Data Element',
+        title: <RespText long='Data Element' short='DE' cutoff={980}/>,
         field: 'info.dataElementName',
         cellStyle: styles.tableColumn,
         headerStyle: styles.columnHeader,

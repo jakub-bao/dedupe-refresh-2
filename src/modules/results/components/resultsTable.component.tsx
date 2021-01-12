@@ -31,7 +31,7 @@ const styles = {
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
         fontSize: '0.875rem',
         borderLeft: lightBorder,
-        padding: '6px 10px',
+        padding: '6px 7px',
         height: 130
     },
     duplicatesColumn:{

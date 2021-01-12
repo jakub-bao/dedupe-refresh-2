@@ -30,7 +30,7 @@ const Row = withStyles((theme) => ({
 const Cell = withStyles(()=>({
     root:{
         borderBottom: 0,
-        padding: 5,
+        padding: 7,
         borderRight: `1px solid rgba(0,0,0,0.08)`,
         fontSize: 13,
         '&:last-child':{

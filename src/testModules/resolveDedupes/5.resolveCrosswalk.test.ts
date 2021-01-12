@@ -37,6 +37,6 @@ test(`5 > Resolve Crosswalk Dedupes > Cameroon`, async ()=>{
     });
     click(`dedupe_1_resolve`);
     text('Processing...');
-    await waitForTexts(['Dedupe resolved','Resolved on server']);
+    await waitForTexts(['1 dedupe successfully resolved','Resolved on server']);
     checkCustomValue(70080);
 });

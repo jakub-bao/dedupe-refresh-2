@@ -14,6 +14,7 @@ test('9 > Unresolve Dedupe', async ()=>{
     click('dedupe_1_unresolve');
     text('Processing...');
     await pause(1);
+    text('1 dedupe successfully unresolved');
     noTextsIn('status_1',['Resolved on server']);
     textsIn('status_1',['Unresolved']);
 });

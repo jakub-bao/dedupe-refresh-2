@@ -156,7 +156,7 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results: this.state.results});
         resolveDedupe(dedupe).then(()=>{
-            this.showMessage(`Dedupe resolved`);
+            this.showMessage(`1 dedupe successfully resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results: this.state.results});
@@ -178,7 +178,7 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results});
         unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
-            this.showMessage(`Unresolved`);
+            this.showMessage(`1 dedupe successfully unresolved`);
             let results = this.state.results;
             dedupe.resolution.resolutionMethodValue = null;
             dedupe.resolution.original_resolutionMethodValue = null;
@@ -232,13 +232,6 @@ class Main extends React.Component<{
         this.setState({results:this.state.results});
     };
 
-    // markSelectedAs = (status:InternalStatus)=>{
-    //     this.state.results.dedupes
-    //         .filter(d=>d.tableData.checked&&(d.status===InternalStatus.readyToResolve||d.status===InternalStatus.processing))
-    //         .forEach(d=>d.status=status);
-    //     this.updateDedupes(this.state.results.dedupes);
-    // };
-
     markDedupesAs = (dedupes:DedupeModel[], status:InternalStatus)=>{
         dedupes.forEach(d=>d.status=status);
         this.updateDedupes(this.state.results.dedupes);
@@ -266,7 +259,7 @@ class Main extends React.Component<{
         this.markDedupesAs(dedupes, InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
-            this.showMessage(`${dedupes.length} dedupes successfully ${verb}`);
+            this.showMessage(`${dedupes.length} dedupe${dedupes.length>1?'s':''} successfully ${verb}`);
             this.markDedupesAs(dedupes,toStatus);
         } else {
             this.showMessage('Batch processing failed', {variant: 'error'});

@@ -38,6 +38,6 @@ test(`4 > Resolve Dedupes > Botswana > Submit`, async ()=>{
     });
     click(`dedupe_1_resolve`);
     text('Processing...');
-    await waitForTexts(['Dedupe resolved','Resolved on server']);
+    await waitForTexts(['1 dedupe successfully resolved','Resolved on server']);
     checkCustomValue(60040);
 });

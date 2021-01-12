@@ -31,7 +31,7 @@ test(`15 > Batch Unset > From Resolved on server > Unresolve as batch`,async ()=
     });
     click('batch_action_resolve');
     await pause(0.8);
-    await waitForTexts(['1 dedupes successfully unresolved']);
+    await waitForTexts(['1 dedupe successfully unresolved']);
     checkStatus(1, "Unresolved");
 });
 

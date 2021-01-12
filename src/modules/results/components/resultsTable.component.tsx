@@ -17,6 +17,7 @@ import StatusCell, {
 } from "../../resolutionMethodCell/components/statusCell.component";
 import "./resultsTable.component.css";
 import {isTestEnv} from "../../../test/apiCache/apiCache.index";
+import RespText from "../../../sharedModules/shared/components/responsiveText.component";
 
 const padding = '5px';
 const border = '1px solid #00000021';
@@ -95,7 +96,7 @@ function getStatusCellStyle(dedupe:DedupeModel):CSSProperties{
 
 const Cell = withStyles(()=>({
     root: {
-        fontWeight: 400,
+        fontWeight: 500,
         padding: 6,
         borderRight: `1px solid rgba(0,0,0,0.08)`,
         height: 30,
@@ -128,12 +129,12 @@ const getColumnSettings = (setResolutionValue:SetResolutionValue, changeResoluti
         cellStyle: styles.tableColumn,
         headerStyle: styles.columnHeader,
     } as Column<any>, {
-        title: 'Disagg',
+        title: <RespText long='Disaggregation' short='Disaggreg' cutoff={1200}/>,
         field: 'data.disAggregation',
         cellStyle: styles.tableColumn,
         headerStyle: styles.columnHeader,
     }, {
-        title: 'OU',
+        title: <RespText long='Org Unit' short='OU' cutoff={1300}/>,
         field: 'info.orgUnitName',
         cellStyle: styles.tableColumn,
         headerStyle: styles.columnHeader,

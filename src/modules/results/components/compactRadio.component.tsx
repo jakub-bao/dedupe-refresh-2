@@ -12,8 +12,8 @@ const useStyles = makeStyles({
     },
     icon: {
         borderRadius: '50%',
-        width: 16,
-        height: 16,
+        width: 14,
+        height: 14,
         boxShadow: 'inset 0 0 0 1px rgba(16,22,26,.49), inset 0 -1px 0 rgba(16,22,26,.1)',
         backgroundColor: '#f5f8fa',
         'input:hover ~ &': {
@@ -26,8 +26,8 @@ const useStyles = makeStyles({
         backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
         '&:before': {
             display: 'block',
-            width: 16,
-            height: 16,
+            width: 14,
+            height: 14,
             backgroundImage: 'radial-gradient(#fff,#fff 28%,transparent 32%)',
             content: '""',
         },

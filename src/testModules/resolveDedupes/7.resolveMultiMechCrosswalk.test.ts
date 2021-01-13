@@ -21,7 +21,7 @@ const EthiopiaTest:DedupeTestCase = {
         'PWID, Positive',
         'Addis Ketema Woreda 1',
         'HHS/HRSA',
-        'Unresolved','80020','80010','Sum (160030)','Maximum (80020)'
+        'Unresolved','80020','80010','(160030)','(80020)'
     ],
     resolved: null,
 };
@@ -33,6 +33,6 @@ test(`7 > Resolve Multi-mech Crosswalk Dedupe > Ethiopia`, async ()=>{
         expect(data).toBe('de=kt5rPumWUBE&co=xYyVHiXrvSi&ou=Dl0yK0OhftZ&pe=2020Q4&value=-80010&cc=wUpfppgjEza&cp=OM58NubPbx1');
     });
     click(`dedupe_1_resolve`);
-    await waitForTexts(['Dedupe resolved','Resolved on server']);
+    await waitForTexts(['1 dedupe successfully resolved','Resolved on server']);
     checkRadioValue(`resolution_1`, 'maximum');
 });

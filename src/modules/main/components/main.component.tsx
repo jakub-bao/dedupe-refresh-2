@@ -10,7 +10,6 @@ import {
 } from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
-import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
 import Loading from "../../../sharedModules/shared/components/loading.component";
 import NetworkError from "../../../sharedModules/boot/components/networkError.component";
@@ -25,15 +24,15 @@ import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notista
 import {Typography} from "@material-ui/core";
 import {ActionValue, MenuVariant, UiActionType, UiModel, updateUi} from "../../menu/services/uiModel";
 import {
-    BatchAction,
     BatchActionType,
+    BatchExecute,
     BatchMethod,
     BatchSelect,
     SelectionType
 } from "../../menu/components/batchResolveMenu.component";
 import {batchSelectDedupes} from "../../batch/services/batchSelect.service";
 import {generateBatchStats} from "../../batch/services/generateBatchStats.service";
-import {batchSetMethod} from "../../batch/services/batchSetMethod.service";
+import {batchSetMethod, batchUnsetMethod} from "../../batch/services/batchSetMethod.service";
 import {batchResolve} from "../../batch/services/batchResolve.service";
 import {exportCsv} from "../services/exportCsv.service";
 
@@ -68,7 +67,6 @@ class Main extends React.Component<{
             },
             ui: {
                 menu: {
-                    open: true,
                     menuTab: MenuVariant.search
                 },
                 error: {},
@@ -98,6 +96,7 @@ class Main extends React.Component<{
         }])
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes => {
+            if (JSON.stringify(this.state.selectedFilters)!==JSON.stringify(selectedFilters)) return;
             this.setState({results: {dedupes, selectedFilters}});
             this.updateUi([{action: UiActionType.loadingResults, value: false}])
         }).catch(() => {
@@ -158,7 +157,7 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results: this.state.results});
         resolveDedupe(dedupe).then(()=>{
-            this.showMessage(`Dedupe resolved`);
+            this.showMessage(`1 dedupe successfully resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results: this.state.results});
@@ -180,7 +179,7 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results});
         unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
-            this.showMessage(`Unresolved`);
+            this.showMessage(`1 dedupe successfully unresolved`);
             let results = this.state.results;
             dedupe.resolution.resolutionMethodValue = null;
             dedupe.resolution.original_resolutionMethodValue = null;
@@ -197,17 +196,18 @@ class Main extends React.Component<{
         if (process.env.NODE_ENV === 'production') return null;
         if (this.state.results.dedupes) return null;
         return <div style={{position: 'fixed', top: 50, right: 10}}>
-            <Typography onClick={() => this.preselect('XtxUYCsDWrR', '2020Q4', DedupeType.pure)}>1.Rwanda</Typography>
-            <Typography onClick={() => this.preselect('PqlFzhuPcF1', '2020Q4', DedupeType.pure)}>2.Nigeria</Typography>
+            <Typography onClick={() => this.preselect('XtxUYCsDWrR', '2020Q4', DedupeType.pure)}>1. Rwanda</Typography>
+            <Typography onClick={() => this.preselect('PqlFzhuPcF1', '2020Q4', DedupeType.pure)}>2. Nigeria</Typography>
             <Typography
-                onClick={() => this.preselect('f5RoebaDLMx', '2020Q4', DedupeType.crosswalk)}>3.Zambia</Typography>
-            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q4', DedupeType.pure)}>4.Botswana</Typography>
+                onClick={() => this.preselect('f5RoebaDLMx', '2020Q4', DedupeType.crosswalk)}>3. Zambia</Typography>
+            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q4', DedupeType.pure)}>4. Botswana</Typography>
             <Typography
-                onClick={() => this.preselect('bQQJe0cC1eD', '2020Q4', DedupeType.crosswalk)}>5.Cameroon</Typography>
+                onClick={() => this.preselect('bQQJe0cC1eD', '2020Q4', DedupeType.crosswalk)}>5. Cameroon</Typography>
             <Typography
-                onClick={() => this.preselect('IH1kchw86uA', '2020Q4', DedupeType.crosswalk)}>6.Ethiopia</Typography>
-            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q3', DedupeType.pure)}>7.Full
+                onClick={() => this.preselect('IH1kchw86uA', '2020Q4', DedupeType.crosswalk)}>6. Ethiopia</Typography>
+            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q3', DedupeType.pure)}>7. Full
                 list</Typography>
+            <Typography onClick={() => this.preselect('h11OyvlPxpJ', '2020Q4', DedupeType.pure)}>8. No results</Typography>
         </div>;
     }
 
@@ -229,29 +229,50 @@ class Main extends React.Component<{
     };
 
     batchMethod:BatchMethod = (method:ResolutionMethodType)=>{
-        batchSetMethod(this.state.results.dedupes, method);
+        if(method) batchSetMethod(this.state.results.dedupes, method);
+        else batchUnsetMethod(this.state.results.dedupes);
         this.setState({results:this.state.results});
     };
 
-    markSelectedAs = (status:InternalStatus)=>{
-        this.state.results.dedupes
-            .filter(d=>d.tableData.checked&&(d.status===InternalStatus.readyToResolve||d.status===InternalStatus.processing))
-            .forEach(d=>d.status=status);
+    markDedupesAs = (dedupes:DedupeModel[], status:InternalStatus)=>{
+        dedupes.forEach(dedupe=>{
+            dedupe.status=status;
+            if (status===InternalStatus.resolvedOnServer) dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
+            if (status===InternalStatus.unresolved) dedupe.resolution.original_resolutionMethodValue = null;
+        });
         this.updateDedupes(this.state.results.dedupes);
     };
 
-    batchAction:BatchAction = async (action:BatchActionType)=>{
-        let dedupes = this.state.results.dedupes.filter(d=>d.tableData.checked);
-        this.markSelectedAs(InternalStatus.processing);
+    batchExecute:BatchExecute = ()=>{
+        let dedupesToResolve = this.state.results.dedupes.filter(d=>d.tableData.checked&&d.status===InternalStatus.readyToResolve);
+        let dedupesToUnresolve = this.state.results.dedupes.filter(d=>d.tableData.checked&&d.status===InternalStatus.readyToUnresolve);
+        if (dedupesToResolve.length>0) this.batchAction(dedupesToResolve, BatchActionType.resolve);
+        if (dedupesToUnresolve.length>0) this.batchAction(dedupesToUnresolve, BatchActionType.unresolve);
+    }
+
+    batchAction = async (dedupes: DedupeModel[],action:BatchActionType)=>{
+        let fromStatus:InternalStatus,toStatus:InternalStatus, verb:string;
+        if (action===BatchActionType.resolve){
+            fromStatus = InternalStatus.readyToResolve;
+            toStatus = InternalStatus.resolvedOnServer;
+            verb = 'resolved';
+        }
+        if (action===BatchActionType.unresolve){
+            fromStatus = InternalStatus.readyToUnresolve;
+            toStatus = InternalStatus.unresolved;
+            verb = 'unresolved';
+        }
+        this.markDedupesAs(dedupes, InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
-            this.showMessage(`${dedupes.length} dedupes successfully resolved`);
-            this.markSelectedAs(InternalStatus.resolvedOnServer);
+            this.showMessage(`${dedupes.length} dedupe${dedupes.length>1?'s':''} successfully ${verb}`);
+            this.markDedupesAs(dedupes,toStatus);
         } else {
             this.showMessage('Batch processing failed', {variant: 'error'});
-            this.markSelectedAs(InternalStatus.readyToResolve);
+            this.markDedupesAs(dedupes, fromStatus);
         }
     };
+
 
 
     render() {
@@ -266,16 +287,12 @@ class Main extends React.Component<{
                 menuUi={this.state.ui.menu}
                 switchMenuTab={this.switchMenuTab}
                 batchSelect={this.batchSelect}
-                batchAction={this.batchAction}
+                batchExecute={this.batchExecute}
                 batchMethod={this.batchMethod}
                 batchStats={generateBatchStats(this.state.results.dedupes)}
             />
 
-            <ContentWrapper ui={this.state.ui}>
-                {!this.state.ui.menu.open && <Header
-                    selectedFilters={this.state.results.selectedFilters}
-                    filterOptionsProvider={this.filterOptionsProvider}
-                />}
+            <ContentWrapper>
                 {this.renderResults()}
                 {this.renderPreselect()}
             </ContentWrapper>

@@ -21,7 +21,7 @@ export const BotswanaTestCase:DedupeTestCase = {
         'PWID, Positive',
         'Bobirwa District',
         'HHS/CDC',
-        '60030','60020','60010','Sum (180060)','Maximum (60030)'
+        '60030','60020','60010','(180060)','(60030)'
     ],
     resolved: null,
 };
@@ -38,6 +38,6 @@ test(`4 > Resolve Dedupes > Botswana > Submit`, async ()=>{
     });
     click(`dedupe_1_resolve`);
     text('Processing...');
-    await waitForTexts(['Dedupe resolved','Resolved on server']);
+    await waitForTexts(['1 dedupe successfully resolved','Resolved on server']);
     checkCustomValue(60040);
 });

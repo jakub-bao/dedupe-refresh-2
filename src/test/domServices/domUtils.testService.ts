@@ -6,10 +6,11 @@ import {checkboxValue, checkRadioValue, checkSelectValue, click, clickByText, se
 export {waitForTexts, text, texts, noText, noTexts};
 export {click, clickByText, checkboxValue, checkRadioValue, checkSelectValue, select};
 
-export async function loadingDone():Promise<any>{
+export async function loadingDone(timeOut?:number):Promise<any>{
+    let timeout = (timeOut||15)*1000;
     await pause(0.2);
     if (!screen.queryByTestId('loading')) return Promise.resolve();
-    return waitForElementToBeRemoved(() => screen.queryAllByTestId('loading'),{timeout: 15000});
+    return waitForElementToBeRemoved(() => screen.queryAllByTestId('loading'),{timeout});
 }
 
 export async function setUpComponent(component:ReactElement, toContain: string[]):Promise<any>{

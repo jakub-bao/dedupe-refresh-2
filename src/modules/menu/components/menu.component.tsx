@@ -6,7 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {colors} from "../../../values/color.values";
 import {Filters} from "./filters.component";
 import {MenuUi} from "../services/uiModel";
-import {BatchAction, BatchMethod, BatchResolveMenu, BatchSelect} from "./batchResolveMenu.component";
+import {BatchExecute, BatchMethod, BatchResolveMenu, BatchSelect} from "./batchResolveMenu.component";
 import {BatchStatsModel} from "../../batch/services/generateBatchStats.service";
 
 export enum MenuVariant {
@@ -18,8 +18,8 @@ const useStyles = makeStyles({
     root: {
         backgroundColor: colors.backgroundSecondary,
         marginTop: 49,
-        width: 200,
-        paddingTop:0
+        width: 180,
+        padding: "0px 6px"
     },
 });
 
@@ -48,16 +48,16 @@ const MenuTabs = withStyles((theme)=>({
 
 const MenuTab = withStyles((theme)=>({
     root:{
-        minWidth: 100,
+        minWidth: 50,
         height: 40,
     },
     selected:{
         color: 'white',
         backgroundColor: 'rgba(44, 102, 147, 88%)'
     }
-}))(Tab)//(Tab);
+}))(Tab);
 
-export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab, batchSelect, batchMethod, batchAction, batchStats}:{
+export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, menuUi,switchMenuTab, batchSelect, batchMethod, batchExecute, batchStats}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider,
@@ -66,14 +66,14 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
     switchMenuTab: (tabIndex:MenuVariant)=>void,
     batchSelect: BatchSelect,
     batchMethod:BatchMethod,
-    batchAction:BatchAction,
+    batchExecute:BatchExecute,
     batchStats:BatchStatsModel
 }) {
     let classStyles = useStyles();
     return <Drawer
         anchor='left'
         variant="persistent"
-        open={menuUi.open}
+        open={true}
         classes={{paper: classStyles.root}}
     >
         <MenuTabs value={menuUi.menuTab} onChange={(event, tabIndex:number)=>switchMenuTab(tabIndex)} variant='fullWidth'>
@@ -82,6 +82,6 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
         </MenuTabs>
 
         {menuUi.menuTab===0 && <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>}
-        {menuUi.menuTab===1 && <BatchResolveMenu batchStats={batchStats} batchAction={batchAction} batchSelect={batchSelect} batchMethod={batchMethod}/>}
+        {menuUi.menuTab===1 && <BatchResolveMenu batchStats={batchStats} batchExecute={batchExecute} batchSelect={batchSelect} batchMethod={batchMethod}/>}
     </Drawer>;
 }

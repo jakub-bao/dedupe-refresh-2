@@ -7,3 +7,17 @@ tr:nth-of-type(even) tr:nth-of-type(odd){
 tr:nth-of-type(even) tr:nth-of-type(even){
     background: rgba(0, 0, 0, 0.04)!important;
 }
+
+.MuiTablePagination-toolbar{
+    min-height: 47px!important;
+}
+
+.MuiTableCell-head{
+    font-weight: 400;
+}
+
+[data-style="batch_checkbox_all"] svg, [data-style='batch_checkbox'] svg{
+    width: 19px;
+    height: 19px;
+}
+

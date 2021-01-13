@@ -60,13 +60,13 @@ export enum BatchActionType {
 
 export type BatchSelect = (selection:SelectionType)=>void;
 export type BatchMethod = (method:ResolutionMethodType)=>void;
-export type BatchAction = (action:BatchActionType)=>void;
+export type BatchExecute = ()=>void;
 
-export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAction}:{
+export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchExecute}:{
     batchStats:BatchStatsModel,
     batchSelect:BatchSelect,
     batchMethod:BatchMethod,
-    batchAction:BatchAction
+    batchExecute:BatchExecute
 }){
     return <React.Fragment>
         <Section title='Status'>
@@ -81,10 +81,11 @@ export function BatchResolveMenu({batchStats, batchSelect, batchMethod, batchAct
         <Section title='Method' disabled={batchStats.selectedCount===0}>
             <Button title={'Set to maximum'} tooltip={'Set resolution to maximum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.maximum)} data-testid='batch_method_max' disabled={batchStats.selectedCount===0||batchStats.selectedCount===batchStats.maximum}/>
             <Button title={'Set to sum'} tooltip={'Set resolution to sum for all selected dedupes'} onClick={()=>batchMethod(ResolutionMethodType.sum)} data-testid='batch_method_sum' disabled={batchStats.selectedCount===0||batchStats.selectedCount===batchStats.sum}/>
+            <Button title={'Unset method'} tooltip={'Unset resolution method for selected dedupes'} onClick={()=>batchMethod(null)} data-testid='batch_method_unset' disabled={batchStats.selectedCount===0||(batchStats.readyToResolve===0&&batchStats.alreadyResolved===0)}/>
         </Section>
 
         <Section title='Action' disabled={batchStats.selectedCount===0}>
-            <Button title={'Resolve'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchAction(BatchActionType.resolve)} data-testid='batch_action_resolve' disabled={batchStats.readyToResolve===0} color='secondary' /*variant='outlined'*/ variant={'contained'} disableElevation/>
+            <Button title={'Execute'} tooltip={'Save and upload the chosen resolution for all selected dedupes'} onClick={()=>batchExecute()} data-testid='batch_action_resolve' disabled={batchStats.readyToResolve===0&&batchStats.readyToUnresolve===0} color='secondary' /*variant='outlined'*/ variant={'contained'} disableElevation/>
         </Section>
     </React.Fragment>
 }

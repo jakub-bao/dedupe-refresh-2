@@ -7,6 +7,7 @@ import {
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 import {ResolveDedupe, UnresolveDedupe} from "../../resolutionMethodCell/components/statusCell.component";
+import NoResults from "./noResults.component";
 
 const styles = {
     root: {
@@ -14,12 +15,12 @@ const styles = {
     } as CSSProperties,
     export: {
         position: 'absolute',
-        bottom: 9,
+        bottom: 5,
         left: 5
     } as CSSProperties,
-    info: {
-        margin: '30px 5px'
-    }
+    // info: {
+    //     margin: '30px 5px'
+    // }
 };
 
 export default function Results({filteredDedupes,setResolutionValue, changeResolutionMethod, resolveDedupe, unresolveDedupe,onSelectChange,triggerExport}:{
@@ -32,7 +33,7 @@ export default function Results({filteredDedupes,setResolutionValue, changeResol
     triggerExport: ()=>void
 }) {
     if (!filteredDedupes) return null;
-    if (filteredDedupes.length===0) return <Typography style={styles.info}>No duplicates found matching the selected criteria</Typography>
+    if (filteredDedupes.length===0) return <NoResults/>
     return <div style={styles.root}>
         <ResultsTable
         filteredDedupes={filteredDedupes}

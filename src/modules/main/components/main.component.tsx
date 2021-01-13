@@ -196,17 +196,18 @@ class Main extends React.Component<{
         if (process.env.NODE_ENV === 'production') return null;
         if (this.state.results.dedupes) return null;
         return <div style={{position: 'fixed', top: 50, right: 10}}>
-            <Typography onClick={() => this.preselect('XtxUYCsDWrR', '2020Q4', DedupeType.pure)}>1.Rwanda</Typography>
-            <Typography onClick={() => this.preselect('PqlFzhuPcF1', '2020Q4', DedupeType.pure)}>2.Nigeria</Typography>
+            <Typography onClick={() => this.preselect('XtxUYCsDWrR', '2020Q4', DedupeType.pure)}>1. Rwanda</Typography>
+            <Typography onClick={() => this.preselect('PqlFzhuPcF1', '2020Q4', DedupeType.pure)}>2. Nigeria</Typography>
             <Typography
-                onClick={() => this.preselect('f5RoebaDLMx', '2020Q4', DedupeType.crosswalk)}>3.Zambia</Typography>
-            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q4', DedupeType.pure)}>4.Botswana</Typography>
+                onClick={() => this.preselect('f5RoebaDLMx', '2020Q4', DedupeType.crosswalk)}>3. Zambia</Typography>
+            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q4', DedupeType.pure)}>4. Botswana</Typography>
             <Typography
-                onClick={() => this.preselect('bQQJe0cC1eD', '2020Q4', DedupeType.crosswalk)}>5.Cameroon</Typography>
+                onClick={() => this.preselect('bQQJe0cC1eD', '2020Q4', DedupeType.crosswalk)}>5. Cameroon</Typography>
             <Typography
-                onClick={() => this.preselect('IH1kchw86uA', '2020Q4', DedupeType.crosswalk)}>6.Ethiopia</Typography>
-            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q3', DedupeType.pure)}>7.Full
+                onClick={() => this.preselect('IH1kchw86uA', '2020Q4', DedupeType.crosswalk)}>6. Ethiopia</Typography>
+            <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q3', DedupeType.pure)}>7. Full
                 list</Typography>
+            <Typography onClick={() => this.preselect('h11OyvlPxpJ', '2020Q4', DedupeType.pure)}>8. No results</Typography>
         </div>;
     }
 

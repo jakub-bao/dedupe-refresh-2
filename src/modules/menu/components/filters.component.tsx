@@ -1,9 +1,9 @@
-import {Button} from "@material-ui/core";
+import {Button, withStyles} from "@material-ui/core";
 import React from "react";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
 import SelectFilter from "./selectFilter.component";
-
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = {
     searchButton: {
@@ -35,6 +35,16 @@ function searchEnabled(selectedFilters:FiltersModel):boolean{
     return !!selectedFilters.operatingUnit && !!selectedFilters.dataType && !!selectedFilters.period;
 }
 
+const SearchButton = withStyles({
+    root: {
+        borderRadius: 2
+    },
+    label: {
+        position: 'relative',
+        top: 1
+    }
+})(Button);
+
 export function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
@@ -43,8 +53,8 @@ export function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider
 }){
     return <React.Fragment>
         {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
-        <Button style={styles.searchButton} variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes' disableElevation>
+        <SearchButton style={styles.searchButton} variant="contained" color="primary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} data-testid='searchDedupes' disableElevation>
             Search Dedupes
-        </Button>
+        </SearchButton>
     </React.Fragment>
 }

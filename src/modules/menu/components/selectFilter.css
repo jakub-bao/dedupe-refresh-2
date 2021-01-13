@@ -1,3 +1,8 @@
 .MuiPopover-root{
     z-index: 150000!important;
 }
+
+.MuiPopover-root .MuiPaper-root {
+    border-radius: 2px;
+    padding:0px;
+}

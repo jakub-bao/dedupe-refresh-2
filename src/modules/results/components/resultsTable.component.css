@@ -15,3 +15,9 @@ tr:nth-of-type(even) tr:nth-of-type(even){
 .MuiTableCell-head{
     font-weight: 400;
 }
+
+[data-style="batch_checkbox_all"] svg, [data-style='batch_checkbox'] svg{
+    width: 19px;
+    height: 19px;
+}
+

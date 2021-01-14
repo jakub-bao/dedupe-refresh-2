@@ -3,7 +3,6 @@ import React from "react";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
 import SelectFilter from "./selectFilter.component";
-import SearchIcon from '@material-ui/icons/Search';
 
 const styles = {
     searchButton: {

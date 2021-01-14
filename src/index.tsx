@@ -16,9 +16,9 @@ function Index(){
         </div>
         <ThemeWrapper>
             <SnackbarProvider
-                maxSnack={3}
+                maxSnack={4}
                 anchorOrigin={{
-                    vertical: 'bottom',
+                    vertical: 'top',
                     horizontal: 'center',
                 }}
             >

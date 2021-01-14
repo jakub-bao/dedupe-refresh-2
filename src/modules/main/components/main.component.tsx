@@ -162,7 +162,7 @@ class Main extends React.Component<{
             dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results: this.state.results});
         }).catch(()=>{
-            this.showMessage(`Error resolving dedupe`, {variant: 'error'});
+            this.showMessage(`Error: Cannot resolve dedupe`, {variant: 'error'});
             dedupe.status = InternalStatus.readyToResolve;
             this.setState({results: this.state.results});
         });
@@ -208,6 +208,7 @@ class Main extends React.Component<{
             <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q3', DedupeType.pure)}>7. Full
                 list</Typography>
             <Typography onClick={() => this.preselect('h11OyvlPxpJ', '2020Q4', DedupeType.pure)}>8. No results</Typography>
+            <Typography onClick={() => this.preselect('PqlFzhuPcF1', '2017Q1', DedupeType.pure)}>9. Dataset locked</Typography>
         </div>;
     }
 

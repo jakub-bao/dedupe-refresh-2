@@ -1,15 +1,13 @@
 import React, {Ref} from "react";
 import {IconButton, withStyles} from "@material-ui/core";
-import {SnackbarProvider as SBP} from "notistack";
+import {SnackbarProvider as MuiSnackbarProvider} from "notistack";
 import {Close} from "@material-ui/icons";
-import Main from "../../../modules/main/components/main.component";
-import ThemeWrapper from "../../boot/components/themeWrapper.component";
 
 const SnackbarProvider = withStyles({
     root:{
         top: 46
     }
-})(SBP);
+})(MuiSnackbarProvider);
 
 const notistackRef = React.createRef();
 const onClickDismiss = key => () => {
@@ -20,7 +18,7 @@ const onClickDismiss = key => () => {
 
 export default function MessageProvider({children}:{children:any}) {
     return <SnackbarProvider
-        ref={notistackRef as Ref<SBP>}
+        ref={notistackRef as Ref<MuiSnackbarProvider>}
         autoHideDuration={7000}
         maxSnack={4}
         anchorOrigin={{

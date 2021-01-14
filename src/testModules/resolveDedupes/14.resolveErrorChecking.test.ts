@@ -30,6 +30,6 @@ test(`14 > Resolve Error Checking`, async ()=>{
     click('resolution_1_maximum');
     click(`dedupe_1_resolve`);
     text('Processing...');
-    await waitForTexts(['Error resolving dedupe']);
+    await waitForTexts(['Error: Cannot resolve dedupe']);
     checkStatus(1, "Ready to resolve");
 });

@@ -82,7 +82,8 @@ class Main extends React.Component<{
         });
     }
 
-    showMessage = this.props.enqueueSnackbar;
+    successMessage = (msg:string)=>this.props.enqueueSnackbar(msg, {variant:'success'});
+    errorMessage = (msg:string)=>this.props.enqueueSnackbar(msg,{variant:'error', persist: true});
 
     updateUi = (actions: ActionValue[]) => {
         let ui = updateUi(this.state.ui, actions);
@@ -157,12 +158,12 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results: this.state.results});
         resolveDedupe(dedupe).then(()=>{
-            this.showMessage(`1 dedupe successfully resolved`);
+            this.successMessage(`1 dedupe successfully resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results: this.state.results});
         }).catch(()=>{
-            this.showMessage(`Error: Cannot resolve dedupe`, {variant: 'error'});
+            this.errorMessage(`Error: Cannot resolve dedupe`);
             dedupe.status = InternalStatus.readyToResolve;
             this.setState({results: this.state.results});
         });
@@ -179,14 +180,14 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results});
         unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
-            this.showMessage(`1 dedupe successfully unresolved`);
+            this.successMessage(`1 dedupe successfully unresolved`);
             let results = this.state.results;
             dedupe.resolution.resolutionMethodValue = null;
             dedupe.resolution.original_resolutionMethodValue = null;
             dedupe.status = InternalStatus.unresolved;
             this.setState({results});
         }).catch(()=>{
-            this.showMessage(`Error: Cannot unresolve dedupe`, {variant: 'error'});
+            this.errorMessage(`Error: Cannot unresolve dedupe`);
             dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results: this.state.results});
         });
@@ -266,10 +267,10 @@ class Main extends React.Component<{
         this.markDedupesAs(dedupes, InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
-            this.showMessage(`${dedupes.length} dedupe${dedupes.length>1?'s':''} successfully ${verb}`);
+            this.successMessage(`${dedupes.length} dedupe${dedupes.length>1?'s':''} successfully ${verb}`);
             this.markDedupesAs(dedupes,toStatus);
         } else {
-            this.showMessage('Batch processing failed', {variant: 'error'});
+            this.errorMessage('Batch processing failed');
             this.markDedupesAs(dedupes, fromStatus);
         }
     };

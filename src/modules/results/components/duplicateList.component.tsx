@@ -42,9 +42,9 @@ const Cell = withStyles(()=>({
 
 function Value({duplicate}:{duplicate:DuplicateModel}){
     return <Row>
+        <Cell>{duplicate.mechanismNumber}</Cell>
         <Cell>{duplicate.agencyName}</Cell>
         <Cell>{duplicate.partnerName}</Cell>
-        <Cell>{duplicate.mechanismNumber}</Cell>
         <Cell>{duplicate.value}</Cell>
     </Row>
 }

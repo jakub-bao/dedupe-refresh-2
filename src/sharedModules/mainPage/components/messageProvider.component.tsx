@@ -2,6 +2,8 @@ import React, {Ref} from "react";
 import {IconButton, withStyles} from "@material-ui/core";
 import {SnackbarProvider as MuiSnackbarProvider} from "notistack";
 import {CheckCircle, Close, KeyboardReturn} from "@material-ui/icons";
+import {makeStyles} from "@material-ui/core/styles";
+import {colors} from "../../../values/color.values";
 
 const styles = {
     icon: {
@@ -13,7 +15,9 @@ const styles = {
 const SnackbarProvider = withStyles({
     root:{
         top: 33
-    }
+    },
+    variantSuccess: {backgroundColor: colors.success+'!important'},
+    variantError: {backgroundColor: colors.alert+'!important'},
 })(MuiSnackbarProvider);
 
 const notistackRef = React.createRef();
@@ -25,8 +29,9 @@ const onClickDismiss = key => () => {
 
 export default function MessageProvider({children}:{children:any}) {
     return <SnackbarProvider
+        hideIconVariant={true}
         ref={notistackRef as Ref<MuiSnackbarProvider>}
-        autoHideDuration={7000000}
+        autoHideDuration={700000}
         maxSnack={4}
         anchorOrigin={{
             vertical: 'top',

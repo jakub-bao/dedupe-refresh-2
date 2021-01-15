@@ -7,4 +7,6 @@ export const colors = {
     backgroundSecondaryBorder: 'rgba(0, 0, 0, 0.12)',
     backgroundThird: '#e0e0e0',
     backgroundThirdBorder: '#00000052',
+    success: '#307351',
+    alert: '#9C0D38'
 };

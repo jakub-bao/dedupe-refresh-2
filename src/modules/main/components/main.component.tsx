@@ -83,7 +83,7 @@ class Main extends React.Component<{
     }
 
     resolveMessage = (msg:string)=>this.props.enqueueSnackbar(msg, {variant:'success'});
-    unresolveMessage = (msg:string)=>this.props.enqueueSnackbar(msg, {variant:'warning'});
+    unresolveMessage = this.resolveMessage;
     errorMessage = (msg:string)=>this.props.enqueueSnackbar(msg,{variant:'error', persist: true});
 
     updateUi = (actions: ActionValue[]) => {

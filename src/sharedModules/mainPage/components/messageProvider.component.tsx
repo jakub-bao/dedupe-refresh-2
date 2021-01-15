@@ -1,11 +1,18 @@
 import React, {Ref} from "react";
 import {IconButton, withStyles} from "@material-ui/core";
 import {SnackbarProvider as MuiSnackbarProvider} from "notistack";
-import {Close} from "@material-ui/icons";
+import {CheckCircle, Close, KeyboardReturn} from "@material-ui/icons";
+
+const styles = {
+    icon: {
+        width: 20,
+        marginInlineEnd: 8
+    }
+};
 
 const SnackbarProvider = withStyles({
     root:{
-        top: 46
+        top: 33
     }
 })(MuiSnackbarProvider);
 
@@ -19,20 +26,20 @@ const onClickDismiss = key => () => {
 export default function MessageProvider({children}:{children:any}) {
     return <SnackbarProvider
         ref={notistackRef as Ref<MuiSnackbarProvider>}
-        autoHideDuration={7000}
+        autoHideDuration={7000000}
         maxSnack={4}
         anchorOrigin={{
             vertical: 'top',
             horizontal: 'center',
         }}
         action={(key) => (
-            // <Button onClick={onClickDismiss(key)}>
-            //     Dismiss
-            // </Button>
             <IconButton onClick={onClickDismiss(key)}>
                 <Close />
             </IconButton>
         )}
+        iconVariant={{
+            warning: <CheckCircle style={styles.icon}/>,
+        }}
     >
         {children}
     </SnackbarProvider>

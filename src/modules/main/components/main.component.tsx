@@ -82,7 +82,8 @@ class Main extends React.Component<{
         });
     }
 
-    successMessage = (msg:string)=>this.props.enqueueSnackbar(msg, {variant:'success'});
+    resolveMessage = (msg:string)=>this.props.enqueueSnackbar(msg, {variant:'success'});
+    unresolveMessage = (msg:string)=>this.props.enqueueSnackbar(msg, {variant:'warning'});
     errorMessage = (msg:string)=>this.props.enqueueSnackbar(msg,{variant:'error', persist: true});
 
     updateUi = (actions: ActionValue[]) => {
@@ -158,7 +159,7 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results: this.state.results});
         resolveDedupe(dedupe).then(()=>{
-            this.successMessage(`1 dedupe successfully resolved`);
+            this.resolveMessage(`1 dedupe successfully resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results: this.state.results});
@@ -180,7 +181,7 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results});
         unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
-            this.successMessage(`1 dedupe successfully unresolved`);
+            this.unresolveMessage(`1 dedupe successfully unresolved`);
             let results = this.state.results;
             dedupe.resolution.resolutionMethodValue = null;
             dedupe.resolution.original_resolutionMethodValue = null;
@@ -267,7 +268,9 @@ class Main extends React.Component<{
         this.markDedupesAs(dedupes, InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
-            this.successMessage(`${dedupes.length} dedupe${dedupes.length>1?'s':''} successfully ${verb}`);
+            let msg = `${dedupes.length} dedupe${dedupes.length>1?'s':''} successfully ${verb}`;
+            if (action===BatchActionType.resolve) this.resolveMessage(msg);
+            if (action===BatchActionType.unresolve) this.unresolveMessage(msg)
             this.markDedupesAs(dedupes,toStatus);
         } else {
             this.errorMessage('Batch processing failed');

@@ -12,12 +12,12 @@ const styles = {
     col3:{width:'15%'}
 }
 
-export const ColWidths = ()=> <React.Fragment>
+export const ColWidths = ()=> <colgroup>
     <col span={1} style={styles.col0}/>
     <col span={1} style={styles.col1}/>
     <col span={1} style={styles.col2}/>
     <col span={1} style={styles.col3}/>
-</React.Fragment>
+</colgroup>
 
 const Row = withStyles((theme) => ({
     root: {

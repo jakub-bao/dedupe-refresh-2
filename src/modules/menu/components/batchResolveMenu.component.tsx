@@ -40,10 +40,12 @@ function Section({title,children, disabled}:{title:string, children:any, disable
 }
 
 function Button({title, tooltip, ...props}){
-    return <Tooltip title={tooltip}>
-        <MuiButton style={styles.button} size='small' {...props}>
-            {title}
-        </MuiButton>
+    const inside = <MuiButton style={styles.button} size='small' {...props}>
+        {title}
+    </MuiButton>;
+    if (props.disabled) return inside;
+    else return <Tooltip title={tooltip}>
+        {inside}
     </Tooltip>
 }
 

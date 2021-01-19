@@ -1,9 +1,6 @@
-import {DedupeTestCase} from "../shared/models/test.models";
-import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 import {checkCheckbox, isDisabled, nextPage, searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
 import {click} from "../../test/domServices/click.testService";
 import {textsIn} from "../../test/domServices/textsIn.testService";
-import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 import {alreadyResolved, totalDedupes, unresolved} from "./batchNums.testValues";
 import {BotswanaAllCase} from "./11.batchSelect.testCase";
 

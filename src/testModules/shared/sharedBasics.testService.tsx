@@ -1,4 +1,4 @@
-import {click, loadingDone, select, setUpComponent, texts} from "../../test/domServices/domUtils.testService";
+import {click, debug, loadingDone, select, setUpComponent, texts} from "../../test/domServices/domUtils.testService";
 import Main from "../../modules/main/components/main.component";
 import React from "react";
 import {testAs} from "../../test/apiCache/getData/getData.service";
@@ -23,6 +23,7 @@ export async function searchDedupes(testCase:DedupeTestCase){
     if (testCase.filters.status===FilterDedupeStatus.resolvedAndUnresolved) select('filter_status','Include resolved');
     click('searchDedupes');
     await loadingDone(120);
+    debug();
     texts(testCase.expectedTokens);
 }
 

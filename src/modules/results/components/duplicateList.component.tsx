@@ -6,9 +6,9 @@ const styles = {
     root:{
         height: '100%'
     } as CSSProperties,
-    col0:{width:'25%'},
-    col1:{width:'45%'},
-    col2:{width:'15%'},
+    col0:{width:'15%'},
+    col1:{width:'25%'},
+    col2:{width:'45%'},
     col3:{width:'15%'}
 }
 

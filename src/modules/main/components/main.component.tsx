@@ -36,9 +36,11 @@ import {batchSetMethod, batchUnsetMethod} from "../../batch/services/batchSetMet
 import {batchResolve} from "../../batch/services/batchResolve.service";
 import {exportCsv} from "../services/exportCsv.service";
 
+
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
     closeSnackbar: (key?: SnackbarKey) => void;
+    setUnsavedChanges: (boolean)=>void;
 }, {
     selectedFilters: FiltersModel,
     results: {
@@ -91,6 +93,11 @@ class Main extends React.Component<{
         this.setState({ui});
     }
 
+    checkUnsaved = ()=>{
+        if (this.state.results.dedupes.filter(d=>[InternalStatus.readyToUnresolve,InternalStatus.readyToUnresolve].includes(d.status)).length>0) this.props.setUnsavedChanges(true);
+        else this.props.setUnsavedChanges(false);
+    }
+
     onSearchClick = () => {
         this.updateUi([{action: UiActionType.loadingResults, value: true}, {
             action: UiActionType.errorResults,
@@ -120,6 +127,7 @@ class Main extends React.Component<{
 
     updateDedupes = (dedupes: DedupeModel[]) => {
         this.setState({results: {dedupes, selectedFilters: this.state.results.selectedFilters}});
+        this.checkUnsaved();
     }
 
     changeResolutionMethod: ChangeResolutionMethod = (dedupeId: number, resolvedBy: DedupeResolutionMethodValue) => {
@@ -162,7 +170,7 @@ class Main extends React.Component<{
             this.resolveMessage(`1 dedupe successfully resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
-            this.setState({results: this.state.results});
+            this.updateDedupes(this.state.results.dedupes);
         }).catch(()=>{
             this.errorMessage(`Error: Cannot resolve dedupe`);
             dedupe.status = InternalStatus.readyToResolve;
@@ -186,7 +194,7 @@ class Main extends React.Component<{
             dedupe.resolution.resolutionMethodValue = null;
             dedupe.resolution.original_resolutionMethodValue = null;
             dedupe.status = InternalStatus.unresolved;
-            this.setState({results});
+            this.updateDedupes(results.dedupes);
         }).catch(()=>{
             this.errorMessage(`Error: Cannot unresolve dedupe`);
             dedupe.status = InternalStatus.resolvedOnServer;

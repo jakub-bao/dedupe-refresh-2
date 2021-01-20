@@ -8,6 +8,7 @@ import {HeaderBar} from '@dhis2/ui'
 import FloatClear from "./sharedModules/shared/components/floatClear.component";
 import Main from "./modules/main/components/main.component";
 import MessageProvider from "./sharedModules/mainPage/components/messageProvider.component";
+import PageLeave from "./sharedModules/mainPage/components/pageLeave.component";
 
 
 function Index(){
@@ -17,7 +18,9 @@ function Index(){
         </div>
         <ThemeWrapper>
             <MessageProvider>
-                <Main/>
+                <PageLeave>
+                    <Main/>
+                </PageLeave>
             </MessageProvider>
         </ThemeWrapper>
         <FloatClear/>

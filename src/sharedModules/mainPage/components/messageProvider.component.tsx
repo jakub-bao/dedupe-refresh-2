@@ -1,8 +1,7 @@
 import React, {Ref} from "react";
 import {IconButton, withStyles} from "@material-ui/core";
 import {SnackbarProvider as MuiSnackbarProvider} from "notistack";
-import {CheckCircle, Close, KeyboardReturn} from "@material-ui/icons";
-import {makeStyles} from "@material-ui/core/styles";
+import {CheckCircle, Close} from "@material-ui/icons";
 import {colors} from "../../../values/color.values";
 
 const styles = {
@@ -25,7 +24,6 @@ const onClickDismiss = key => () => {
     // @ts-ignore
     notistackRef.current.closeSnackbar(key);
 }
-
 
 export default function MessageProvider({children}:{children:any}) {
     return <SnackbarProvider

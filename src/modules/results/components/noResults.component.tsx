@@ -18,7 +18,7 @@ const styles = {
 };
 
 
-export default function NoResults({}:{}) {
+export default function NoResults() {
     return <div style={styles.root}>
         <SearchIcon fontSize='large' style={styles.icon}/>
         <Typography style={styles.text}>No duplicates found matching the selected criteria</Typography>

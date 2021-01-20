@@ -1,4 +1,4 @@
-import React, {Ref} from "react";
+import React from "react";
 import {render} from "react-dom";
 import {baseUrl} from "./sharedModules/shared/services/config.service";
 import ThemeWrapper from "./sharedModules/boot/components/themeWrapper.component";
@@ -7,11 +7,7 @@ import {Provider} from "@dhis2/app-runtime";
 import {HeaderBar} from '@dhis2/ui'
 import FloatClear from "./sharedModules/shared/components/floatClear.component";
 import Main from "./modules/main/components/main.component";
-import {SnackbarProvider as SBP} from "notistack";
-import {Button, IconButton, withStyles} from "@material-ui/core";
-import {Close} from "@material-ui/icons";
 import MessageProvider from "./sharedModules/mainPage/components/messageProvider.component";
-
 
 
 function Index(){

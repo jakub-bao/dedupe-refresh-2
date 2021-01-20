@@ -1,4 +1,4 @@
-import {click, debug, loadingDone, select, setUpComponent, texts} from "../../test/domServices/domUtils.testService";
+import {click, loadingDone, select, setUpComponent, texts} from "../../test/domServices/domUtils.testService";
 import Main from "../../modules/main/components/main.component";
 import React from "react";
 import {testAs} from "../../test/apiCache/getData/getData.service";

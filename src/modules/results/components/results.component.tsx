@@ -1,7 +1,7 @@
 import React, {CSSProperties} from "react";
 import {DedupeModel} from "../models/dedupe.model";
 import ResultsTable from "./resultsTable.component";
-import {Button, Typography} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import {
     ChangeResolutionMethod,
     SetResolutionValue

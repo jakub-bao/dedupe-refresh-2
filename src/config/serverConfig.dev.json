@@ -1,7 +1,8 @@
 {
-  "baseUrl": "https://dev-jakub.datim.org/",
+  "baseUrl": "https://jakub.datim.org/",
   "apiVersion": "33",
   "apiRefreshRate": 500,
   "apiOperationWait": 1000,
-  "enableSubrecipients": false
+  "enableSubrecipients": false,
+  "networkCheckInterval": null
 }

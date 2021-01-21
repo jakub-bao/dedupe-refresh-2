@@ -1,7 +1,7 @@
 import {checkCheckbox, clickCheckbox, searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
-import {BotswanaAllCase} from "./11.batchSelect.test";
 import {textsIn} from "../../test/domServices/textsIn.testService";
 import {alreadyResolved, totalDedupes, unresolved} from "./batchNums.testValues";
+import {BotswanaAllCase} from "./11.batchSelect.testCase";
 
 function selectAll(){
     clickCheckbox('all');

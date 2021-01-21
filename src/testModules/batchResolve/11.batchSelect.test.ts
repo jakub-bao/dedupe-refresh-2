@@ -1,35 +1,8 @@
-import {DedupeTestCase} from "../shared/models/test.models";
-import {ResolutionMethodType} from "../../modules/results/models/dedupe.model";
 import {checkCheckbox, isDisabled, nextPage, searchDedupes, switchToBatch} from "../shared/sharedBasics.testService";
 import {click} from "../../test/domServices/click.testService";
 import {textsIn} from "../../test/domServices/textsIn.testService";
-import {FilterDedupeStatus} from "../../modules/menu/models/filters.model";
 import {alreadyResolved, totalDedupes, unresolved} from "./batchNums.testValues";
-
-export const BotswanaAllCase:DedupeTestCase = {
-    testAs: 'test-de-superAdmin',
-    name: `Botswana > MER Results > 2020 Summer`,
-    filters: {
-        operatingUnit: 'Botswana',
-        dataType: 'MER Results',
-        period: 'Jul - Sep 2020',
-        status: FilterDedupeStatus.resolvedAndUnresolved
-    },
-    expectedTokens: [
-        'OVC_HIVSTAT (N, DSD, ReportedStatus): OVC Disclosed Known HIV Status',
-        'Kgatleng District',
-        'STEPPING STONES INTERNATIONAL',
-        'Project Concern International',
-        '(1191)'
-    ],
-    resolved: [{
-        value:1191,
-        method: ResolutionMethodType.sum
-    },{
-        value:309,
-        method: ResolutionMethodType.sum
-    }],
-};
+import {BotswanaAllCase} from "./11.batchSelect.testCase";
 
 function checkButtons(){
     isDisabled('batch_selectNone');

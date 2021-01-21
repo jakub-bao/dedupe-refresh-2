@@ -18,7 +18,7 @@ import {
     ChangeResolutionMethod,
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
-import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData.service";
+import {changeResolutionMethod, checkUnsaved, setResolutionValue} from "../services/dedupeData.service";
 import {resolveDedupe, unresolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
@@ -35,10 +35,13 @@ import {generateBatchStats} from "../../batch/services/generateBatchStats.servic
 import {batchSetMethod, batchUnsetMethod} from "../../batch/services/batchSetMethod.service";
 import {batchResolve} from "../../batch/services/batchResolve.service";
 import {exportCsv} from "../services/exportCsv.service";
+import DevTools from "../../../sharedModules/mainPage/components/devTools.component";
+
 
 class Main extends React.Component<{
     enqueueSnackbar: (message: SnackbarMessage, options?: OptionsObject) => SnackbarKey;
     closeSnackbar: (key?: SnackbarKey) => void;
+    setUnsavedChanges: (boolean)=>void;
 }, {
     selectedFilters: FiltersModel,
     results: {
@@ -82,11 +85,17 @@ class Main extends React.Component<{
         });
     }
 
-    showMessage = this.props.enqueueSnackbar;
+    resolveMessage = (msg:string)=>this.props.enqueueSnackbar(msg, {variant:'success'});
+    unresolveMessage = this.resolveMessage;
+    errorMessage = (msg:string)=>this.props.enqueueSnackbar(msg,{variant:'error', persist: true});
 
     updateUi = (actions: ActionValue[]) => {
         let ui = updateUi(this.state.ui, actions);
         this.setState({ui});
+    }
+
+    checkUnsaved = ()=>{
+        if (this.props.setUnsavedChanges) this.props.setUnsavedChanges(checkUnsaved(this.state.results.dedupes));
     }
 
     onSearchClick = () => {
@@ -118,6 +127,7 @@ class Main extends React.Component<{
 
     updateDedupes = (dedupes: DedupeModel[]) => {
         this.setState({results: {dedupes, selectedFilters: this.state.results.selectedFilters}});
+        this.checkUnsaved();
     }
 
     changeResolutionMethod: ChangeResolutionMethod = (dedupeId: number, resolvedBy: DedupeResolutionMethodValue) => {
@@ -152,25 +162,27 @@ class Main extends React.Component<{
         />;
     }
 
+
+
+
+    switchMenuTab = (tab: MenuVariant) => {
+        this.updateUi([{action: UiActionType.menuTab, value: tab}]);
+    }
+
     resolveDedupe = (id: number) => {
         let dedupe: DedupeModel = this.state.results.dedupes[id - 1];
         dedupe.status = InternalStatus.processing;
         this.setState({results: this.state.results});
         resolveDedupe(dedupe).then(()=>{
-            this.showMessage(`1 dedupe successfully resolved`);
+            this.resolveMessage(`1 dedupe successfully resolved`);
             dedupe.resolution.original_resolutionMethodValue = JSON.parse(JSON.stringify(dedupe.resolution.resolutionMethodValue));
             dedupe.status = InternalStatus.resolvedOnServer;
-            this.setState({results: this.state.results});
+            this.updateDedupes(this.state.results.dedupes);
         }).catch(()=>{
-            this.showMessage(`Error resolving dedupe`, {variant: 'error'});
+            this.errorMessage(`Error: Cannot resolve dedupe`);
             dedupe.status = InternalStatus.readyToResolve;
             this.setState({results: this.state.results});
         });
-    }
-
-
-    switchMenuTab = (tab: MenuVariant) => {
-        this.updateUi([{action: UiActionType.menuTab, value: tab}]);
     }
 
     unresolveDedupe = (index: number) => {
@@ -179,14 +191,14 @@ class Main extends React.Component<{
         dedupe.status = InternalStatus.processing;
         this.setState({results});
         unresolveDedupe(this.state.results.dedupes[index - 1]).then(() => {
-            this.showMessage(`1 dedupe successfully unresolved`);
+            this.unresolveMessage(`1 dedupe successfully unresolved`);
             let results = this.state.results;
             dedupe.resolution.resolutionMethodValue = null;
             dedupe.resolution.original_resolutionMethodValue = null;
             dedupe.status = InternalStatus.unresolved;
-            this.setState({results});
+            this.updateDedupes(results.dedupes);
         }).catch(()=>{
-            this.showMessage(`Error: Cannot unresolve dedupe`, {variant: 'error'});
+            this.errorMessage(`Error: Cannot unresolve dedupe`);
             dedupe.status = InternalStatus.resolvedOnServer;
             this.setState({results: this.state.results});
         });
@@ -208,6 +220,7 @@ class Main extends React.Component<{
             <Typography onClick={() => this.preselect('l1KFEXKI4Dg', '2020Q3', DedupeType.pure)}>7. Full
                 list</Typography>
             <Typography onClick={() => this.preselect('h11OyvlPxpJ', '2020Q4', DedupeType.pure)}>8. No results</Typography>
+            <Typography onClick={() => this.preselect('PqlFzhuPcF1', '2017Q1', DedupeType.pure)}>9. Dataset locked</Typography>
         </div>;
     }
 
@@ -265,10 +278,12 @@ class Main extends React.Component<{
         this.markDedupesAs(dedupes, InternalStatus.processing);
         let result = await batchResolve(dedupes, action);
         if (result) {
-            this.showMessage(`${dedupes.length} dedupe${dedupes.length>1?'s':''} successfully ${verb}`);
+            let msg = `${dedupes.length} dedupe${dedupes.length>1?'s':''} successfully ${verb}`;
+            if (action===BatchActionType.resolve) this.resolveMessage(msg);
+            if (action===BatchActionType.unresolve) this.unresolveMessage(msg)
             this.markDedupesAs(dedupes,toStatus);
         } else {
-            this.showMessage('Batch processing failed', {variant: 'error'});
+            this.errorMessage('Batch processing failed');
             this.markDedupesAs(dedupes, fromStatus);
         }
     };
@@ -296,6 +311,7 @@ class Main extends React.Component<{
                 {this.renderResults()}
                 {this.renderPreselect()}
             </ContentWrapper>
+            <DevTools/>
         </React.Fragment>;
     }
 }

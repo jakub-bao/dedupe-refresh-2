@@ -79,8 +79,8 @@ function statusToColor(status:InternalStatus):string{
         case InternalStatus.unresolved: return '#00000000';
         case InternalStatus.readyToResolve:
         case InternalStatus.readyToUnresolve:
-            return '#9C0D38';
-        case InternalStatus.resolvedOnServer: return '#307351';
+            return colors.alert;
+        case InternalStatus.resolvedOnServer: return colors.success;
         case InternalStatus.processing: return '#E8C547';
         case InternalStatus.invalidValue: return '#A4BAB7';
     }
@@ -111,7 +111,7 @@ const DuplicatesHeader = <Table size="small">
     <ColWidths/>
     <TableBody>
         <TableRow>
-            <Cell>Agency</Cell><Cell>Partner</Cell><Cell>Mech</Cell><Cell>Value</Cell>
+            <Cell>Mech</Cell><Cell>Agency</Cell><Cell>Partner</Cell><Cell>Value</Cell>
         </TableRow>
     </TableBody>
 </Table>

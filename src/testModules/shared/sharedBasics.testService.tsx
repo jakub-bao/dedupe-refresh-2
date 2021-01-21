@@ -22,7 +22,7 @@ export async function searchDedupes(testCase:DedupeTestCase){
     });
     if (testCase.filters.status===FilterDedupeStatus.resolvedAndUnresolved) select('filter_status','Include resolved');
     click('searchDedupes');
-    await loadingDone(120);
+    await loadingDone(240);
     texts(testCase.expectedTokens);
 }
 

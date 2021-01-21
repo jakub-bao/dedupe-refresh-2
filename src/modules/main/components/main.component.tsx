@@ -35,6 +35,7 @@ import {generateBatchStats} from "../../batch/services/generateBatchStats.servic
 import {batchSetMethod, batchUnsetMethod} from "../../batch/services/batchSetMethod.service";
 import {batchResolve} from "../../batch/services/batchResolve.service";
 import {exportCsv} from "../services/exportCsv.service";
+import DevTools from "../../../sharedModules/mainPage/components/devTools.component";
 
 
 class Main extends React.Component<{
@@ -309,6 +310,7 @@ class Main extends React.Component<{
                 {this.renderResults()}
                 {this.renderPreselect()}
             </ContentWrapper>
+            <DevTools/>
         </React.Fragment>;
     }
 }

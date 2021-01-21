@@ -83,5 +83,6 @@ export  default function Menu({selectedFilters, onFiltersSelect, filterOptionsPr
 
         {menuUi.menuTab===0 && <Filters selectedFilters={selectedFilters} onFiltersSelect={onFiltersSelect} filterOptionsProvider={filterOptionsProvider} onSearchClick={onSearchClick}/>}
         {menuUi.menuTab===1 && <BatchResolveMenu batchStats={batchStats} batchExecute={batchExecute} batchSelect={batchSelect} batchMethod={batchMethod}/>}
+
     </Drawer>;
 }

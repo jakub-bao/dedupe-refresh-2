@@ -1,4 +1,9 @@
-import {DedupeModel, DedupeResolutionMethodValue, updateStatus} from "../../results/models/dedupe.model";
+import {
+    DedupeModel,
+    DedupeResolutionMethodValue,
+    InternalStatus,
+    updateStatus
+} from "../../results/models/dedupe.model";
 
 const findDedupe = (dedupes: DedupeModel[],dedupeId:number, cb:any)=>{
     let dedupe = dedupes[dedupeId-1];
@@ -21,3 +26,5 @@ export const setResolutionValue = (dedupes: DedupeModel[], dedupeId:number, cust
         dedupe.resolution.resolutionMethodValue.deduplicationAdjustmentValue = customValue - dedupe.resolution.availableValues.sum;
     });
 };
+
+export const checkUnsaved = (dedupes:DedupeModel[])=>dedupes.filter(d=>[InternalStatus.readyToUnresolve,InternalStatus.readyToUnresolve].includes(d.status)).length>0;

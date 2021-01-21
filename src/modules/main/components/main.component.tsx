@@ -18,7 +18,7 @@ import {
     ChangeResolutionMethod,
     SetResolutionValue
 } from "../../resolutionMethodCell/components/resolutionMethodCell.component";
-import {changeResolutionMethod, setResolutionValue} from "../services/dedupeData.service";
+import {changeResolutionMethod, checkUnsaved, setResolutionValue} from "../services/dedupeData.service";
 import {resolveDedupe, unresolveDedupe} from "../services/saveDedupe.service";
 import {OptionsObject, SnackbarKey, SnackbarMessage, withSnackbar} from "notistack";
 import {Typography} from "@material-ui/core";
@@ -95,8 +95,7 @@ class Main extends React.Component<{
     }
 
     checkUnsaved = ()=>{
-        if (this.state.results.dedupes.filter(d=>[InternalStatus.readyToUnresolve,InternalStatus.readyToUnresolve].includes(d.status)).length>0) this.props.setUnsavedChanges(true);
-        else this.props.setUnsavedChanges(false);
+        if (this.props.setUnsavedChanges) this.props.setUnsavedChanges(checkUnsaved(this.state.results.dedupes));
     }
 
     onSearchClick = () => {

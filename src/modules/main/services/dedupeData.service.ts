@@ -28,3 +28,4 @@ export const setResolutionValue = (dedupes: DedupeModel[], dedupeId:number, cust
 };
 
 export const checkUnsaved = (dedupes:DedupeModel[])=>dedupes.filter(d=>[InternalStatus.readyToUnresolve,InternalStatus.readyToUnresolve].includes(d.status)).length>0;
+

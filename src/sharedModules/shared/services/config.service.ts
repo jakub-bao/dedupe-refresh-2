@@ -17,3 +17,4 @@ export const baseUrl = config.baseUrl;
 export const apiRefreshRate = config.apiRefreshRate;
 export const apiOperationWait = config.apiOperationWait;
 export const enableSubrecipients = config.enableSubrecipients;
+export const networkCheckInterval = config.networkCheckInterval;

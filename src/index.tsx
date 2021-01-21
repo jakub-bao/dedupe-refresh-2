@@ -9,6 +9,7 @@ import FloatClear from "./sharedModules/shared/components/floatClear.component";
 import Main from "./modules/main/components/main.component";
 import MessageProvider from "./sharedModules/mainPage/components/messageProvider.component";
 import PageLeave from "./sharedModules/mainPage/components/pageLeave.component";
+import NetworkCheck from "./sharedModules/mainPage/components/networkCheck.component";
 
 
 function Index(){
@@ -21,6 +22,7 @@ function Index(){
                 <PageLeave>
                     <Main/>
                 </PageLeave>
+                <NetworkCheck/>
             </MessageProvider>
         </ThemeWrapper>
         <FloatClear/>

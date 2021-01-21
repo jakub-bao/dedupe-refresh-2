@@ -162,6 +162,13 @@ class Main extends React.Component<{
         />;
     }
 
+
+
+
+    switchMenuTab = (tab: MenuVariant) => {
+        this.updateUi([{action: UiActionType.menuTab, value: tab}]);
+    }
+
     resolveDedupe = (id: number) => {
         let dedupe: DedupeModel = this.state.results.dedupes[id - 1];
         dedupe.status = InternalStatus.processing;
@@ -176,11 +183,6 @@ class Main extends React.Component<{
             dedupe.status = InternalStatus.readyToResolve;
             this.setState({results: this.state.results});
         });
-    }
-
-
-    switchMenuTab = (tab: MenuVariant) => {
-        this.updateUi([{action: UiActionType.menuTab, value: tab}]);
     }
 
     unresolveDedupe = (index: number) => {
